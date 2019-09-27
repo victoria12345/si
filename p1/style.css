@@ -7,7 +7,7 @@ body{
 #cabecera {
   /*1ABC9C*/
   display: flex;
-  justify-content:space-around;
+  /*justify-content:space-around;*/
   align-items:center;
   background-color: #F55F66;
   top: 0;
@@ -15,7 +15,21 @@ body{
   position: sticky;
   width: 100%;
 }
+.logo {
+   width: 50%;
+   font-family: Courier;
+   text-align: center;
+   font-size: 14pt;
+   float:left;
+   font-weight: bold;
+}
+.busqueda {
+   width: 55%
+}
 
+.botones {
+   width: 20%
+}
 
 #menu {
   float: left;
@@ -42,13 +56,34 @@ body{
   color: black;
   background-color: white;
   color: black;
-  border: 2px solid #000000; /* Green */
-  padding: 15px 32px;
+  border: 1px solid #000000;
+  padding: 12px 20px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 14px;
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 8px;
+}
+
+input[type=text] {
+  width: 100px;
+  height: 14px;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  background-color: white;
+  background-image: url(./lupa.png);
+  background-position: 5px 5px;
+  background-repeat: no-repeat;
+  padding: 12px 20px 12px 40px;
+}
+
+select {
+  width: 100px;
+  height: 40px;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  background-color: white;
+  padding: 12px 20px;
 }
