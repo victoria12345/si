@@ -14,14 +14,21 @@ body{
   height: 110px;
   position: sticky;
   width: 100%;
+  border: 1px solid #000000;
 }
-.logo {
-   width: 50%;
+
+h1 {
+   padding-left: 0;
+   padding-right: 140px;
+   float:left;
    font-family: Courier;
-   text-align: center;
-   font-size: 14pt;
+   font-size: 18pt;
    float:left;
    font-weight: bold;
+}
+#cabecera #logo {
+   padding-left: 40px;
+   padding-right: 20px;
 }
 .busqueda {
    width: 55%
@@ -36,6 +43,54 @@ body{
   width: 20%;
   height: 1000px;
   background-color: #FF9F7C;
+
+}
+
+#menu ul {
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+
+   /* background:red; */
+   border-radius:9px;
+   width:auto;
+   padding:15px;
+   /*Quitar puntos laterales*/
+   list-style-type:none;
+}
+#menu ul a{
+   /*Quitar subrayado*/
+   text-decoration: none;
+   background-position: center;
+   padding-right: 22px;
+   padding-left: 22px;
+   display: block;
+   line-height: 25px;
+   font-family: Courier;
+   font-size: 20px;
+}
+#menu li a{
+   color:#000000;
+   margin:2px;
+   background:linear-gradient(#fff 40%,#dedede 100%);
+   background:-moz-linear-gradient(#fff 40%,#dedede 100%);
+   background:-ms-linear-gradient(#fff 40%,#dedede 100%);
+   background:-o-linear-gradient(#fff 40%,#dedede 100%);
+   background:-webkit-linear-gradient(#fff 40%,#dedede 100%);
+   border: 1px solid #000000;
+   border-radius:15px;
+   padding:10px;
+}
+
+#menu li a:hover{
+   background:linear-gradient(#DEDEDE 40%, #FFF 100%);
+   background:-moz-linear-gradient(#DEDEDE 40%, #FFF 100%);
+   background:-ms-linear-gradient(#DEDEDE 40%, #FFF 100%);
+   background:-o-linear-gradient(#DEDEDE 40%, #FFF 100%);
+   background:-webkit-linear-gradient(#DEDEDE 40%, #FFF 100%);
+   border-radius:15px;
+   border:solid 4px #333;
+   color:red;
 }
 #contenido {
   float: left;
@@ -54,7 +109,7 @@ body{
 
 .button {
   color: black;
-  background-color: white;
+  /* background-color: white; */
   color: black;
   border: 1px solid #000000;
   padding: 12px 20px;
@@ -65,6 +120,11 @@ body{
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 8px;
+  background:linear-gradient(#fff 40%,#dedede 100%);
+  background:-moz-linear-gradient(#fff 40%,#dedede 100%);
+  background:-ms-linear-gradient(#fff 40%,#dedede 100%);
+  background:-o-linear-gradient(#fff 40%,#dedede 100%);
+  background:-webkit-linear-gradient(#fff 40%,#dedede 100%);
 }
 
 input[type=text] {
