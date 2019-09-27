@@ -7,9 +7,16 @@ body{
 #cabecera {
   /*1ABC9C*/
   display: flex;
-  /*justify-content:space-around;*/
   align-items:center;
   background-color: #F55F66;
+  /* ESTO ES PARA PONERLO GRADIENTE
+  background: -moz-linear-gradient(269deg, #F55F66 52%, #F5656B 55%, #F98D90 74%, #FFC4C4 100%);
+  background: -webkit-linear-gradient(269deg, #F55F66 52%, #F5656B 55%, #F98D90 74%, #FFC4C4 100%);
+  background: -o-linear-gradient(269deg, #F55F66 52%, #F5656B 55%, #F98D90 74%, #FFC4C4 100%);
+  background: -ms-linear-gradient(269deg, #F55F66 52%, #F5656B 55%, #F98D90 74%, #FFC4C4 100%);
+  background: linear-gradient(181deg, #F55F66 52%, #F5656B 55%, #F98D90 74%, #FFC4C4 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F55F66', endColorstr='#FFC4C4',GradientType=0 );
+*/
   top: 0;
   height: 110px;
   position: sticky;
@@ -96,7 +103,7 @@ h1 {
   float: left;
   height: 1000px;
   width:80%;
-  background-color: #FFCCA5;
+  background-color: #FFDDC4;
 }
 #pie {
   clear: both;
@@ -127,7 +134,7 @@ h1 {
   background:-webkit-linear-gradient(#fff 40%,#dedede 100%);
 }
 
-input[type=text] {
+.buscar {
   width: 100px;
   height: 14px;
   border: 1px solid #000000;
@@ -146,4 +153,20 @@ select {
   border-radius: 4px;
   background-color: white;
   padding: 12px 20px;
+}
+
+.registro {
+   padding-left: 100px;
+   padding-right: 80px;
+   padding-top: 100px;
+   padding-bottom: 100px;
+
+}
+
+.text1{
+   width: 400px;
+   height: 30px;
+   background-color: white;
+   border: 1px solid #000000;
+   border-radius: 4px;
 }
