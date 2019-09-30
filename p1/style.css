@@ -31,16 +31,14 @@ h1 {
     padding-left: 0;
     padding-right: 140px;
     float: left;
-    font-family: Courier New;
-	font-variant-ligatures: normal;
+    font-family: 'Montserrat Alternates', sans-serif;
     font-size: 18pt;
     float: left;
     font-weight: bold;
 }
 
 h2 {
-    font-family: Courier New;
-	font-variant-ligatures: normal;
+	font-family: 'Josefin Slab', serif;
     font-size: 18pt;
     font-weight: bold;
     padding-left: 100px;
@@ -48,7 +46,7 @@ h2 {
 }
 
 h3 {
-    font-family: Courier New;
+    font-family: 'Josefin Slab', serif;
 	font-variant-ligatures: normal;
     font-size: 18pt;
     font-weight: bold;
