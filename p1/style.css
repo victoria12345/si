@@ -10,7 +10,7 @@ body {
     display: flex;
     align-items: center;
     /* background-color: #F55F66; */
-    background-color: #EAFF30;
+    background-color: #FFDA33;
     /* ESTO ES PARA PONERLO GRADIENTE
   background: -moz-linear-gradient(269deg, #F55F66 52%, #F5656B 55%, #F98D90 74%, #FFC4C4 100%);
   background: -webkit-linear-gradient(269deg, #F55F66 52%, #F5656B 55%, #F98D90 74%, #FFC4C4 100%);
@@ -127,6 +127,7 @@ h2 {
     width: 100%;
     height: 40px;
     background-color: #34495E;
+    display: flex;
 }
 
 .boton {
@@ -226,7 +227,7 @@ select {
 
 .compra {
     padding-top: 10px;
-    padding-left: 270px;
+    padding-right: 60px;
 }
 
 .info {
