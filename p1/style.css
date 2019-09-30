@@ -11,6 +11,7 @@ body {
     align-items: center;
     /* background-color: #F55F66; */
     background-color: #FFDA33;
+	z-index:1;
     /* ESTO ES PARA PONERLO GRADIENTE
   background: -moz-linear-gradient(269deg, #F55F66 52%, #F5656B 55%, #F98D90 74%, #FFC4C4 100%);
   background: -webkit-linear-gradient(269deg, #F55F66 52%, #F5656B 55%, #F98D90 74%, #FFC4C4 100%);
@@ -69,12 +70,21 @@ h3 {
     width: 20%
 }
 
+.boton2{
+	position: absolute;
+	x-index: 200;
+	y-index: 200px;
+	z-index:1;
+}
+
 #menu {
-    float: left;
+    position: fixed;
+	z-index:0;
 	margin-top: 0px;
+	y-index:2000px;
     /* border-right: 1px solid #000000; */
     width: 20%;
-    height: 1000px;
+    height: 100%;
     /* background-color: #FF9F7C; */
     background-color: #174A68;
 }
@@ -132,6 +142,7 @@ h3 {
     height: 1000px;
     width: 80%;
     background-color: #FEFFE2;
+    padding-left: 20%;
 }
 
 #pie {
@@ -245,6 +256,7 @@ select {
 .etiqueta {
 	color: #FEFFE2;
 	display: right;
+	font-size: 14px;
 }
 
 .compra {
