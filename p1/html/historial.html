@@ -1,15 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html>
 <head>
-<link rel="stylesheet" type="text/css" href="style.css" />
+<link rel="stylesheet" type="text/css" href="../style.css" />
 </head>
-
+<!-- <link rel="icon" href="./imagenes/logo.png" > -->
 <body>
 
   <div id="contenedor">
     <div id="cabecera">
 
-      <a href="layout-div.html"><img id="logo" src ="logo.png"></a>
+      <a href="../html/index.html"><img id="logo" src ="../imagenes/logo.png"></a>
       <h1>Tu tienda de confianza</h1>
 
       <div class = "busqueda">
@@ -26,14 +26,16 @@
       </div>
       <div class = "botones">
          <span> Usuario: Sofia Sanchez</span>
-         <button class="boton">Logout</button>
+         <form action="../html/index.html">
+            <button class ="boton">Logout</button>
+         </form>
       </div>
     </div>
 
 
     <div id="menu">
       <ul> <!-- ul define la lista-->
-        <li><a href="#">Home</a></li>  <!-- li define cada elemento de la lista-->
+        <li><a href="../html/index2.html">Home</a></li>  <!-- li define cada elemento de la lista-->
         <li><a href="#">Archivos</a></li>
         <li><a href="#">Enlaces</a></li>
         <li><a href="#">Acerca de</a></li>
@@ -43,7 +45,24 @@
     </div>
 
     <div id="contenido">
-       Jesús y Sofía
+      <h2>Este es tu historial...</h2>
+       <table>
+          <tr>
+             <th> Película </th>
+             <th> Día </th>
+             <th> Precio </th>
+          </tr>
+          <tr>
+             <td> It Capitulo 2 </td>
+             <td> 19/07/2019 </td>
+             <td> 5€ </td>
+          </tr>
+          <tr>
+             <td> El Rey León </td>
+             <td> 22/09/2019 </td>
+             <td> 10€ </td>
+          </tr>
+       </table>
     </div>
 
     <div id="pie">
