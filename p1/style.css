@@ -133,6 +133,7 @@ h2 {
 }
 
 .boton {
+   font-family: Courier;
     color: black;
     width: 150px;
     /* background-color: white; */
@@ -154,6 +155,7 @@ h2 {
 }
 
 .botonComprar {
+   font-family: Courier;
     color: black;
     /* background-color: white; */
     color: black;
@@ -183,7 +185,9 @@ h2 {
     background-position: 5px 5px;
     background-repeat: no-repeat;
     padding: 12px 20px 12px 40px;
+    font-family: Courier;
 }
+
 
 select {
     width: 100px;
@@ -199,6 +203,7 @@ select {
     padding-right: 80px;
     padding-top: 20px;
     padding-bottom: 100px;
+    width: 100%;
 }
 
 .text1 {
