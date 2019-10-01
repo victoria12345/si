@@ -1,6 +1,11 @@
 body {
     margin: 0;
     font-family: Courier;
+    background-color: #FEFFE2;
+}
+
+* {
+   overflow-x: hidden;
 }
 
 #contenedor {}
@@ -12,17 +17,9 @@ body {
     /* background-color: #F55F66; */
     background-color: #FFDA33;
 	z-index:1;
-    /* ESTO ES PARA PONERLO GRADIENTE
-  background: -moz-linear-gradient(269deg, #F55F66 52%, #F5656B 55%, #F98D90 74%, #FFC4C4 100%);
-  background: -webkit-linear-gradient(269deg, #F55F66 52%, #F5656B 55%, #F98D90 74%, #FFC4C4 100%);
-  background: -o-linear-gradient(269deg, #F55F66 52%, #F5656B 55%, #F98D90 74%, #FFC4C4 100%);
-  background: -ms-linear-gradient(269deg, #F55F66 52%, #F5656B 55%, #F98D90 74%, #FFC4C4 100%);
-  background: linear-gradient(181deg, #F55F66 52%, #F5656B 55%, #F98D90 74%, #FFC4C4 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F55F66', endColorstr='#FFC4C4',GradientType=0 );
-*/
     top: 0;
     height: 110px;
-    position: sticky;
+    position: fixed;
     width: 100%;
     border: 1px solid #000000;
 }
@@ -55,6 +52,7 @@ h3 {
 }
 
 h4 {
+   padding-top: 30px;
     font-family: 'Josefin Slab', serif;
 	color: #FEFFE2;
 	font-variant-ligatures: normal;
@@ -67,7 +65,7 @@ h4 {
     padding-right: 20px;
 }
 
-#cabecera #icono {
+#cabecera .icono {
 	width: 25px;
 	height: 25px;
 }
@@ -88,23 +86,21 @@ h4 {
     width: 20%;
 }
 
-.boton2{
+/* .boton2{
 	position: absolute;
-	x-index: 200;
-	y-index: 200px;
 	z-index:1;
-}
+} */
 
 #menu {
     position: fixed;
 	z-index:0;
 	margin-top: 0px;
-	y-index:2000px;
     /* border-right: 1px solid #000000; */
     width: 20%;
     height: 100%;
     /* background-color: #FF9F7C; */
     background-color: #174A68;
+    padding-top: 120px;
 }
 
 #menu h4{
@@ -112,6 +108,7 @@ h4 {
 }
 
 #menu ul {
+    padding-top: 110px;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -139,10 +136,10 @@ h4 {
     color: #000000;
     margin: 2px;
     background: linear-gradient(#fff 40%, #dedede 100%);
-    background: -moz-linear-gradient(#fff 40%, #dedede 100%);
+    /* background: -moz-linear-gradient(#fff 40%, #dedede 100%);
     background: -ms-linear-gradient(#fff 40%, #dedede 100%);
     background: -o-linear-gradient(#fff 40%, #dedede 100%);
-    background: -webkit-linear-gradient(#fff 40%, #dedede 100%);
+    background: -webkit-linear-gradient(#fff 40%, #dedede 100%); */
     border: 1px solid #000000;
     border-radius: 15px;
     padding: 10px;
@@ -150,10 +147,10 @@ h4 {
 
 #menu li a:hover {
     background: linear-gradient(#DEDEDE 40%, #FFF 100%);
-    background: -moz-linear-gradient(#DEDEDE 40%, #FFF 100%);
+    /* background: -moz-linear-gradient(#DEDEDE 40%, #FFF 100%);
     background: -ms-linear-gradient(#DEDEDE 40%, #FFF 100%);
     background: -o-linear-gradient(#DEDEDE 40%, #FFF 100%);
-    background: -webkit-linear-gradient(#DEDEDE 40%, #FFF 100%);
+    background: -webkit-linear-gradient(#DEDEDE 40%, #FFF 100%); */
     border-radius: 15px;
     border: solid 4px #333;
     color: red;
@@ -164,12 +161,15 @@ h4 {
     width: 80%;
     background-color: #FEFFE2;
     padding-left: 20%;
+    padding-top: 120px;
+    padding-bottom: 50px;
+    /* overflow: scroll; */
 }
 
 #pie {
     clear: both;
     bottom: 0;
-    position: sticky;
+    position: fixed;
 	padding-left: 32%;
 	align-items: center;
     width: 100%;
@@ -195,10 +195,10 @@ h4 {
     cursor: pointer;
     border-radius: 8px;
     background: linear-gradient(#fff 40%, #dedede 100%);
-    background: -moz-linear-gradient(#fff 40%, #dedede 100%);
+    /* background: -moz-linear-gradient(#fff 40%, #dedede 100%);
     background: -ms-linear-gradient(#fff 40%, #dedede 100%);
     background: -o-linear-gradient(#fff 40%, #dedede 100%);
-    background: -webkit-linear-gradient(#fff 40%, #dedede 100%);
+    background: -webkit-linear-gradient(#fff 40%, #dedede 100%); */
 }
 
 .botonComprar {
@@ -216,10 +216,10 @@ h4 {
     cursor: pointer;
     border-radius: 8px;
     background: linear-gradient(#fff 40%, #dedede 100%);
-    background: -moz-linear-gradient(#fff 40%, #dedede 100%);
+    /* background: -moz-linear-gradient(#fff 40%, #dedede 100%);
     background: -ms-linear-gradient(#fff 40%, #dedede 100%);
     background: -o-linear-gradient(#fff 40%, #dedede 100%);
-    background: -webkit-linear-gradient(#fff 40%, #dedede 100%);
+    background: -webkit-linear-gradient(#fff 40%, #dedede 100%); */
 }
 
 .buscar {
@@ -264,7 +264,8 @@ select {
 .pelicula {
     display: flex;
     flex-direction: column;
-    padding-top: 70px;
+    padding-top: 40px;
+    padding-bottom: 20px;
     padding-left: 100px;
 }
 
@@ -277,8 +278,7 @@ select {
 }
 
 .etiqueta {
-	color: #FEFFE2;
-	display: right;
+	color: gray;
 	font-size: 14px;
 }
 
@@ -313,6 +313,7 @@ table {
   padding-left: 80px;
   padding-top: 50px;
   table-layout : auto;
+  padding-bottom: 20px;
   }
 
 td {
@@ -333,7 +334,37 @@ td {
 
 .imagen_princ {
    width: 200px;
-   margin-left: 40px;
    margin-bottom: 15px;
    height: 250px;
+}
+
+
+
+.pelicula {
+   display: flex;
+   position: relative;
+}
+
+.pelicula a {
+   text-decoration: none;
+   text-align: center;
+   color: #000000;
+   padding-left: 8px;
+   padding-right: 8px;
+   padding-top: 8px;
+   border: 2px solid #000000;
+   /* background-color: #FFDA33; */
+   background-color: #FFDA70;
+}
+
+.pelicula a:hover {
+   background-color: #FFDA33;
+   border-radius: 15px;
+   border: solid 4px #333;
+}
+
+.contenidoPeliculas {
+   text-align: center;
+   display: flex;
+   flex-wrap: wrap;
 }

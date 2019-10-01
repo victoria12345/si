@@ -1,23 +1,26 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
-<html>
+<!DOCTYPE HTML>
 
+<html lang="es" dir="ltr">
 <head>
-<link href="https://fonts.googleapis.com/css?family=Josefin+Slab|Montserrat+Alternates&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../style.css" />
+   <meta charset="UTF-8">
+   <link href="https://fonts.googleapis.com/css?family=Josefin+Slab&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates&display=swap" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="../style.css">
+   <title> Practica 1 SI: Sofia y Victoria</title>
 </head>
-<link rel="icon" href="../imagenes/logo.png" >
+<!-- <link rel="icon" href="../imagenes/logo.png" > -->
 <body>
 
     <div id="contenedor">
         <div id="cabecera">
 
-            <a href="../html/index.html"><img id="logo" src="../imagenes/logo.png"></a>
+            <a href="../html/index.html"><img id="logo" src="../imagenes/logo.png" alt ="logo"></a>
             <h1>Tu tienda de confianza</h1>
 
             <div class="busqueda">
                 <input class="buscar" type="text" placeholder="Buscar...">
                 <select class="categoria" name="Categoria">
-				<button class="boton">Buscar</button>
+
             <option value="">Categoria</option>
             <option value="terror">Terror</option>
             <option value="drama">Drama</option>
@@ -26,10 +29,11 @@
             <option value="animada">Animada</option>
             <option value="romantica">Romantica</option>
          </select>
+         <button class="boton">Buscar</button>
             </div>
             <div class = "contacto">
-		<a href="https://github.com/search?q=org%3Agithub+victoria12345&unscoped_q=victoria12345"><img id="icono" src ="../imagenes/git.png"></a>
-		<a href="https://www.instagram.com/victoria_6/?hl=es"><img id="icono" src ="../imagenes/ig.png"></a>
+		<a href="https://github.com/search?q=org%3Agithub+victoria12345&unscoped_q=victoria12345"><img class="icono" src ="../imagenes/git.png" alt ="git"></a>
+		<a href="https://www.instagram.com/victoria_6/?hl=es"><img class="icono" src ="../imagenes/ig.png" alt ="ig"></a>
 
 	  </div>
         </div>
@@ -38,7 +42,7 @@
         <div id="menu">
             <ul>
                 <!-- ul define la lista-->
-			<li><a href="#">Home</a></li>  <!-- li define cada elemento de la lista-->
+			<li><a href="index.html">Home</a></li>  <!-- li define cada elemento de la lista-->
 			<li><a href="registro.html">Registrarse</a></li>
 			<li><a href="login.html">Login</a></li>
             </ul>
@@ -49,9 +53,9 @@
                 <div class="arriba">
                     <!-- igual combiene cambiar este nombre-->
 
-                    <img class="foto" src="../imagenes/it.png">
+                    <img class="foto" src="../imagenes/it.png" alt ="it">
                     <div class="info">
-                        <h1>It Capitulo 2</h1>
+                        <h1>It Capitulo 2</h1><br>
                         <p><span class="etiqueta"> Duración: </span>192 min</p>
                         <p><span class="etiqueta">País:</span>Estados Unidos</p>
                         <p><span class="etiqueta"> Género:  </span>Terror</p>
@@ -62,7 +66,7 @@
 
                     <div class="compra">
                         <p> Precio : 5€ </p>
-                        <button class="botonComprar"><span id="icono-cesta">Comprar</span><img src = "../imagenes/carrito.png"></button>
+                        <button class="botonComprar"><span id="icono-cesta">Comprar</span><img src = "../imagenes/carrito.png" alt ="carrito"></button>
                     </div>
                 </div>
                 <div class="abajo">
