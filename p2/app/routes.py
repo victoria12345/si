@@ -8,12 +8,28 @@ import os
 import sys
 
 @app.route('/')
-@app.route('/index')
+@app.route('/index',methods=['GET','POST'])
 def index():
     # print (url_for('static', filename='estilo.css'), file=sys.stderr)
     catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
     return render_template('index.html', title = "Home", movies=catalogue['peliculas'][:10])
+
+
+@app.route('/informacion/<pelicula_id>', methods=['GET','POST'])
+def informacion(pelicula_id):
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+
+    movies=catalogue['peliculas']
+
+    for item in movies:
+        if item['id'] == int(pelicula_id):
+            return render_template('informacion.html', title = "Film", film=item)
+
+
+    return 'error'
+
 '''
 @app.route('/login', methods=['GET', 'POST'])
 def login():

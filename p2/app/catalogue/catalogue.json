@@ -8,13 +8,18 @@
       "precio": 18.99,
       "categoria": "Aventura",
       "año": 1999,
+      "duracion": "2000 min",
+      "pais": "Estados Unidos",
+      "genero": "Terror",
+      "guionista": "Gary Dauberman",
       "actores":
       [
         { "nombre": "Jake Lloyd",
           "personaje": "Anakin Skywalker",
           "foto": "imagenes/anakin.jpg"
         }
-      ]
+      ],
+      "sinopsis": "Han pasado casi 30 años desde que el 'Club de los Perdedores', formado por Bill, Berverly, Richie, Ben, Eddie, Mike y Stanley, se enfrentaran al macabro y despiadado Pennywise (Bill Skarsgård). En cuanto tuvieron oportunidad, abandonaron el pueblo de Derry, en el estado de Maine, que tantos problemas les había ocasionado. Sin embargo, ahora, siendo adultos, parece que no pueden escapar de su pasado. Todos deberán enfrentarse de nuevo al temible payaso para descubrir si de verdad están preparados para superar sus traumas de la infancia."
     }
   ]
 }
