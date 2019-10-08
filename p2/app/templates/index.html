@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+
+{% block contenido %}
+   <h3>Quizás te interese ver...</h3>
+
+   {% for item in movies %}
+     <div class="pelicula">
+        <a title="{{ item.titulo }}" href='informacion.html'><img class="imagen_princ" src="../static/imagenes/{{ item.poster }}" alt="It"><p> {{ item.titulo }}</p></a>
+     </div>
+   {% endfor %}
+
+{% endblock %}

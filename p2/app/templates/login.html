@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+
+<html lang="es" dir="ltr">
+<head>
+   <meta charset="UTF-8">
+   <link href="https://fonts.googleapis.com/css?family=Josefin+Slab&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates&display=swap" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="../style.css">
+   <link rel="icon" href="../imagenes/logo.png" >
+   <title> Practica 1 SI: Sofia y Victoria</title>
+</head>
+
+<body>
+
+  <div id="contenedor">
+    <div id="cabecera">
+
+      <a href="../html/index.html"><img id="logo" src ="../imagenes/logo.png" alt ="logo"></a>
+      <h1>Tu tienda de confianza</h1>
+
+      <div class = "busqueda">
+         <input class = "buscar" type="text" placeholder="Buscar...">
+         <select class="categoria" name="Categoria">
+            <option value="">Categoria</option>
+            <option value="terror">Terror</option>
+            <option value="drama">Drama</option>
+            <option value="ciencia">Ciencia ficcion</option>
+            <option value="suspense">Suspense</option>
+            <option value="animada">Animada</option>
+            <option value="romantica">Romantica</option>
+         </select>
+		 <button class="boton">Buscar</button>
+      </div>
+
+	  <div class = "contacto">
+		<a href="https://github.com/search?q=org%3Agithub+victoria12345&unscoped_q=victoria12345"><img class="icono" src ="../imagenes/git.png" alt ="git"></a>
+		<a href="https://www.instagram.com/victoria_6/?hl=es"><img class="icono" src ="../imagenes/ig.png" alt ="ig"></a>
+
+	  </div>
+    </div>
+
+
+    <div id="menu">
+      <ul> <!-- ul define la lista-->
+        <li><a href="index.html">Home</a></li>  <!-- li define cada elemento de la lista-->
+
+    </ul>
+    </div>
+
+    <div id="contenido">
+      <h2> Inicia sesion!<br></h2>
+      <div class ="registro">
+
+      <form action ="index2.html">
+       <p> Nombre de Usuario:</p>
+       <input class="text1" type ="text">
+       <p> Contraseña:</p>
+       <input class="text1" type ="password">
+       <p></p>
+       <input class="boton" type ="submit" value="Confirmar">
+       </form>
+
+	  <h2>¿Aún no estás registrado?<br></h2>
+	  <button onclick="self.location.href = 'registro.html'" class ="boton">Regístrate</button>
+
+    </div>
+    </div>
+
+    <div id="pie">
+      <p class="etiqueta"> Práctica realizada por Victoria Pelayo y Sofía Sánchez</p>
+    </div>
+  </div>
+
+</body>
+</html>
