@@ -44,6 +44,43 @@ def login():
     # catalogue = json.loads(catalogue_data)
     return render_template('login.html', title = "Registro")
 
+@app.route('/busqueda', methods=['GET','POST'])
+def busqueda():
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+    movies=catalogue['peliculas']
+
+    L=[]
+
+    if request.form['buscar'] != "":
+        for item in movies:
+            if item['titulo'] == request.form['buscar']:
+                L.append(item)
+        if request.form['categoria'] != "":
+            for item in L:
+                if item['categoria'] != request.form['categoria']:
+                    L.remove(item)
+
+    elif request.form['categoria'] != "":
+        for item in movies:
+            if item['categoria'] == request.form['categoria']:
+                L.append(item)
+
+    else:
+        return redirect(url_for('index'))
+
+    return render_template('index.html', title = "Home", movies=L)
+
+
+    # movies=catalogue['peliculas']
+    #
+    # for item in movies:
+    #     if item['categoria'] == cateogoria:
+    #         return render_template('busqueda.html', title = "Film", film=item)
+    #
+    #
+    # return 'error'
+
 '''
 @app.route('/login', methods=['GET', 'POST'])
 def login():

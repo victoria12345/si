@@ -226,7 +226,7 @@ h4 {
 
 .buscar {
     width: 100px;
-    height: 14px;
+    height: auto;
     border: 1px solid #000000;
     border-radius: 4px;
     background-color: white;
@@ -269,7 +269,9 @@ select {
     padding-top: 40px;
     padding-bottom: 20px;
     padding-left: 100px;
-    max-width: 20vw;
+    width: 15vw;
+    display: flex;
+    position: relative;
 }
 
 .detalle {
@@ -354,18 +356,12 @@ td {
    max-width: 15vw;
 }
 
-
-.pelicula {
-   display: flex;
-   position: relative;
-}
-
 .pelicula a {
    text-decoration: none;
    text-align: center;
    color: #000000;
-   padding-left: 8px;
-   padding-right: 8px;
+   padding-left: 3%;
+   padding-right: 3%;
    padding-top: 8px;
    border: 2px solid #000000;
    /* background-color: #FFDA33; */
@@ -375,6 +371,8 @@ td {
 .pelicula a:hover {
    background-color: #FFDA33;
    border-radius: 15px;
+   padding-left: 3%;
+   padding-right: 3%;
    border: solid 4px #333;
 }
 

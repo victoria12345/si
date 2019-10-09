@@ -6,7 +6,7 @@
    <link href="https://fonts.googleapis.com/css?family=Josefin+Slab&display=swap" rel="stylesheet">
    <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates&display=swap" rel="stylesheet">
    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename='style.css')}}">
-   <link rel="icon" href="../static/imagenes/logo.png" >
+   <link rel="icon" href="{{url_for("static", filename= 'imagenes/logo.png')}}" >
    <title> Practica 1 SI: Sofia y Victoria</title>
 </head>
 
@@ -14,26 +14,28 @@
 
   <div id="contenedor">
     <div id="cabecera">
-      <a href="{{url_for('index')}}"><img id="logo" src ="../static/imagenes/logo.png" alt="Logo"></a>
+      <!-- <a href="{{url_for('index')}}"><img id="logo" src ="../static/imagenes/logo.png" alt="Logo"></a> -->
+      <a href="{{url_for('index')}}"><img id="logo" src ="{{url_for("static", filename= 'imagenes/logo.png')}}" alt="Logo"></a>
       <h1>Tu tienda de confianza</h1>
 
-      <div class = "busqueda">
-         <input class = "buscar" type="text" placeholder="Buscar...">
-         <select class="categoria" name="Categoria">
+      <form action="{{url_for('busqueda')}}" class = "busqueda" method="post">
+         <input class = "buscar" name="buscar" type="search" placeholder="Buscar...">
+         <select class="categoria" name="categoria">
             <option value="">Categoria</option>
             <option value="terror">Terror</option>
             <option value="drama">Drama</option>
-            <option value="ciencia">Ciencia ficcion</option>
+            <option value="ciencia ficcion">Ciencia ficcion</option>
             <option value="suspense">Suspense</option>
             <option value="animada">Animada</option>
+            <option value="accion">Accion</option>
             <option value="romantica">Romantica</option>
          </select>
-		 <button class="boton">Buscar</button>
-      </div>
+		 <input class="boton" type ="submit" value="Buscar">
+      </form>
 
 	  <div class = "contacto">
-		<a href="https://github.com/search?q=org%3Agithub+victoria12345&unscoped_q=victoria12345"><img class="icono" src ="../static/imagenes/git.png" alt="git"></a>
-		<a href="https://www.instagram.com/victoria_6/?hl=es"><img class="icono" src ="../static/imagenes/ig.png" alt = "ig"></a>
+		<a href="https://github.com/search?q=org%3Agithub+victoria12345&unscoped_q=victoria12345"><img class="icono" src ="{{url_for("static", filename= 'imagenes/git.png')}}" alt="git"></a>
+		<a href="https://www.instagram.com/victoria_6/?hl=es"><img class="icono" src ="{{url_for("static", filename= 'imagenes/ig.png')}}" alt = "ig"></a>
 
 	  </div>
     </div>
@@ -41,7 +43,7 @@
 
     <div id="menu">
 		<ul> <!-- ul define la lista-->
-			<li><a href="#">Home</a></li>  <!-- li define cada elemento de la lista-->
+			<li><a href="{{url_for('index')}}">Home</a></li>  <!-- li define cada elemento de la lista-->
 			<li><a href="{{url_for('registro')}}">Registrarse</a></li>
 			<li><a href="{{url_for('login')}}">Login</a></li>
 		</ul>

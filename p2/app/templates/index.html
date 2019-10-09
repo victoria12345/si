@@ -7,7 +7,7 @@
    {% for item in movies %}
      <div class="pelicula">
         <a title="{{ item.titulo }}" href="{{url_for('informacion', pelicula_id = item.id)}}">
-        <img class="imagen_princ" src="../static/imagenes/{{ item.poster }}" alt="It"><p> {{ item.titulo }}</p></a>
+        <img class="imagen_princ" src="../static/imagenes/{{ item.poster }}" alt="{{item.titulo}}"><p> {{ item.titulo }}</p></a>
      </div>
    {% endfor %}
    </div>

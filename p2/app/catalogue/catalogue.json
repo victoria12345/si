@@ -6,11 +6,10 @@
          "poster": "it.png",
          "director": "Andrés Muschietti",
          "precio": 18.99,
-         "categoria": "Terror",
+         "categoria": "terror",
          "año": 2019,
          "duracion": "169 min",
          "pais": "Estados Unidos",
-         "genero": "Terror",
          "guionista": "Gary Dauberman",
          "actores":
          [
@@ -27,11 +26,10 @@
          "poster": "a2m.jpg",
          "director": "Justin Baldoni",
          "precio": 18.99,
-         "categoria": "Romantica",
+         "categoria": "romantica",
          "año": 2019,
          "duracion": "196 min",
          "pais": "Estados Unidos",
-         "genero": "Romantica",
          "guionista": "Tobias Iaconis, Mikki Daughtry",
          "actores":
          [
@@ -48,11 +46,10 @@
          "poster": "adastra.jpg",
          "director": "James Gray",
          "precio": 18.99,
-         "categoria": "Ciencia Ficcion",
+         "categoria": "ciencia ficcion",
          "año": 2019,
          "duracion": "124 min",
          "pais": "Estados Unidos",
-         "genero": "Ciencia Ficcion",
          "guionista": "Ethan Gross, James Gray",
          "actores":
          [
@@ -69,11 +66,10 @@
          "poster": "dora.jpg",
          "director": "James Bobin",
          "precio": 18.99,
-         "categoria": "Aventura",
+         "categoria": "accion",
          "año": 2019,
          "duracion": "102 min",
          "pais": "Australia - Estados Unidos",
-         "genero": "Aventura",
          "guionista": "Nicholas Stoller",
          "actores":
          [
@@ -90,11 +86,10 @@
          "poster": "objetivo.jpg",
          "director": "Ric Roman Waugh",
          "precio": 18.99,
-         "categoria": "Accion",
+         "categoria": "accion",
          "año": 2019,
          "duracion": "120 min",
          "pais": "Estados Unidos",
-         "genero": "Accion",
          "guionista": "Katrin Benedikt, Creighton Rothenberger",
          "actores":
          [
@@ -111,11 +106,10 @@
          "poster": "hierro.jpg",
          "director": "Paco Plaza",
          "precio": 18.99,
-         "categoria": "Suspense",
+         "categoria": "suspense",
          "año": 2019,
          "duracion": "107 min",
          "pais": "España",
-         "genero": "Suspense",
          "guionista": "Jorge Guerricaechevarría",
          "actores":
          [
@@ -132,11 +126,10 @@
          "poster": "guerra.jpg",
          "director": "Alejandro Amenábar",
          "precio": 18.99,
-         "categoria": "Drama",
+         "categoria": "drama",
          "año": 2019,
          "duracion": "107 min",
          "pais": "España",
-         "genero": "Drama",
          "guionista": "Alejandro Amenábar, Alejandro Hernández",
          "actores":
          [
@@ -153,11 +146,10 @@
          "poster": "padre.jpg",
          "director": "Santiago Segura",
          "precio": 18.99,
-         "categoria": "Comedia",
+         "categoria": "comedia",
          "año": 2019,
          "duracion": "98 min",
          "pais": "España",
-         "genero": "Comedia",
          "guionista": "Marta González De Vega, Santiago Segura",
          "actores":
          [
@@ -174,11 +166,10 @@
          "poster": "cegado.jpg",
          "director": "Gurinder Chadha",
          "precio": 18.99,
-         "categoria": "Comedia",
+         "categoria": "comedia",
          "año": 2019,
          "duracion": "118 min",
          "pais": "Gran Bretaña",
-         "genero": "Comedia",
          "guionista": "Paul Mayeda Berges, Gurinder Chadha, Sarfraz Manzoor",
          "actores":
          [
@@ -195,11 +186,10 @@
          "poster": "reyleon.jpg",
          "director": "Jon Favreau",
          "precio": 18.99,
-         "categoria": "Animacion",
+         "categoria": "animada",
          "año": 2019,
          "duracion": "120 min",
          "pais": "Estados Unidos",
-         "genero": "Animacion",
          "guionista": "Brenda Chapman, Jonathan Roberts, Linda Woolverton, Irene Mecchi, Jeff Nathanson",
          "actores":
          [
