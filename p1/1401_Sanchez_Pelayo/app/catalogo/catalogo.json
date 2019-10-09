@@ -1,0 +1,74 @@
+{
+ "peliculas": [
+      {
+      “id”, 1,
+      "titulo": "A dos metros de ti",
+      "poster": "imagenes/a2m.jpg",
+      "director": "Justin Baldoni",
+      "precio": 18.99,
+      "categoria": "Drama",
+      "anno": 2019,
+      "actores": [
+         {
+            "nombre": "Haley Lu Richardson",
+            "personaje": "Stella Grant",
+            "foto": " "
+         },
+         {
+            "nombre": "Cole Sprouse",
+            "personaje": "Will Newman",
+            "foto": " "
+         }
+      ]
+
+
+      },
+
+      {
+      “id”, 2,
+      "titulo": "Ad astra: Hacia las estrellas ",
+      "poster": "imagenes/adastra.jpg",
+      "director": "James Gray ",
+      "precio": 20.00,
+      "categoria": "Ciencia Ficcion",
+      "anno": 2019,
+      "actores": [
+         {
+            "nombre": "Brad Pitt",
+            "personaje": "Mayor Roy McBride",
+            "foto": " "
+         },
+         {
+            "nombre": "Ruth Negga",
+            "personaje": "Helen Lantos",
+            "foto": " "
+         }
+      ]
+
+
+      },
+      {
+      “id”, 3,
+      "titulo": "Ad astra: Hacia las estrellas ",
+      "poster": "imagenes/adastra.jpg",
+      "director": "James Gray ",
+      "precio": 20.00,
+      "categoria": "Ciencia Ficcion",
+      "anno": 2019,
+      "actores": [
+         {
+            "nombre": "Brad Pitt",
+            "personaje": "Mayor Roy McBride",
+            "foto": " "
+         },
+         {
+            "nombre": "Ruth Negga",
+            "personaje": "Helen Lantos",
+            "foto": " "
+         }
+      ]
+
+
+      }
+   ]
+}
