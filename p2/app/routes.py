@@ -30,6 +30,7 @@ def informacion(pelicula_id):
 
     return 'error'
 
+
 '''
 @app.route('/login', methods=['GET', 'POST'])
 def login():

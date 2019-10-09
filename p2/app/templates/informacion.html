@@ -2,14 +2,12 @@
 
 {% block contenido %}
 
- 
-        
             <div class="detalle">
                 <div class="arriba">
 
                     <img class="foto" src="../static/imagenes/{{ film.poster }}" alt ="it">
                     <div class="info">
-                        <h1>It Capitulo 2</h1><br>
+                        <h1>{{film.titulo}}</h1><br>
                         <p><span class="etiqueta"> Duración: </span>{{film.duracion}}</p>
                         <p><span class="etiqueta">País:</span>{{film.pais}}</p>
                         <p><span class="etiqueta"> Género:  </span>{{film.genero}}</p>
