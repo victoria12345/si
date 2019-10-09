@@ -25,7 +25,7 @@ def informacion(pelicula_id):
 
     for item in movies:
         if item['id'] == int(pelicula_id):
-            return render_template('informacion.html', title = "Film", film=item)
+            return render_template('informacion.html', title = "Pelicula", film=item)
 
 
     return 'error'
@@ -42,7 +42,7 @@ def login():
     # print (url_for('static', filename='estilo.css'), file=sys.stderr)
     # catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     # catalogue = json.loads(catalogue_data)
-    return render_template('login.html', title = "Registro")
+    return render_template('login.html', title = "Login")
 
 @app.route('/busqueda', methods=['GET','POST'])
 def busqueda():

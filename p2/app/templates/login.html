@@ -1,23 +1,28 @@
 <!DOCTYPE HTML>
 
+
+
 {% extends "base.html" %}
 
+{% block title %}
+    {{ title }}
+{% endblock%}
 
 {% block contenido %}
-<h2> Inicia sesion!<br></h2>
-<div class ="registro">
+   <h2> Inicia sesion!<br></h2>
+   <div class ="registro">
 
-   <form action ="index2.html">
-      <p> Nombre de Usuario:</p>
-      <input class="text1" type ="text">
-      <p> Contraseña:</p>
-      <input class="text1" type ="password">
-      <p></p>
-      <input class="boton" type ="submit" value="Confirmar">
-   </form>
+      <form action ="index2.html">
+         <p> Nombre de Usuario:</p>
+         <input class="text1" type ="text">
+         <p> Contraseña:</p>
+         <input class="text1" type ="password">
+         <p></p>
+         <input class="boton" type ="submit" value="Confirmar">
+      </form>
 
-   <h2>¿Aún no estás registrado?<br></h2>
-   <button onclick="self.location.href = 'registro.html'" class ="boton">Regístrate</button>
+      <h2>¿Aún no estás registrado?<br></h2>
+      <button onclick="self.location.href = 'registro.html'" class ="boton">Regístrate</button>
 
-</div>
+   </div>
 {% endblock %}

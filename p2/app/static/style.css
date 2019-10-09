@@ -304,7 +304,7 @@ select {
     padding-left: 30px;
     padding-right: 60px;
     display: flex;
-    /* flex-direction: column; */
+    flex-direction: column;
 }
 
 .foto {

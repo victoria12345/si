@@ -7,7 +7,7 @@
    <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates&display=swap" rel="stylesheet">
    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename='style.css')}}">
    <link rel="icon" href="{{url_for("static", filename= 'imagenes/logo.png')}}" >
-   <title> Practica 1 SI: Sofia y Victoria</title>
+   <title> {% block title %} {% endblock %}- El Videoclub</title>
 </head>
 
 <body>
