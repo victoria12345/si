@@ -30,6 +30,19 @@ def informacion(pelicula_id):
 
     return 'error'
 
+@app.route('/registro',methods=['GET','POST'])
+def registro():
+    # print (url_for('static', filename='estilo.css'), file=sys.stderr)
+    # catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    # catalogue = json.loads(catalogue_data)
+    return render_template('registro.html', title = "Registro")
+
+@app.route('/login',methods=['GET','POST'])
+def login():
+    # print (url_for('static', filename='estilo.css'), file=sys.stderr)
+    # catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    # catalogue = json.loads(catalogue_data)
+    return render_template('login.html', title = "Registro")
 
 '''
 @app.route('/login', methods=['GET', 'POST'])

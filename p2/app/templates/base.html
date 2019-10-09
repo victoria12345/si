@@ -13,8 +13,6 @@
 <body>
 
   <div id="contenedor">
-
-
     <div id="cabecera">
       <a href="{{url_for('index')}}"><img id="logo" src ="../static/imagenes/logo.png" alt="Logo"></a>
       <h1>Tu tienda de confianza</h1>
@@ -44,8 +42,8 @@
     <div id="menu">
 		<ul> <!-- ul define la lista-->
 			<li><a href="#">Home</a></li>  <!-- li define cada elemento de la lista-->
-			<li><a href="registro.html">Registrarse</a></li>
-			<li><a href="login.html">Login</a></li>
+			<li><a href="{{url_for('registro')}}">Registrarse</a></li>
+			<li><a href="{{url_for('login')}}">Login</a></li>
 		</ul>
 	</div>
 

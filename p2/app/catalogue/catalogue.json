@@ -27,11 +27,11 @@
          "poster": "a2m.jpg",
          "director": "Justin Baldoni",
          "precio": 18.99,
-         "categoria": "Terror",
+         "categoria": "Romantica",
          "año": 2019,
-         "duracion": "2000 min",
+         "duracion": "196 min",
          "pais": "Estados Unidos",
-         "genero": "Terror",
+         "genero": "Romantica",
          "guionista": "Tobias Iaconis, Mikki Daughtry",
          "actores":
          [
@@ -52,7 +52,7 @@
          "año": 2019,
          "duracion": "124 min",
          "pais": "Estados Unidos",
-         "genero": "Accion",
+         "genero": "Ciencia Ficcion",
          "guionista": "Ethan Gross, James Gray",
          "actores":
          [
@@ -132,11 +132,11 @@
          "poster": "guerra.jpg",
          "director": "Alejandro Amenábar",
          "precio": 18.99,
-         "categoria": "Suspense",
+         "categoria": "Drama",
          "año": 2019,
          "duracion": "107 min",
          "pais": "España",
-         "genero": "Suspense",
+         "genero": "Drama",
          "guionista": "Alejandro Amenábar, Alejandro Hernández",
          "actores":
          [
