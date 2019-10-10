@@ -6,7 +6,7 @@ import os
 import sys
 
 app = Flask(__name__)
-'''
+
 # ejemplo de sesion Flask: http://flask.pocoo.org/docs/1.0/quickstart/#sessions
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
@@ -22,6 +22,6 @@ try:
     sys.stderr.write ("Usando sesiones de Flask-Session en fichero del servidor\n")
 except ImportError as e:
     sys.stderr.write ("Flask-Session no disponible, usando sesiones de Flask en cookie")
-'''
+
 
 from app import routes

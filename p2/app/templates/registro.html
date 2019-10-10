@@ -10,15 +10,15 @@
 <h2> Registrate en nuestra pagina!<br></h2>
 <div class ="registro">
 
-   <form action ="index2.html">
+   <form action ="{{url_for('registro')}}" method="post">
       <p> Nombre de Usuario:</p>
-      <input class="text1" type ="text" required>
+      <input class="text1" name=username type ="text" required>
       <p> Contraseña:</p>
-      <input class="text1" type ="password">
+      <input class="text1" name=contrasenna type ="password" required>
       <p> Email:</p>
-      <input class="text1" type ="text">
+      <input class="text1" name=email type ="text" required>
       <p> Tarjeta:</p>
-      <input class="text1" type ="text">
+      <input class="text1" name=tarjeta type ="text" required>
       <p></p>
 
       <input class="boton" type ="submit" value="Confirmar">

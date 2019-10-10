@@ -9,11 +9,16 @@
 {% endblock%}
 
 {% block contenido %}
-   <h2> Inicia sesion!<br></h2>
-   <div class ="registro">
 
+   {% if mensaje %}
+      <h5>{{mensaje}}</h5>
+   {% endif %}
+   <h2> Inicia sesion!<br></h2>
+   
+
+   <div class ="registro">
       <!-- <form action ="index2.html"> -->
-      <form action="{{url_for('login')}}">
+      <form action="{{url_for('login')}}" method="post">
          <p> Nombre de Usuario:</p>
          <input class="text1" name=username type ="text" required>
          <p> Contraseña:</p>
