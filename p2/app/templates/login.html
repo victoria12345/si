@@ -12,11 +12,12 @@
    <h2> Inicia sesion!<br></h2>
    <div class ="registro">
 
-      <form action ="index2.html">
+      <!-- <form action ="index2.html"> -->
+      <form action="{{url_for('login')}}">
          <p> Nombre de Usuario:</p>
-         <input class="text1" type ="text">
+         <input class="text1" name=username type ="text" required>
          <p> Contraseña:</p>
-         <input class="text1" type ="password">
+         <input class="text1" name=contrasenna type ="password" required>
          <p></p>
          <input class="boton" type ="submit" value="Confirmar">
       </form>
