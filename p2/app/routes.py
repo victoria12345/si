@@ -43,7 +43,7 @@ def busqueda():
 
     if request.form['buscar'] != "":
         for item in movies:
-            if item['titulo'] == request.form['buscar']:
+            if request.form['buscar'] in item['titulo']:
                 L.append(item)
         if request.form['categoria'] != "":
             for item in L:
@@ -83,7 +83,7 @@ def login():
             # aqui se le puede pasar como argumento un mensaje de login invalido
             return render_template('login.html', title = "Sign In", mensaje="Login invalido")
 
-        
+
         aux2 = hashlib.md5(request.form['contrasenna'].encode())
         aux2 = "" + aux2.hexdigest()
         if request.form['username'] == dato[0] and aux2 == dato[1]:
@@ -114,12 +114,12 @@ def registro():
 
     if 'username' in request.form:
 
-        
+
         cadena = os.getcwd() + "/app/usuarios/" + request.form['username']
         if path.exists(cadena):
             return render_template('registro.html', title = "Registro", mensaje="Ese nombre de usuario ya existe")
         else:
-            
+
             os.mkdir(cadena)
             cadena = cadena + "/datos.dat"
             f = open(cadena, "w")

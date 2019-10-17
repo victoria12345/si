@@ -10,20 +10,80 @@
 <h2> Registrate en nuestra pagina!<br></h2>
 <div class ="registro">
 
-   <form action ="{{url_for('registro')}}" method="post">
+   <form action ="{{url_for('registro')}}" method="post" onsubmit="return validar();">
       <p> Nombre de Usuario:</p>
-      <input class="text1" name=username type ="text" required>
+      <input class="text1" name=username type ="text" id="username" onkeypress="return permite(event)" required>
       <p> Contraseña:</p>
-      <input class="text1" name=contrasenna type ="password" required>
+      <input class="text1" name=contrasenna type ="password" id="contrasenna" required>
       <p> Email:</p>
-      <input class="text1" name=email type ="text" required>
+      <input class="text1" name=email type ="mail" id="email" required>
       <p> Tarjeta:</p>
-      <input class="text1" name=tarjeta type ="text" required>
+      <input class="text1" name=tarjeta type ="text" id="tarjeta"required>
       <p></p>
 
       <input class="boton" type ="submit" value="Confirmar">
    </form>
 
 </div>
+
+<script type='text/javascript'>
+
+function validar(){
+
+   var todo_correcto = true;
+
+
+   if(document.getElementById('username').value.length < 2 ){
+      alert('El nombre introducido es demasiado corto');
+      todo_correcto = false;
+   }
+   if(permite(document.getElementById('username').value) == false){
+
+      alert('El usuario introducido contiene caracteres no permitidos');
+      todo_correcto = false;
+   }
+
+   if(document.getElementById('contrasenna').value.length < 8 ){
+      alert('La contraseña es demasiado corta');
+      todo_correcto = false;
+   }
+
+   if(isNaN(document.getElementById('tarjeta').value.length ) == 12 ){
+      alert('La tarjeta introducida es incorrecta');
+      todo_correcto = false;
+   }
+
+   var email = document.getElementById('email').value
+   alert(email)
+   var patron=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
+   if (email.search(patron) != 0) {
+      alert('El email introducido no es correcto');
+      todo_correcto = false;
+   }
+
+
+
+   return todo_correcto;
+}
+
+// function validar_email( email )
+// {
+//     var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+//     return regex.test(email) ? true : false;
+// }
+
+function permite(string){//solo letras y numeros
+
+    //Se añaden las letras validas
+    var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890';//Caracteres validos
+
+    for (var i=0; i<string.length; i++)
+       if (filtro.indexOf(string.charAt(i)) == -1)
+	     return false;
+    return true;
+}
+
+
+</script>
 
 {% endblock %}
