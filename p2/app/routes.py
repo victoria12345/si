@@ -119,11 +119,13 @@ def registro():
         if path.exists(cadena):
             return render_template('registro.html', title = "Registro", mensaje="Ese nombre de usuario ya existe")
         else:
+            
             os.mkdir(cadena)
             cadena = cadena + "/datos.dat"
             f = open(cadena, "w")
             aux_contrasenna = hashlib.md5(request.form['contrasenna'].encode())
             aux_contrasenna = "" + aux_contrasenna.hexdigest()
+
             f.write("usuario: " + request.form['username'] + "\n" +
                     "contrasenna: " + aux_contrasenna + "\n" +
                     "correo: " + request.form['email'] + "\n" +
