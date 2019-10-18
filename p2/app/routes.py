@@ -43,7 +43,7 @@ def busqueda():
 
     if request.form['buscar'] != "":
         for item in movies:
-            if request.form['buscar'] in item['titulo']:
+            if request.form['buscar'].lower() in item['titulo'].lower():
                 L.append(item)
         if request.form['categoria'] != "":
             for item in L:
