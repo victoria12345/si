@@ -24,7 +24,8 @@
 
                     <div class="compra">
                         <p> Precio : {{film.precio}} </p>
-                        <button class="botonComprar"><span id="icono-cesta">Comprar</span><img src = "../static/imagenes/carrito.png" alt ="carrito"></button>
+                        <button onclick="window.location.href='{{url_for('comprar', pelicula_id = film.id)}}'" class="botonComprar"><span id="icono-cesta">Comprar</span><img src = "../static/imagenes/carrito.png" alt ="carrito"></button>
+                        
                     </div>
                 </div>
                 <div class="abajo" >
@@ -32,5 +33,11 @@
                     <p> {{film.sinopsis}}</p>
                  </div>
             </div>
+            {% if flag == True %}
+                <script>
+                    alert("Pelicula añadida al carrito.");
+                </script>
+            {% endif %}
+
 
 {% endblock %}

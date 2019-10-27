@@ -12,6 +12,14 @@ import os.path as path
 @app.route('/')
 @app.route('/index',methods=['GET','POST'])
 def index():
+
+    #creamos el carrito para la sesion
+
+    if not "carrito" in session:
+
+        session['carrito'] = [] #creamos una lista vacia para el carrito
+        session['precio'] = 0 #ponemos el precio final a 0
+        session.modified = True
     # print (url_for('static', filename='estilo.css'), file=sys.stderr)
     catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
@@ -27,7 +35,7 @@ def informacion(pelicula_id):
 
     for item in movies:
         if item['id'] == int(pelicula_id):
-            return render_template('informacion.html', title = "Pelicula", film=item)
+            return render_template('informacion.html', title = "Pelicula", film=item, flag=False)
 
 
     return 'error'
@@ -119,10 +127,10 @@ def registro():
         if path.exists(cadena):
             return render_template('registro.html', title = "Registro", mensaje="Ese nombre de usuario ya existe")
         else:
-
+            #si el usuario no existe creamos el fichero datos.dat que contiene los datos del usuario
             os.mkdir(cadena)
-            cadena = cadena + "/datos.dat"
-            f = open(cadena, "w")
+            cadena_datos = cadena + "/datos.dat"
+            f = open(cadena_datos, "w")
             aux_contrasenna = hashlib.md5(request.form['contrasenna'].encode())
             aux_contrasenna = "" + aux_contrasenna.hexdigest()
 
@@ -133,6 +141,42 @@ def registro():
                     "saldo: " + "0" + "\n"
                     )
             f.close()
+
+            #cuando ya hemos creado el fichero datos.dat tenemso que crear el historial.json
+            cadena_historial = cadena + "/historial.json"
+
+            f = open (cadena_historial, "w")
+
+            historial = { 'peliculas': [] }
+
+            f.write(json.dumps(historial))
             return redirect(url_for('index'))
     else:
         return render_template('registro.html', title = "Registrarse")
+
+
+@app.route('/informacion/<pelicula_id>comprada', methods=['GET','POST'])
+def comprar(pelicula_id):
+    # Cuando compre una pelicula me pasan el id y tengo que comprobar que este en el catalogo.
+    # Despues de comprobar que este en el catalogo tengo que añadir el id de la pelicula a la lista del carrito en la sesion
+    # Tengo que actualizar el precio del carrito
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+    movies=catalogue['peliculas']
+    print("hola")
+    for item in movies:
+            if item['id'] == int(pelicula_id):
+                session['carrito'].append(int(pelicula_id))
+                session['precio'] += item['precio']
+                session.modified = True
+                print(item['poster'])
+                print(session['carrito'])
+                print(session['precio'])
+                return render_template('informacion.html', title = "Pelicula", film=item, flag=True)
+
+
+
+# @app.route('historial/', methods=['GET','POST'])
+# def historial():
+
+#     return
