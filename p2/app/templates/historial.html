@@ -2,15 +2,14 @@
 
 {% block title %}
     {{ title }}
-{% endblock%}
+{% endblock %}
 
 {% block contenido %}
       <h2>Este es tu historial...</h2>
-      { % if not carrito %}
-      <p> No tienes peliculas en tu historial </p>
-      { % endif % }
+      {% if not historial %}
+      <h2> No tienes peliculas en tu historial</h2>
 
-      {% else }
+      {% else %}
       <table>
          <tr>
             <th> </th>
@@ -18,15 +17,15 @@
             <th> Día </th>
             <th> Precio </th>
          </tr>
-          { %for item in movies %}
+          {%for item in historial %}
           <tr>
-             <td><img class="imagen" src="../imagenes/{{film.poster}}" alt ="film.poster"></td>
+             <td><img class="imagen" src="../static/imagenes/{{item.poster}}" alt ="item.poster"></td>
              <td> {{item.titulo}} </td>
              <td> 19/07/2019 </td>
              <td> {{item.precio}} </td>
           </tr>
           <tr>
-         { % endfor % }
+         {% endfor %}
        </table>
-      { % endif % }
-{ % endblock % }
+      {% endif %}
+{% endblock %}

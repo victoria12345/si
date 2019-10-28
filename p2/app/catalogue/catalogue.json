@@ -7,18 +7,18 @@
          "director": "Andrés Muschietti",
          "precio": 18.99,
          "categoria": "terror",
-         "año": 2019,
+         "anno": 2019,
          "duracion": "169 min",
          "pais": "Estados Unidos",
          "guionista": "Gary Dauberman",
          "actores":
          [
-            { "nombre": " ",
-               "personaje": " ",
+            { "nombre": " lula",
+               "personaje": " mari carmen",
                "foto": " "
             }
          ],
-         "sinopsis": "Han pasado casi 30 años desde que el 'Club de los Perdedores', formado por Bill, Berverly, Richie, Ben, Eddie, Mike y Stanley, se enfrentaran al macabro y despiadado Pennywise (Bill Skarsgård). En cuanto tuvieron oportunidad, abandonaron el pueblo de Derry, en el estado de Maine, que tantos problemas les había ocasionado. Sin embargo, ahora, siendo adultos, parece que no pueden escapar de su pasado. Todos deberán enfrentarse de nuevo al temible payaso para descubrir si de verdad están preparados para superar sus traumas de la infancia."
+         "sinopsis": "Han pasado casi 30 annos desde que el 'Club de los Perdedores', formado por Bill, Berverly, Richie, Ben, Eddie, Mike y Stanley, se enfrentaran al macabro y despiadado Pennywise (Bill Skarsgård). En cuanto tuvieron oportunidad, abandonaron el pueblo de Derry, en el estado de Maine, que tantos problemas les había ocasionado. Sin embargo, ahora, siendo adultos, parece que no pueden escapar de su pasado. Todos deberán enfrentarse de nuevo al temible payaso para descubrir si de verdad están preparados para superar sus traumas de la infancia."
       },
       {
          "id": 2,
@@ -27,7 +27,7 @@
          "director": "Justin Baldoni",
          "precio": 18.99,
          "categoria": "romantica",
-         "año": 2019,
+         "anno": 2019,
          "duracion": "196 min",
          "pais": "Estados Unidos",
          "guionista": "Tobias Iaconis, Mikki Daughtry",
@@ -47,7 +47,7 @@
          "director": "James Gray",
          "precio": 18.99,
          "categoria": "ciencia ficcion",
-         "año": 2019,
+         "anno": 2019,
          "duracion": "124 min",
          "pais": "Estados Unidos",
          "guionista": "Ethan Gross, James Gray",
@@ -58,7 +58,7 @@
                "foto": " "
             }
          ],
-         "sinopsis": "El astronauta Roy McBride (Brad Pitt) viaja a los límites exteriores del sistema solar para encontrar a su padre perdido y desentrañar un misterio que amenaza la supervivencia de nuestro planeta. Su viaje desvelará secretos que desafían la naturaleza de la existencia humana y nuestro lugar en el cosmos."
+         "sinopsis": "El astronauta Roy McBride (Brad Pitt) viaja a los límites exteriores del sistema solar para encontrar a su padre perdido y desentrannar un misterio que amenaza la supervivencia de nuestro planeta. Su viaje desvelará secretos que desafían la naturaleza de la existencia humana y nuestro lugar en el cosmos."
       },
       {
          "id": 4,
@@ -67,7 +67,7 @@
          "director": "James Bobin",
          "precio": 18.99,
          "categoria": "accion",
-         "año": 2019,
+         "anno": 2019,
          "duracion": "102 min",
          "pais": "Australia - Estados Unidos",
          "guionista": "Nicholas Stoller",
@@ -87,7 +87,7 @@
          "director": "Ric Roman Waugh",
          "precio": 18.99,
          "categoria": "accion",
-         "año": 2019,
+         "anno": 2019,
          "duracion": "120 min",
          "pais": "Estados Unidos",
          "guionista": "Katrin Benedikt, Creighton Rothenberger",
@@ -107,9 +107,9 @@
          "director": "Paco Plaza",
          "precio": 18.99,
          "categoria": "suspense",
-         "año": 2019,
+         "anno": 2019,
          "duracion": "107 min",
-         "pais": "España",
+         "pais": "Espanna",
          "guionista": "Jorge Guerricaechevarría",
          "actores":
          [
@@ -118,7 +118,7 @@
                "foto": " "
             }
          ],
-         "sinopsis": "Mario (Luis Tosar) es un hombre ejemplar, trabaja como enfermero en una residencia y en poco tiempo va a tener un hijo junto con su adorable mujer Julia. Antonio Padín es un reconocido narcotraficante de Galicia que tras salir de la cárcel ingresa en el centro donde trabaja Mario, debido a una grave enfermedad. Kike y Toño son los hijos de Padín, quienes han tomado el relevo de su padre y se han hecho cargo del negocio familiar. Tras tener graves problemas con uno de sus socios y una importante deuda con un proveedor colombiano, el hermano mayor ingresará en la cárcel. Será entonces cuando Toño intentará recurrir al enfermero de su padre, con quien ha creado una estrecha relación, pero Mario tiene otros planes en mente."
+         "sinopsis": "Mario (Luis Tosar) es un hombre ejemplar, trabaja como enfermero en una residencia y en poco tiempo va a tener un hijo junto con su adorable mujer Julia. Antonio Padín es un reconocido narcotraficante de Galicia que tras salir de la cárcel ingresa en el centro donde trabaja Mario, debido a una grave enfermedad. Kike y Tonno son los hijos de Padín, quienes han tomado el relevo de su padre y se han hecho cargo del negocio familiar. Tras tener graves problemas con uno de sus socios y una importante deuda con un proveedor colombiano, el hermano mayor ingresará en la cárcel. Será entonces cuando Tonno intentará recurrir al enfermero de su padre, con quien ha creado una estrecha relación, pero Mario tiene otros planes en mente."
       },
       {
          "id": 7,
@@ -127,9 +127,9 @@
          "director": "Alejandro Amenábar",
          "precio": 18.99,
          "categoria": "drama",
-         "año": 2019,
+         "anno": 2019,
          "duracion": "107 min",
-         "pais": "España",
+         "pais": "Espanna",
          "guionista": "Alejandro Amenábar, Alejandro Hernández",
          "actores":
          [
@@ -138,7 +138,7 @@
                "foto": " "
             }
          ],
-         "sinopsis": "España. Verano de 1936. El célebre escritor Miguel de Unamuno decide apoyar públicamente la rebelión militar que promete traer orden a la convulsa situación del país. Inmediatamente es destituido por el gobierno republicano como rector de la Universidad de Salamanca. Mientras tanto, el general Franco consigue sumar sus tropas al frente sublevado e inicia una exitosa campaña con la secreta esperanza de hacerse con el mando único de la guerra. La deriva sangrienta del conflicto y el encarcelamiento de algunos de sus compañeros hacen que Unamuno empiece a cuestionar su postura inicial y a sopesar sus principios. Cuando Franco traslada su cuartel a Salamanca y es nombrado Jefe del Estado de la zona nacional, Unamuno acudirá a su Palacio, decidido a hacerle una petición de clemencia."
+         "sinopsis": "Espanna. Verano de 1936. El célebre escritor Miguel de Unamuno decide apoyar públicamente la rebelión militar que promete traer orden a la convulsa situación del país. Inmediatamente es destituido por el gobierno republicano como rector de la Universidad de Salamanca. Mientras tanto, el general Franco consigue sumar sus tropas al frente sublevado e inicia una exitosa campanna con la secreta esperanza de hacerse con el mando único de la guerra. La deriva sangrienta del conflicto y el encarcelamiento de algunos de sus companneros hacen que Unamuno empiece a cuestionar su postura inicial y a sopesar sus principios. Cuando Franco traslada su cuartel a Salamanca y es nombrado Jefe del Estado de la zona nacional, Unamuno acudirá a su Palacio, decidido a hacerle una petición de clemencia."
       },
       {
          "id": 8,
@@ -147,9 +147,9 @@
          "director": "Santiago Segura",
          "precio": 18.99,
          "categoria": "comedia",
-         "año": 2019,
+         "anno": 2019,
          "duracion": "98 min",
-         "pais": "España",
+         "pais": "Espanna",
          "guionista": "Marta González De Vega, Santiago Segura",
          "actores":
          [
@@ -158,7 +158,7 @@
                "foto": " "
             }
          ],
-         "sinopsis": "Javier (Santiago Segura) es un padre de cinco hijos, de entre cuatro y doce años. Una especie de 'marido/cuñao' que, sin ocuparse en absoluto de lo que supone el cuidado de la casa y de los niños, sabe perfectamente lo que hay que hacer, aunque continuamente regala a su mujer frases del tipo: “no te pongas nerviosa”, porque considera que su desbordada mujer se ahoga en un vaso de agua. Claro que Javier tendrá que enfrentarse a la caótica realidad que supone quedarse solo con sus cinco hijos, cuando su mujer decida irse de viaje y dejarle solo con ellos. La caótica situación que esto provoca en casa, todo un ejercicio práctico de conciliación familiar, dará lugar al desastre más absoluto. Eso sí, les dará la oportunidad a padre e hijos de conocerse y disfrutarse por primera vez. Será una experiencia que cambiará sus vidas para siempre."
+         "sinopsis": "Javier (Santiago Segura) es un padre de cinco hijos, de entre cuatro y doce annos. Una especie de 'marido/cunnao' que, sin ocuparse en absoluto de lo que supone el cuidado de la casa y de los ninnos, sabe perfectamente lo que hay que hacer, aunque continuamente regala a su mujer frases del tipo: “no te pongas nerviosa”, porque considera que su desbordada mujer se ahoga en un vaso de agua. Claro que Javier tendrá que enfrentarse a la caótica realidad que supone quedarse solo con sus cinco hijos, cuando su mujer decida irse de viaje y dejarle solo con ellos. La caótica situación que esto provoca en casa, todo un ejercicio práctico de conciliación familiar, dará lugar al desastre más absoluto. Eso sí, les dará la oportunidad a padre e hijos de conocerse y disfrutarse por primera vez. Será una experiencia que cambiará sus vidas para siempre."
       },
       {
          "id": 9,
@@ -167,9 +167,9 @@
          "director": "Gurinder Chadha",
          "precio": 18.99,
          "categoria": "comedia",
-         "año": 2019,
+         "anno": 2019,
          "duracion": "118 min",
-         "pais": "Gran Bretaña",
+         "pais": "Gran Bretanna",
          "guionista": "Paul Mayeda Berges, Gurinder Chadha, Sarfraz Manzoor",
          "actores":
          [
@@ -178,7 +178,7 @@
                "foto": " "
             }
          ],
-         "sinopsis": "'Blinded by the light (Cegado por la luz)' cuenta la historia de Javed (Viveik Kalra), un adolescente británico de ascendencia paquistaní, que vive en la ciudad inglesa de Luton en 1987. En medio de la agitación racial y económica de la época, Javed escribe poesía como medio para escapar de la intolerancia de su ciudad natal y de la inflexibilidad de un padre tradicional. Pero cuando un compañero de clase le da a conocer la música de 'The Boss', Javed ve paralelismos entre su vida de chico de clase trabajadora y las potentes letras de Springsteen. Así es como Javed descubre una salida catártica para sus sueños reprimidos y se arma de valor para empezar a expresarse con su propia voz."
+         "sinopsis": "'Blinded by the light (Cegado por la luz)' cuenta la historia de Javed (Viveik Kalra), un adolescente británico de ascendencia paquistaní, que vive en la ciudad inglesa de Luton en 1987. En medio de la agitación racial y económica de la época, Javed escribe poesía como medio para escapar de la intolerancia de su ciudad natal y de la inflexibilidad de un padre tradicional. Pero cuando un compannero de clase le da a conocer la música de 'The Boss', Javed ve paralelismos entre su vida de chico de clase trabajadora y las potentes letras de Springsteen. Así es como Javed descubre una salida catártica para sus suennos reprimidos y se arma de valor para empezar a expresarse con su propia voz."
       },
       {
          "id": 10,
@@ -187,7 +187,7 @@
          "director": "Jon Favreau",
          "precio": 18.99,
          "categoria": "animada",
-         "año": 2019,
+         "anno": 2019,
          "duracion": "120 min",
          "pais": "Estados Unidos",
          "guionista": "Brenda Chapman, Jonathan Roberts, Linda Woolverton, Irene Mecchi, Jeff Nathanson",

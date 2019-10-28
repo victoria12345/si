@@ -107,7 +107,7 @@ def login():
         session['url_origen']=request.referrer
         session.modified=True
         # print a error.log de Apache si se ejecuta bajo mod_wsgi
-        print (request.referrer, file=sys.stderr)
+        # print (request.referrer, file=sys.stderr)
         return render_template('login.html', title = "Login")
 
 @app.route('/logout', methods=['GET', 'POST'])
@@ -163,15 +163,15 @@ def comprar(pelicula_id):
     catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
     movies=catalogue['peliculas']
-    print("hola")
+    # print("hola")
     for item in movies:
             if item['id'] == int(pelicula_id):
                 session['carrito'].append(int(pelicula_id))
                 session['precio'] += item['precio']
                 session.modified = True
-                print(item['poster'])
-                print(session['carrito'])
-                print(session['precio'])
+                # print(item['poster'])
+                # print(session['carrito'])
+                # print(session['precio'])
                 return render_template('informacion.html', title = "Pelicula", film=item, flag=True)
 
 # #esta funcion nos permitira cargar el carrito de la compra: 
@@ -183,7 +183,7 @@ def carrito():
     catalogue = json.loads(catalogue_data)
     movies=catalogue['peliculas']
     L = []
-    print(request)
+    # print(request)
     for item in movies:
         if item['id'] in session['carrito']:
             L.append(item)
@@ -198,17 +198,12 @@ def eliminar(pelicula_id):
     catalogue = json.loads(catalogue_data)
     movies=catalogue['peliculas']
     L = []
-
-    print("Antes:")
-    print(session['carrito'])
     
     for item in movies:
         if item['id'] == (int(pelicula_id)):
             session['carrito'].remove(int(pelicula_id))
             session['precio'] -= item['precio']
     session.modified=True
-    print("despues:")
-    print(session['carrito'])
     
     # for item in movies:
     #     if item['id'] in session['carrito']:
@@ -234,8 +229,6 @@ def finalizar():
     #Si hay un usuario logeado en la sesion hacemos las comprobaciones pertinentes: saldo 
     #si no esta logeado le llevamos a que inicie sesion
     if "usuario" in session:
-        print("Usuario en la sesion")
-        print(session['usuario'])
         #tenemos que meternos en los datos del usuario y comprobar si tiene saldo
         cadena = os.getcwd() + "/app/usuarios/" + session['usuario']
 
@@ -243,15 +236,13 @@ def finalizar():
         dato = []
         i = 0
 
-        print(cadena)
         with open(cadena) as f:
             for linea in f:
                 dato.append ((linea.split(": ")[1]).split('\n')[0])
                 i = i + 1
                 if i == 5:
                     break;
-            print("Imprimiendo el saldo")
-            print(dato)
+
             saldo = float(dato[4])
 
             if saldo <= 0 and saldo < session['precio']:
@@ -264,6 +255,21 @@ def finalizar():
             
             #en caso de que si tenga saldo, tenemos que modificarlo y restarselo.
             else:
+
+                #annadimos al historial las pelis compradas
+                cadena2 = os.getcwd() + "/app/usuarios/" + session['usuario']
+                historial_data = open(cadena2 + '/historial.json', encoding="utf-8").read()
+                historial = json.loads(historial_data)
+
+                for i in session['carrito']:
+                    for item in movies:
+                        if i == item['id']:
+                            historial['peliculas'].append(item)
+                
+                with open(cadena2 + '/historial.json','w') as file:
+                    json.dump(historial, file, indent= 3)
+
+
                 f = open(cadena, "r")
                 lineas = f.readlines()
                 f.close()
@@ -285,3 +291,20 @@ def finalizar():
 
     else:
         return render_template('login.html', title = "Login")
+
+# #esta funcion nos permitira cargar el historial de un cliente
+
+@app.route('/historial/', methods=['GET', 'POST'])
+def historial():
+    cadena2 = os.getcwd() + "/app/usuarios/" + session['usuario']
+    catalogue_data = open(cadena2+'/historial.json', encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+    movies=catalogue['peliculas']
+    L = []
+    # print(request)
+    for item in catalogue['peliculas']:
+        L.append(item)
+
+    print(L)
+
+    return render_template('historial.html', title = "Historial", historial = L)
