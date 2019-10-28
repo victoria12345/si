@@ -183,15 +183,16 @@ def carrito():
     catalogue = json.loads(catalogue_data)
     movies=catalogue['peliculas']
     L = []
-
+    print(request)
     for item in movies:
         if item['id'] in session['carrito']:
             L.append(item)
+
     return render_template('carrito.html', title = "Carrito", carrito_lista = L)
 
 
 #con esta funcion eliminaremos una pelicula del carrito
-@app.route('/carrito/eliminada/<pelicula_id>', methods=['GET', 'POST'])
+@app.route('/carrito/<pelicula_id>eliminada', methods=['GET', 'POST'])
 def eliminar(pelicula_id):
     catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
@@ -204,15 +205,16 @@ def eliminar(pelicula_id):
     for item in movies:
         if item['id'] == (int(pelicula_id)):
             session['carrito'].remove(int(pelicula_id))
+            session['precio'] -= item['precio']
     session.modified=True
     print("despues:")
     print(session['carrito'])
-
-    for item in movies:
-        if item['id'] in session['carrito']:
-            L.append(item)
-
-    return render_template('carrito.html', title = "Carrito", carrito_lista = L)
+    
+    # for item in movies:
+    #     if item['id'] in session['carrito']:
+    #         L.append(item)
+    # return carrito()
+    return redirect(url_for('carrito'))
 
 
 # Esta funcion nos permite finalizar la compra 
@@ -222,7 +224,10 @@ def eliminar(pelicula_id):
 
 @app.route('/finalizar', methods=['GET', 'POST'])
 def finalizar():
-    
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+    movies=catalogue['peliculas']
+    L = []
 
     #primero voy a comprobar que el usuario este registrado en la aplicacion
 
@@ -246,11 +251,37 @@ def finalizar():
                 if i == 5:
                     break;
             print("Imprimiendo el saldo")
-            print(dato[4])
+            print(dato)
+            saldo = float(dato[4])
 
-            if int(dato[4]) < 0:
+            if saldo <= 0 and saldo < session['precio']:
+                for item in movies:
+                    if item['id'] in session['carrito']:
+                        L.append(item)
                 #si no tiene saldo tenemos que decirle que no tiene saldo suficiente
                 #esto podemos hacerlo como en el login, enviando un mensaje de compra no valida porque no tienes saldo
-                eturn render_template('carrito.html', title = "Carrito", carrito_lista = session['carrito', mensaje = "No tienes saldo para realizar la compra"])
+                return render_template('carrito.html', title = "Carrito", carrito_lista = L, mensaje="No tienes saldo para realizar la compra")
+            
+            #en caso de que si tenga saldo, tenemos que modificarlo y restarselo.
+            else:
+                f = open(cadena, "r")
+                lineas = f.readlines()
+                f.close()
+
+                f = open(cadena, "w")
+
+                for linea in lineas:
+                    if not "saldo" in linea:
+                        f.write(linea)
+                saldo -= session['precio']
+                session['precio'] = 0
+                session['carrito'] = []
+                session.modified = True
+                saldo_str = str(saldo)
+                f.write("saldo: " + saldo_str + "\n")
+                f.close()
+                return redirect(url_for('carrito'))
+
+
     else:
         return render_template('login.html', title = "Login")

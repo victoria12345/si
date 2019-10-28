@@ -5,6 +5,9 @@
 {% endblock%}
 
 {% block contenido %}
+      {% if mensaje %}
+         <h2>{{mensaje}}</h2>
+      {% endif %}
       <h2>Este es tu carrito de la compra...</h2>
       {% if not carrito_lista %}
          <h2> No tienes peliculas en tu carrito </h2>>
@@ -28,7 +31,7 @@
             <tr>
             {% endfor %}
             <tr>
-               <td> <button  onclick="window.location.href='{{url_for('finalizar')}}'"  class=boton>Finalizar Compra</button></td>
+               <td> <button onclick="window.location.href='{{url_for('finalizar')}}' " class=boton>Finalizar Compra</button></td>
             </tr>
          </table>
       {% endif %}
