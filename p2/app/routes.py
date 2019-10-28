@@ -115,7 +115,44 @@ def logout():
     session.pop('usuario', None)
     return redirect(url_for('index'))
 
+@app.route('/saldo', methods=['GET', 'POST'])
+def saldo():
 
+    if 'saldo' in request.form:
+        if "usuario" in session:
+            dato = []
+            i = 0
+            #tenemos que meternos en los datos del usuario y comprobar si tiene saldo
+            cadena = os.getcwd() + "/app/usuarios/" + session['usuario']
+            cadena = cadena + "/datos.dat"
+            with open(cadena) as f:
+                for linea in f:
+                    dato.append ((linea.split(": ")[1]).split('\n')[0])
+                    i = i + 1
+                    if i == 5:
+                        break;
+
+            saldo = float(dato[4])
+
+            # Escribimos el nuevo saldo
+            f = open(cadena, "r")
+            lineas = f.readlines()
+            f.close()
+
+            f = open(cadena, "w")
+
+            for linea in lineas:
+                if not "saldo" in linea:
+                    f.write(linea)
+
+            saldo += float(request.form['saldo'])
+            saldo_str = str(saldo)
+            f.write("saldo: "+ saldo_str)
+
+            return redirect(url_for('index'))
+
+    else:
+        return render_template('saldo.html', title = "Registrarse")
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
