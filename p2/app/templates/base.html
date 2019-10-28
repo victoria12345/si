@@ -53,7 +53,7 @@
         <ul> <!-- ul define la lista-->
           <li><a href="#">Home</a></li>  <!-- li define cada elemento de la lista-->
           <li><a href="historial.html">Historial</a></li>
-          <li><a href="#">Carrito</a></li>
+          <li><a href="{{url_for('carrito')}}">Carrito</a></li>
           <li><a href="{{url_for('logout')}}">Logout</a></li>
       </ul>
     {% endif %}

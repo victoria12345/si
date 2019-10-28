@@ -6,27 +6,30 @@
 
 {% block contenido %}
       <h2>Este es tu carrito de la compra...</h2>
-      { % if not carrito %}
-      <p> No tienes peliculas en tu carrito </p>
-      { % endif % }
-
-      {% else }
-      <table>
-         <tr>
-            <th> </th>
-            <th> Película </th>
-            <th> Día </th>
-            <th> Precio </th>
-         </tr>
-          { %for item in movies %}
-          <tr>
-             <td><img class="imagen" src="../imagenes/{{film.poster}}" alt ="film.poster"></td>
-             <td> {{item.titulo}} </td>
-             <td> 19/07/2019 </td>
-             <td> {{item.precio}} </td>
-          </tr>
-          <tr>
-         { % endfor % }
-       </table>
-      { % endif % }
-{ % endblock % }
+      {% if not carrito_lista %}
+         <h2> No tienes peliculas en tu carrito </h2>>
+      {% else %}
+         <table>
+            <tr>
+               <th> </th>
+               <th> Película </th>
+               <th> Día </th>
+               <th> Precio </th>
+               <th> </th>
+            </tr>
+            {% for item in carrito_lista %}
+            <tr>
+               <td><img class="imagen" src="../static/imagenes/{{item.poster}}" alt ="item.poster"></td>
+               <td> {{item.titulo}} </td>
+               <td> 19/07/2019 </td>
+               <td> {{item.precio}} </td>
+               <td><button onclick="window.location.href='{{url_for('eliminar', pelicula_id = item.id)}}'" class=boton>Eliminar</button></td>
+            </tr>
+            <tr>
+            {% endfor %}
+            <tr>
+               <td> <button  onclick="window.location.href='{{url_for('finalizar')}}'"  class=boton>Finalizar Compra</button></td>
+            </tr>
+         </table>
+      {% endif %}
+{% endblock %}

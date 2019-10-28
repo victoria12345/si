@@ -89,7 +89,7 @@ def login():
                         break
         else:
             # aqui se le puede pasar como argumento un mensaje de login invalido
-            return render_template('login.html', title = "Sign In", mensaje="Login invalido")
+            return render_template('login.html', title = "Sign In", mensaje="No has realizado Login correctamente. Intentalo de nuevo")
 
 
         aux2 = hashlib.md5(request.form['contrasenna'].encode())
@@ -101,7 +101,7 @@ def login():
             return redirect(url_for('index'))
         else:
             # aqui se le puede pasar como argumento un mensaje de login invalido
-            return render_template('login.html', title = "Sign In", mensaje="Login invalido2")
+            return render_template('login.html', title = "Sign In", mensaje="No has realizado Login correctamente. Intentalo de nuevo")
     else:
         # se puede guardar la pagina desde la que se invoca
         session['url_origen']=request.referrer
@@ -154,7 +154,7 @@ def registro():
     else:
         return render_template('registro.html', title = "Registrarse")
 
-
+# esta funcion nos permite añadir una pelicula al carrito de la compra. En la sesion hay un carrito de la compra creado
 @app.route('/informacion/<pelicula_id>comprada', methods=['GET','POST'])
 def comprar(pelicula_id):
     # Cuando compre una pelicula me pasan el id y tengo que comprobar que este en el catalogo.
@@ -174,9 +174,83 @@ def comprar(pelicula_id):
                 print(session['precio'])
                 return render_template('informacion.html', title = "Pelicula", film=item, flag=True)
 
+# #esta funcion nos permitira cargar el carrito de la compra: 
+# es decir la vista y ademas realizar diferentes funciones con el carrito
+
+@app.route('/carrito/', methods=['GET', 'POST'])
+def carrito():
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+    movies=catalogue['peliculas']
+    L = []
+
+    for item in movies:
+        if item['id'] in session['carrito']:
+            L.append(item)
+    return render_template('carrito.html', title = "Carrito", carrito_lista = L)
 
 
-# @app.route('historial/', methods=['GET','POST'])
-# def historial():
+#con esta funcion eliminaremos una pelicula del carrito
+@app.route('/carrito/eliminada/<pelicula_id>', methods=['GET', 'POST'])
+def eliminar(pelicula_id):
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+    movies=catalogue['peliculas']
+    L = []
 
-#     return
+    print("Antes:")
+    print(session['carrito'])
+    
+    for item in movies:
+        if item['id'] == (int(pelicula_id)):
+            session['carrito'].remove(int(pelicula_id))
+    session.modified=True
+    print("despues:")
+    print(session['carrito'])
+
+    for item in movies:
+        if item['id'] in session['carrito']:
+            L.append(item)
+
+    return render_template('carrito.html', title = "Carrito", carrito_lista = L)
+
+
+# Esta funcion nos permite finalizar la compra 
+# Para ello debemos comprobar que el usuario que esta en la sesion esta registrado o ha iniciado sesion
+# Si no esta registrado, le llevaremos a la pagina donde se puede hacer login
+# para finalizar una compra tambien se debe de tener saldo
+
+@app.route('/finalizar', methods=['GET', 'POST'])
+def finalizar():
+    
+
+    #primero voy a comprobar que el usuario este registrado en la aplicacion
+
+    #Si hay un usuario logeado en la sesion hacemos las comprobaciones pertinentes: saldo 
+    #si no esta logeado le llevamos a que inicie sesion
+    if "usuario" in session:
+        print("Usuario en la sesion")
+        print(session['usuario'])
+        #tenemos que meternos en los datos del usuario y comprobar si tiene saldo
+        cadena = os.getcwd() + "/app/usuarios/" + session['usuario']
+
+        cadena = cadena + "/datos.dat"
+        dato = []
+        i = 0
+
+        print(cadena)
+        with open(cadena) as f:
+            for linea in f:
+                dato.append ((linea.split(": ")[1]).split('\n')[0])
+                i = i + 1
+                if i == 5:
+                    break;
+            print("Imprimiendo el saldo")
+            print(dato[4])
+
+            if int(dato[4]) < 0:
+                #si no tiene saldo tenemos que decirle que no tiene saldo suficiente
+                #esto podemos hacerlo como en el login, enviando un mensaje de compra no valida porque no tienes saldo
+                eturn render_template('carrito.html', title = "Carrito", carrito_lista = session['carrito', mensaje = "No tienes saldo para realizar la compra"])
+    else:
+        return render_template('login.html', title = "Login")
