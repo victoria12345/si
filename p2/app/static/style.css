@@ -326,7 +326,7 @@ p {
 
 table {
   border-collapse : separate;
-  padding-left: 80px;
+  padding-left: 120px;
   padding-right: 80px;
   padding-top: 50px;
   table-layout : auto;
@@ -338,7 +338,14 @@ td {
   border-style : solid;
   border-width : 2px;
   border-color : gray;
+  background-color: cornsilk;
 }
+
+th {
+    font-family: 'Josefin Slab', serif;
+    font-size: 18pt;
+    font-weight: bold;
+  }
 
 .botonesRegistro {
    float: left;
@@ -387,10 +394,18 @@ td {
 .informacion {
     display: none;
 }
-.todo{
+.todo td{
+    height: 4em;
+    width: 15vw;
+    font-weight: bold;
+    align-items: center;
     background: #FFDA70;
 }
 .todo:hover{
+    height: 4em;
+    width: 15vw;
+    font-weight: bold;
+    align-items: center;
     background:#FFDA33;;
 }
 
@@ -399,6 +414,17 @@ td {
 
 .colorContrasenna {
     font-weight: bold;
+    color: red;
+}
+
+.colorMedianamente{
+    font-weight: bold;
+    color: rgb(255, 166, 0);
+}
+
+.colorBuena{
+    font-weight: bold;
+    color: green;
 }
 
 .infoDiv{

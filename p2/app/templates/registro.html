@@ -59,12 +59,12 @@ function validar(){
    }
 
    if(isNaN(document.getElementById('tarjeta').value)){
-      alert('La tarjeta introducida es incorrecta');
+      alert('La tarjeta introducida no es un valor valido');
       todo_correcto = false;
    }
 
    if(document.getElementById('tarjeta').value.length != 12){
-      alert('La tarjeta introducida es incorrecta2');
+      alert('La tarjeta introducida tiene la longitud incorrecta');
       todo_correcto = false;
    }
 
@@ -124,11 +124,20 @@ function permite(string){//solo letras y numeros
                 //saco la fortaleza en función de los caracteres que tenga la clave
                 if (claveActual.length < 5){
                     fortalezaActual = "\tNo segura";
+                    msg.removeClass('colorMedianamente');
+                    msg.removeClass('colorBuena');
+                    msg.addClass('colorContrasenna');
                 }else{
                     if(claveActual.length < 8){
                         fortalezaActual = "\tMedianamente segura";
+                        msg.removeClass('colorContrasenna');
+                        msg.removeClass('colorBuena');
+                        msg.addClass('colorMedianamente');
                     }else{
                         fortalezaActual = "\tSegura";
+                        msg.removeClass('colorContrasenna');
+                        msg.removeClass('colorMedianamente');
+                        msg.addClass('colorBuena');
                     }
                 }
                 //cambio el texto del elemento mensaje para mostrar la fortaleza actual

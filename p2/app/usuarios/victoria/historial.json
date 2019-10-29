@@ -1,0 +1,67 @@
+{
+   "29/10/19": [
+      {
+         "sinopsis": "Han pasado casi 30 annos desde que el 'Club de los Perdedores', formado por Bill, Berverly, Richie, Ben, Eddie, Mike y Stanley, se enfrentaran al macabro y despiadado Pennywise (Bill Skarsg\u00e5rd). En cuanto tuvieron oportunidad, abandonaron el pueblo de Derry, en el estado de Maine, que tantos problemas les hab\u00eda ocasionado. Sin embargo, ahora, siendo adultos, parece que no pueden escapar de su pasado. Todos deber\u00e1n enfrentarse de nuevo al temible payaso para descubrir si de verdad est\u00e1n preparados para superar sus traumas de la infancia.",
+         "id": 1,
+         "cantidad": 3,
+         "guionista": "Gary Dauberman",
+         "anno": 2019,
+         "precio": 18.99,
+         "director": "Andr\u00e9s Muschietti",
+         "duracion": "169 min",
+         "titulo": "It Capitulo 2",
+         "pais": "Estados Unidos",
+         "poster": "it.png",
+         "actores": [
+            {
+               "personaje": " mari carmen",
+               "nombre": " lula",
+               "foto": " "
+            }
+         ],
+         "categoria": "terror"
+      },
+      {
+         "sinopsis": "Will y Stella son dos adolescentes que padecen fibrosis qu\u00edstica y est\u00e1n ingresados en el hospital para tratarse. Aunque ambos tratan de refugiarse en su propio mundo, de forma inevitable acaban enamor\u00e1ndose. La pareja deber\u00e1 luchar para mantener viva su relaci\u00f3n, con una \u00fanica regla: separarse con una distancia de alrededor de dos metros para evitar que ambos se puedan contagiar. Sin embargo, la vida de ambos estar\u00e1 en peligro.",
+         "id": 2,
+         "cantidad": 7,
+         "guionista": "Tobias Iaconis, Mikki Daughtry",
+         "anno": 2019,
+         "precio": 18.99,
+         "director": "Justin Baldoni",
+         "duracion": "196 min",
+         "titulo": "A dos metros de ti",
+         "pais": "Estados Unidos",
+         "poster": "a2m.jpg",
+         "actores": [
+            {
+               "personaje": "Will Newman",
+               "nombre": "Cole Sprouse",
+               "foto": " "
+            }
+         ],
+         "categoria": "romantica"
+      },
+      {
+         "sinopsis": "El astronauta Roy McBride (Brad Pitt) viaja a los l\u00edmites exteriores del sistema solar para encontrar a su padre perdido y desentrannar un misterio que amenaza la supervivencia de nuestro planeta. Su viaje desvelar\u00e1 secretos que desaf\u00edan la naturaleza de la existencia humana y nuestro lugar en el cosmos.",
+         "anno": 2019,
+         "cantidad": 1,
+         "guionista": "Ethan Gross, James Gray",
+         "id": 3,
+         "precio": 18.99,
+         "director": "James Gray",
+         "duracion": "124 min",
+         "titulo": "Ad Astra",
+         "pais": "Estados Unidos",
+         "poster": "adastra.jpg",
+         "actores": [
+            {
+               "personaje": "Roy McBride",
+               "nombre": "Brad Pitt",
+               "foto": " "
+            }
+         ],
+         "categoria": "ciencia ficcion"
+      }
+   ]
+}
