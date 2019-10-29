@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+
+
 {% block title %}
     {{ title }}
 {% endblock %}
@@ -10,6 +12,7 @@
       <h2> No tienes peliculas en tu historial</h2>
 
       {% else %}
+      <h2>Pulsa sobre cualquier pelicula para saber su sinopsis</h2>
       <table>
          <tr>
             <th> </th>
@@ -18,14 +21,60 @@
             <th> Precio </th>
          </tr>
           {%for item in historial %}
-          <tr>
+          <tr class = "todo"> 
              <td><img class="imagen" src="../static/imagenes/{{item.poster}}" alt ="item.poster"></td>
              <td> {{item.titulo}} </td>
              <td> 19/07/2019 </td>
              <td> {{item.precio}} </td>
           </tr>
-          <tr>
+          <tr class="informacion">
+               <td colspan="5"><div > {{item.sinopsis}}  </div> </td>
+          </tr>
+
+      
+         
          {% endfor %}
        </table>
       {% endif %}
+
+
+      <script>
+            // $(document).ready(function(){ 
+              
+            //   $('.todo').toggle( 
+            
+            //       // Primer click
+            //       function(e){ 
+            //           $(this).next('.informacion').slideDown();
+            //           $(this).text('Ocultar informacion');
+            //           e.preventDefault();
+            //       }, // Separamos las dos funciones con una coma
+                
+            //       // Segundo click
+            //       function(e){ 
+            //           $(this).next('.informacion').slideUp();
+            //           $(this).text('Ver informacion');
+            //           e.preventDefault();
+            //       }
+            
+            //   );
+            
+            // });
+
+
+            $(document).ready(function(){ 
+              
+              $('.todo').click( 
+            
+                  // Primer click
+                  function(){ 
+                      $(this).next('.informacion').slideToggle('slow');
+                  }
+            
+              );
+            
+            });
+         </script>
+
+
 {% endblock %}

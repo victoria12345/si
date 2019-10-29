@@ -1,1 +1,44 @@
-{"peliculas": []}
+{
+   "peliculas": [
+      {
+         "id": 1,
+         "titulo": "It Capitulo 2",
+         "poster": "it.png",
+         "director": "Andr\u00e9s Muschietti",
+         "precio": 18.99,
+         "categoria": "terror",
+         "anno": 2019,
+         "duracion": "169 min",
+         "pais": "Estados Unidos",
+         "guionista": "Gary Dauberman",
+         "actores": [
+            {
+               "nombre": " lula",
+               "personaje": " mari carmen",
+               "foto": " "
+            }
+         ],
+         "sinopsis": "Han pasado casi 30 annos desde que el 'Club de los Perdedores', formado por Bill, Berverly, Richie, Ben, Eddie, Mike y Stanley, se enfrentaran al macabro y despiadado Pennywise (Bill Skarsg\u00e5rd). En cuanto tuvieron oportunidad, abandonaron el pueblo de Derry, en el estado de Maine, que tantos problemas les hab\u00eda ocasionado. Sin embargo, ahora, siendo adultos, parece que no pueden escapar de su pasado. Todos deber\u00e1n enfrentarse de nuevo al temible payaso para descubrir si de verdad est\u00e1n preparados para superar sus traumas de la infancia."
+      },
+      {
+         "id": 2,
+         "titulo": "A dos metros de ti",
+         "poster": "a2m.jpg",
+         "director": "Justin Baldoni",
+         "precio": 18.99,
+         "categoria": "romantica",
+         "anno": 2019,
+         "duracion": "196 min",
+         "pais": "Estados Unidos",
+         "guionista": "Tobias Iaconis, Mikki Daughtry",
+         "actores": [
+            {
+               "nombre": "Cole Sprouse",
+               "personaje": "Will Newman",
+               "foto": " "
+            }
+         ],
+         "sinopsis": "Will y Stella son dos adolescentes que padecen fibrosis qu\u00edstica y est\u00e1n ingresados en el hospital para tratarse. Aunque ambos tratan de refugiarse en su propio mundo, de forma inevitable acaban enamor\u00e1ndose. La pareja deber\u00e1 luchar para mantener viva su relaci\u00f3n, con una \u00fanica regla: separarse con una distancia de alrededor de dos metros para evitar que ambos se puedan contagiar. Sin embargo, la vida de ambos estar\u00e1 en peligro."
+      }
+   ]
+}

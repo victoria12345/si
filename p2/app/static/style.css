@@ -326,6 +326,7 @@ p {
 table {
   border-collapse : separate;
   padding-left: 80px;
+  padding-right: 80px;
   padding-top: 50px;
   table-layout : auto;
   padding-bottom: 20px;
@@ -380,4 +381,17 @@ td {
    text-align: center;
    display: flex;
    flex-wrap: wrap;
+}
+
+.informacion {
+    display: none;
+}
+
+.todo{
+    
+}
+
+
+.colorContrasenna {
+    font-weight: bold;
 }

@@ -9,20 +9,40 @@ import sys
 import hashlib
 import os.path as path
 
+# #recibe un argumento de la manera L = [1,2,1,3,3,1]
+# #devolveremos una lista de la manera L=[(1,2),(2,4)] donde el primer valor es el id y el segundo el numero de veces que aparece
+# def contar(lista):
+#     Lindices = []
+#     Lcontar = []
+#     for i in lista:
+#         if i in Lindices:
+#             continue
+#         veces = lista.count(i)
+#         Lcontar.append((i,veces))
+#         Lindices.append(i)
+#     return Lcontar
+
+ 
+        
 @app.route('/')
 @app.route('/index',methods=['GET','POST'])
 def index():
 
+    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    catalogue = json.loads(catalogue_data)
+    movies=catalogue['peliculas']
     #creamos el carrito para la sesion
-
+    
     if not "carrito" in session:
-
+        session['n_producto_carrito'] = []
+        for i in range(len(movies)):
+            session['n_producto_carrito'].append(0)
+        
         session['carrito'] = [] #creamos una lista vacia para el carrito
         session['precio'] = 0 #ponemos el precio final a 0
         session.modified = True
     # print (url_for('static', filename='estilo.css'), file=sys.stderr)
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
+    
     return render_template('index.html', title = "Home", movies=catalogue['peliculas'][:10])
 
 
@@ -117,22 +137,23 @@ def logout():
 
 @app.route('/saldo', methods=['GET', 'POST'])
 def saldo():
+    dato = []
+    i = 0
+    #tenemos que meternos en los datos del usuario y comprobar si tiene saldo
+    cadena = os.getcwd() + "/app/usuarios/" + session['usuario']
+    cadena = cadena + "/datos.dat"
+    with open(cadena) as f:
+        for linea in f:
+            dato.append ((linea.split(": ")[1]).split('\n')[0])
+            i = i + 1
+            if i == 5:
+                break
+
+    saldo = float(dato[4])
 
     if 'saldo' in request.form:
         if "usuario" in session:
-            dato = []
-            i = 0
-            #tenemos que meternos en los datos del usuario y comprobar si tiene saldo
-            cadena = os.getcwd() + "/app/usuarios/" + session['usuario']
-            cadena = cadena + "/datos.dat"
-            with open(cadena) as f:
-                for linea in f:
-                    dato.append ((linea.split(": ")[1]).split('\n')[0])
-                    i = i + 1
-                    if i == 5:
-                        break;
-
-            saldo = float(dato[4])
+            
 
             # Escribimos el nuevo saldo
             f = open(cadena, "r")
@@ -149,10 +170,10 @@ def saldo():
             saldo_str = str(saldo)
             f.write("saldo: "+ saldo_str)
 
-            return redirect(url_for('index'))
+            return render_template('saldo.html', title = "Añadir Saldo", saldo = saldo)
 
     else:
-        return render_template('saldo.html', title = "Registrarse")
+        return render_template('saldo.html', title = "Añadir Saldo", saldo = saldo)
 
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
@@ -205,6 +226,9 @@ def comprar(pelicula_id):
             if item['id'] == int(pelicula_id):
                 session['carrito'].append(int(pelicula_id))
                 session['precio'] += item['precio']
+                session['n_producto_carrito'][int(pelicula_id)-1] += 1
+                print ("IMPRIMIENDO LA LISTA DE CUANTOS TENGOOOOO ***********")
+                print(session['n_producto_carrito'])
                 session.modified = True
                 # print(item['poster'])
                 # print(session['carrito'])
@@ -225,7 +249,8 @@ def carrito():
         if item['id'] in session['carrito']:
             L.append(item)
 
-    return render_template('carrito.html', title = "Carrito", carrito_lista = L)
+
+    return render_template('carrito.html', title = "Carrito", carrito_lista = L, numero_elementos = session['n_producto_carrito'])
 
 
 #con esta funcion eliminaremos una pelicula del carrito
@@ -240,6 +265,7 @@ def eliminar(pelicula_id):
         if item['id'] == (int(pelicula_id)):
             session['carrito'].remove(int(pelicula_id))
             session['precio'] -= item['precio']
+            session['n_producto_carrito'][int(pelicula_id)-1] -= 1
     session.modified=True
     
     # for item in movies:

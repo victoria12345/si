@@ -8,8 +8,9 @@
 {% block contenido %}
 
 <h2> Añade saldo para comprar más películas!<br></h2>
+<h2> Tu saldo disponible es : {{saldo}}</h2>
 <div class ="registro">
-
+  
    <form action ="{{url_for('saldo')}}" method="post" onsubmit="return validar();">
       <p> Saldo a añadir:</p>
       <input class="text1" name=saldo type ="text" id="saldo"required>
@@ -26,7 +27,7 @@ function validar(){
 
    var todo_correcto = true;
 
-   if(Number.isInteger(document.getElementById('tarjeta').value)){
+   if(isNaN(document.getElementById('saldo').value)){
       alert('El valor introducido es incorrecto');
       todo_correcto = false;
    }

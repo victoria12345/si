@@ -86,4 +86,48 @@ function permite(string){//solo letras y numeros
 
 </script>
 
+
+
+<script>
+    jQuery.fn.fortalezaClave = function(){
+        $(this).each(function(){
+            elem = $(this);
+            //creo el elemento HTML para el mensaje
+            msg = $('<span class="colorContrasenna">\tNo segura</span>');
+            //inserto el mensaje en la página, justo después del campo input password
+            elem.after(msg)
+            //almaceno la referencia del elemento del mensaje dentro del campo input
+            elem.data("mensaje", msg);
+
+            elem.keyup(function(e){
+                elem = $(this);
+                //recupero la referencia al elemento del mensaje
+                msg = elem.data("mensaje")
+                //miro la fortaleza
+                //extraigo el atributo value del campo input password
+                claveActual = elem.attr("value");
+                var fortalezaActual = "";
+                //saco la fortaleza en función de los caracteres que tenga la clave
+                if (claveActual.length < 5){
+                    fortalezaActual = "\tNo segura";
+                }else{
+                    if(claveActual.length < 8){
+                        fortalezaActual = "\tMedianamente segura";
+                    }else{
+                        fortalezaActual = "\tSegura";
+                    }
+                }
+                //cambio el texto del elemento mensaje para mostrar la fortaleza actual
+                msg.html(fortalezaActual);
+            });
+        });
+        return this;
+    }
+
+    //cuando la página esté lista, cargo la funcionalidad del plugin sobre el elemento password
+    $(document).ready(function(){
+        $("#contrasenna").fortalezaClave();
+    });
+</script>
+
 {% endblock %}
