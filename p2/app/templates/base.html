@@ -10,7 +10,6 @@
    <title> {% block title %} {% endblock %}- El Videoclub</title>
    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script> 
    <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-   <script src="jquery-1.4.1.min.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -35,12 +34,20 @@
          </select>
 		 <input class="boton" type ="submit" value="Buscar">
       </form>
-
-	  <div class = "contacto">
-		<a href="https://github.com/search?q=org%3Agithub+victoria12345&unscoped_q=victoria12345"><img class="icono" src ="{{url_for("static", filename= 'imagenes/git.png')}}" alt="git"></a>
-		<a href="https://www.instagram.com/victoria_6/?hl=es"><img class="icono" src ="{{url_for("static", filename= 'imagenes/ig.png')}}" alt = "ig"></a>
-
-	  </div>
+      <div class = "infoDiv">
+          <div class=NumUs> 
+              <span>Clientes online: </span>  
+              <span id="numusuarios"></span>
+          </div>
+          
+      
+          <div class = "contacto">
+          <a href="https://github.com/search?q=org%3Agithub+victoria12345&unscoped_q=victoria12345"><img class="icono" src ="{{url_for("static", filename= 'imagenes/git.png')}}" alt="git"></a>
+          <a href="https://www.instagram.com/victoria_6/?hl=es"><img class="icono" src ="{{url_for("static", filename= 'imagenes/ig.png')}}" alt = "ig"></a>
+      
+          </div>
+      </div>
+	 
     </div>
 
 
@@ -75,4 +82,23 @@
   </div>
 
 </body>
+
+<script>
+$(document).ready(function() {
+    ajaxd();
+    setInterval(ajaxd, 3000); // cada 3 segundos
+});
+
+function ajaxd() { 
+  $.ajax({
+   type: "GET",
+   url: "{{url_for('numeroUsuarios')}}",
+  //  data: "user=success",
+   success: function(msg){
+    $("#numusuarios").text(msg)
+   }
+ });
+}
+
+</script>
 </html>

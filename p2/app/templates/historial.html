@@ -15,22 +15,34 @@
       <h2>Pulsa sobre cualquier pelicula para saber su sinopsis</h2>
       <table>
          <tr>
-            <th> </th>
-            <th> Película </th>
-            <th> Día </th>
-            <th> Precio </th>
+            <th> Fecha de compra </th>
          </tr>
-          {%for item in historial %}
+          {%for item in historial.keys() %}
           <tr class = "todo"> 
-             <td><img class="imagen" src="../static/imagenes/{{item.poster}}" alt ="item.poster"></td>
-             <td> {{item.titulo}} </td>
-             <td> 19/07/2019 </td>
-             <td> {{item.precio}} </td>
+             <td> {{item}} </td>
           </tr>
-          <tr class="informacion">
-               <td colspan="5"><div > {{item.sinopsis}}  </div> </td>
-          </tr>
+          
+            <tr class="informacion">
+                <td>Imagen</td>
+                <td >Titulo</td>
+                <td >Precio </td>
+                <td >Cantidad</td>
+                 <!-- <td ><div > {{item.sinopsis}}  </div> </td> -->
+            </tr>
 
+          {% for i in historial[item] %}
+          <tr class="informacion">
+              <td><img class="imagen" src="../static/imagenes/{{i.poster}}" alt ="{{i.poster}}"></td>
+              <td ><div > {{i.titulo}}  </div> </td>
+              <td ><div > {{i.precio}}  </div> </td>
+              <td ><div > {{i.cantidad}}  </div> </td>
+
+              
+               <!-- <td ><div > {{item.sinopsis}}  </div> </td> -->
+          </tr>
+          {% endfor %}
+          <tr class = "pausa">
+          </tr>
       
          
          {% endfor %}
@@ -39,27 +51,6 @@
 
 
       <script>
-            // $(document).ready(function(){ 
-              
-            //   $('.todo').toggle( 
-            
-            //       // Primer click
-            //       function(e){ 
-            //           $(this).next('.informacion').slideDown();
-            //           $(this).text('Ocultar informacion');
-            //           e.preventDefault();
-            //       }, // Separamos las dos funciones con una coma
-                
-            //       // Segundo click
-            //       function(e){ 
-            //           $(this).next('.informacion').slideUp();
-            //           $(this).text('Ver informacion');
-            //           e.preventDefault();
-            //       }
-            
-            //   );
-            
-            // });
 
 
             $(document).ready(function(){ 
@@ -68,7 +59,7 @@
             
                   // Primer click
                   function(){ 
-                      $(this).next('.informacion').slideToggle('slow');
+                      $(this).nextUntil('.pausa').slideToggle('slow');
                   }
             
               );

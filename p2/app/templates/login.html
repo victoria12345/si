@@ -17,7 +17,11 @@
       <!-- <form action ="index2.html"> -->
       <form action="{{url_for('login')}}" method="post">
          <p> Nombre de Usuario:</p>
-         <input class="text1" name=username type ="text" required>
+         {% if nombre %}
+            <input class="text1" name=username type ="text" value={{nombre}} required>
+         {% else %}
+            <input class="text1" name=username type ="text" required>
+         {% endif %}
          <p> Contraseña:</p>
          <input class="text1" name=contrasenna type ="password" required>
          <p></p>

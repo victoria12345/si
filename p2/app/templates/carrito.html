@@ -16,7 +16,6 @@
             <tr>
                <th> </th>
                <th> Película </th>
-               <th> Día </th>
                <th> Precio </th>
                <th> Cantidad </th>
                <th> </th>
@@ -25,7 +24,6 @@
             <tr>
                <td><img class="imagen" src="../static/imagenes/{{item.poster}}" alt ="item.poster"></td>
                <td> {{item.titulo}} </td>
-               <td> 19/07/2019 </td>
                <td> {{item.precio}} </td>
                <td> {{numero_elementos[item.id-1]}}</td>
                <td><button onclick="window.location.href='{{url_for('eliminar', pelicula_id = item.id)}}'" class=boton>Eliminar</button></td>

@@ -8,6 +8,9 @@
 {% block contenido %}
 
 <h2> Registrate en nuestra pagina!<br></h2>
+{% if mensaje %}
+    <h2>{{mensaje}}</h2>
+{% endif %}
 <div class ="registro">
 
    <form action ="{{url_for('registro')}}" method="post" onsubmit="return validar();">
@@ -15,6 +18,8 @@
       <input class="text1" name=username type ="text" id="username" onkeypress="return permite(event)" required>
       <p> Contraseña:</p>
       <input class="text1" name=contrasenna type ="password" id="contrasenna" required>
+      <p> Confirmación de contraseña:</p>
+      <input class="text1" name=contrasenna2 type ="password" id="contrasenna2" required>
       <p> Email:</p>
       <input class="text1" name=email type ="mail" id="email" required>
       <p> Tarjeta:</p>
@@ -48,13 +53,22 @@ function validar(){
       todo_correcto = false;
    }
 
-   if(isNaN(document.getElementById('tarjeta').value.length ) == 12 ){
+   if(document.getElementById('contrasenna').value != document.getElementById('contrasenna2').value){
+       alert('Las contraseñas no coinciden');
+       todo_correcto = false;
+   }
+
+   if(isNaN(document.getElementById('tarjeta').value)){
       alert('La tarjeta introducida es incorrecta');
       todo_correcto = false;
    }
 
+   if(document.getElementById('tarjeta').value.length != 12){
+      alert('La tarjeta introducida es incorrecta2');
+      todo_correcto = false;
+   }
+
    var email = document.getElementById('email').value
-   alert(email)
    var patron=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
    if (email.search(patron) != 0) {
       alert('El email introducido no es correcto');

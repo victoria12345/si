@@ -26,7 +26,7 @@ body {
 
 h1 {
     padding-left: 0;
-    padding-right: 100px;
+    padding-right: 50px;
     float: left;
     font-family: 'Montserrat Alternates', sans-serif;
     font-size: 18pt;
@@ -75,7 +75,8 @@ h4 {
 }
 
 .contacto{
-	width:10%;
+    text-align: center;
+    padding-top: 2%;
 }
 
 .categoria{
@@ -225,7 +226,7 @@ h4 {
 }
 
 .buscar {
-    width: 100px;
+    width: 150px;
     height: auto;
     border: 1px solid #000000;
     border-radius: 4px;
@@ -386,12 +387,21 @@ td {
 .informacion {
     display: none;
 }
-
 .todo{
-    
+    background: #FFDA70;
+}
+.todo:hover{
+    background:#FFDA33;;
 }
 
+.numUs{
+}
 
 .colorContrasenna {
     font-weight: bold;
+}
+
+.infoDiv{
+    width: 15%;
+    flex-direction: column;
 }

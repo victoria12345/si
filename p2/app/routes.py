@@ -2,12 +2,14 @@
 # -*- coding: utf-8 -*-
 
 from app import app
-from flask import render_template, request, url_for, redirect, session
+from flask import render_template, request, url_for, redirect, session, make_response
 import json
 import os
 import sys
 import hashlib
 import os.path as path
+import random
+import time
 
 # #recibe un argumento de la manera L = [1,2,1,3,3,1]
 # #devolveremos una lista de la manera L=[(1,2),(2,4)] donde el primer valor es el id y el segundo el numero de veces que aparece
@@ -115,20 +117,28 @@ def login():
         aux2 = hashlib.md5(request.form['contrasenna'].encode())
         aux2 = "" + aux2.hexdigest()
         if request.form['username'] == dato[0] and aux2 == dato[1]:
+            resp = make_response(redirect(url_for('index')))
+            print("NOMBRE ANTES ******")
+            print(request.form['username'])
+            resp.set_cookie('nombre',request.form['username'] )
+            print(resp)
             session['usuario'] = request.form['username']
             session.modified=True
             # se puede usar request.referrer para volver a la pagina desde la que se hizo login
-            return redirect(url_for('index'))
+            return resp
         else:
             # aqui se le puede pasar como argumento un mensaje de login invalido
             return render_template('login.html', title = "Sign In", mensaje="No has realizado Login correctamente. Intentalo de nuevo")
     else:
+        nombre = request.cookies.get('nombre')
+        print("IMPRIMIENDO EL NOMBRE **************")
+        print(nombre)
         # se puede guardar la pagina desde la que se invoca
         session['url_origen']=request.referrer
         session.modified=True
         # print a error.log de Apache si se ejecuta bajo mod_wsgi
         # print (request.referrer, file=sys.stderr)
-        return render_template('login.html', title = "Login")
+        return render_template('login.html', title = "Login", nombre = nombre)
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
@@ -150,6 +160,8 @@ def saldo():
                 break
 
     saldo = float(dato[4])
+    saldo = "{0:.2f}".format(saldo)
+    saldo = float(saldo)
 
     if 'saldo' in request.form:
         if "usuario" in session:
@@ -192,11 +204,13 @@ def registro():
             aux_contrasenna = hashlib.md5(request.form['contrasenna'].encode())
             aux_contrasenna = "" + aux_contrasenna.hexdigest()
 
+            saldo = str(random.randint(0, 100))
+
             f.write("usuario: " + request.form['username'] + "\n" +
                     "contrasenna: " + aux_contrasenna + "\n" +
                     "correo: " + request.form['email'] + "\n" +
                     "tarjeta: " + request.form['tarjeta'] + "\n" +
-                    "saldo: " + "0" + "\n"
+                    "saldo: " + saldo + "\n"
                     )
             f.close()
 
@@ -205,7 +219,7 @@ def registro():
 
             f = open (cadena_historial, "w")
 
-            historial = { 'peliculas': [] }
+            historial = {}
 
             f.write(json.dumps(historial))
             return redirect(url_for('index'))
@@ -227,12 +241,7 @@ def comprar(pelicula_id):
                 session['carrito'].append(int(pelicula_id))
                 session['precio'] += item['precio']
                 session['n_producto_carrito'][int(pelicula_id)-1] += 1
-                print ("IMPRIMIENDO LA LISTA DE CUANTOS TENGOOOOO ***********")
-                print(session['n_producto_carrito'])
                 session.modified = True
-                # print(item['poster'])
-                # print(session['carrito'])
-                # print(session['precio'])
                 return render_template('informacion.html', title = "Pelicula", film=item, flag=True)
 
 # #esta funcion nos permitira cargar el carrito de la compra: 
@@ -248,7 +257,6 @@ def carrito():
     for item in movies:
         if item['id'] in session['carrito']:
             L.append(item)
-
 
     return render_template('carrito.html', title = "Carrito", carrito_lista = L, numero_elementos = session['n_producto_carrito'])
 
@@ -308,13 +316,13 @@ def finalizar():
 
             saldo = float(dato[4])
 
-            if saldo <= 0 and saldo < session['precio']:
+            if saldo <= 0 or saldo < session['precio']:
                 for item in movies:
                     if item['id'] in session['carrito']:
                         L.append(item)
                 #si no tiene saldo tenemos que decirle que no tiene saldo suficiente
                 #esto podemos hacerlo como en el login, enviando un mensaje de compra no valida porque no tienes saldo
-                return render_template('carrito.html', title = "Carrito", carrito_lista = L, mensaje="No tienes saldo para realizar la compra")
+                return render_template('carrito.html', title = "Carrito", carrito_lista = L, mensaje="No tienes saldo para realizar la compra",numero_elementos = session['n_producto_carrito'])
             
             #en caso de que si tenga saldo, tenemos que modificarlo y restarselo.
             else:
@@ -323,11 +331,34 @@ def finalizar():
                 cadena2 = os.getcwd() + "/app/usuarios/" + session['usuario']
                 historial_data = open(cadena2 + '/historial.json', encoding="utf-8").read()
                 historial = json.loads(historial_data)
-
+                fecha = time.strftime("%d/%m/%y")
+                if str(fecha) not in historial:
+                    historial[str(fecha)] = []
+                
                 for i in session['carrito']:
                     for item in movies:
                         if i == item['id']:
-                            historial['peliculas'].append(item)
+                            in_history = 0
+                            for j in historial[str(fecha)]:
+                                if j['id'] == item['id']:
+                                    print("lo que añado de cantidad")
+                                    print(session['n_producto_carrito'][item['id']-1])
+                                    j['cantidad'] += 1
+                                    in_history = 1
+                            if not in_history:
+                                item['cantidad']=1
+                                historial[str(fecha)].append(item)
+
+                                # if flag == 0:
+                                #     item['cantidad'] = session['n_producto_carrito'][item['id']-1]
+                                #     print("lo que añado de cantidad")
+                                #     print(session['n_producto_carrito'][item['id']-1])
+                                #     historial[str(fecha)].append(item)
+                           
+                                
+
+                            
+                            
                 
                 with open(cadena2 + '/historial.json','w') as file:
                     json.dump(historial, file, indent= 3)
@@ -345,6 +376,8 @@ def finalizar():
                 saldo -= session['precio']
                 session['precio'] = 0
                 session['carrito'] = []
+                for i in range(len(movies)):
+                    session['n_producto_carrito'][i] = 0
                 session.modified = True
                 saldo_str = str(saldo)
                 f.write("saldo: " + saldo_str + "\n")
@@ -362,12 +395,17 @@ def historial():
     cadena2 = os.getcwd() + "/app/usuarios/" + session['usuario']
     catalogue_data = open(cadena2+'/historial.json', encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
-    movies=catalogue['peliculas']
-    L = []
-    # print(request)
-    for item in catalogue['peliculas']:
-        L.append(item)
+    
+    
+    # movies=catalogue['peliculas']
+    # L = []
+    # # print(request)
+    # for item in catalogue['peliculas']:
+    #     L.append(item)
 
-    print(L)
+    # print(L)
+    return render_template('historial.html', title = "Historial", historial = catalogue)
 
-    return render_template('historial.html', title = "Historial", historial = L)
+@app.route('/numeroUsuarios/', methods=['GET'])
+def numeroUsuarios():
+    return str(random.randint(1, 1000))
