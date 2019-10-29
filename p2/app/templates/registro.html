@@ -18,6 +18,7 @@
       <input class="text1" name=username type ="text" id="username" onkeypress="return permite(event)" required>
       <p> Contraseña:</p>
       <input class="text1" name=contrasenna type ="password" id="contrasenna" required>
+      <div class="barrita1" id="barrita"></div>
       <p> Confirmación de contraseña:</p>
       <input class="text1" name=contrasenna2 type ="password" id="contrasenna2" required>
       <p> Email:</p>
@@ -124,17 +125,26 @@ function permite(string){//solo letras y numeros
                 //saco la fortaleza en función de los caracteres que tenga la clave
                 if (claveActual.length < 5){
                     fortalezaActual = "\tNo segura";
+                    $('#barrita').removeClass('barrita3');
+                    $('#barrita').removeClass('barrita2');
+                    $('#barrita').addClass('barrita1');
                     msg.removeClass('colorMedianamente');
                     msg.removeClass('colorBuena');
                     msg.addClass('colorContrasenna');
                 }else{
                     if(claveActual.length < 8){
                         fortalezaActual = "\tMedianamente segura";
+                        $('#barrita').removeClass('barrita3');
+                        $('#barrita').removeClass('barrita1');
+                        $('#barrita').addClass('barrita2');
                         msg.removeClass('colorContrasenna');
                         msg.removeClass('colorBuena');
                         msg.addClass('colorMedianamente');
                     }else{
                         fortalezaActual = "\tSegura";
+                        $('#barrita').removeClass('barrita2');
+                        $('#barrita').removeClass('barrita1');
+                        $('#barrita').addClass('barrita3');
                         msg.removeClass('colorContrasenna');
                         msg.removeClass('colorMedianamente');
                         msg.addClass('colorBuena');

@@ -264,6 +264,21 @@ select {
     border-radius: 4px;
 }
 
+.barrita1 {
+    width: 130px;
+    height: 5px;
+    background-color: red;
+}
+.barrita2 {
+    width: 250px;
+    height: 5px;
+    background-color: orange;
+}
+.barrita3 {
+    width: 400px;
+    height: 5px;
+    background-color: green;
+}
 .pelicula {
     /* display: flex;
     flex-direction: column; */
