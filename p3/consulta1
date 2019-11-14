@@ -1,3 +1,0 @@
-﻿Insert into orderdetail(orderid, prod_id, price, quantity)
-	(select orderdetail.orderid, orderdetail.prod_id, products.price*1.02, orderdetail.quantity from orderdetail, products);
-
