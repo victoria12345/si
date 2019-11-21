@@ -1,20 +1,10 @@
--- tendremos que igualar los orderid para saber donde tengo que actualizar
 
 UPDATE orders
 SET
-  netamount = suma
-  totalamount = suma + impuestos
-
-WHERE orders.orderid = orderdetail.orderid
-
-
-------------------
-
-
-UPDATE orders
-SET
-	totalamout = suma
-FROM orders
+	totalamount = sumas.s,
+  netamount = sumas.s + tax
+FROM (select orderdetail.orderid as id, sum(price) as s
+      from orderdetail, orders
+      where orders.orderid = orderdetail.orderid group by orderdetail.orderid) as sumas
 WHERE
-
-(select sum(price) from orderdetail, orders where orders.orderid = orderdetail.orderid group by orderdetail.orderid) as suma;
+ orders.orderid = sumas.id ;
