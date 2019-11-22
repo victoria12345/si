@@ -8,7 +8,7 @@ CREATE OR REPLACE FUNCTION updOrdersFunction() RETURNS TRIGGER AS $$ DECLARE res
 
       UPDATE orders
       SET -- queremos cambiar los precios
-        totalamount = netamount + nuevo*(tax/100) + nuevo,
+        totalamount = netamount + netamount*(tax/100) + nuevo*(tax/100) + nuevo,
         netamount = netamount + nuevo
       WHERE
           orderid = NEW.orderid
@@ -20,7 +20,7 @@ CREATE OR REPLACE FUNCTION updOrdersFunction() RETURNS TRIGGER AS $$ DECLARE res
       UPDATE orders
 
       SET
-        totalamount = netamount + nuevo*(tax/100) + nuevo,
+        totalamount = netamount + netamount*(tax/100) + nuevo*(tax/100) + nuevo,
         netamount = netamount + nuevo
       WHERE
         orderid = NEW.orderid
@@ -30,7 +30,7 @@ CREATE OR REPLACE FUNCTION updOrdersFunction() RETURNS TRIGGER AS $$ DECLARE res
 
       UPDATE orders
       SET
-        totalamount = netamount + nuevo*(tax/100) + nuevo,
+        totalamount = netamount + netamount*(tax/100) + nuevo*(tax/100) + nuevo,
         netamount = netamount + nuevo
       WHERE
         orderid = OLD.orderid
