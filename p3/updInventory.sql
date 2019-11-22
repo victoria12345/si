@@ -34,7 +34,9 @@ CREATE OR REPLACE FUNCTION updInventoryFunction() RETURNS TRIGGER AS $$ DECLARE 
       -- Ahora tendre que terlo de nuevo en la TABLA
       INSERT INTO alerts
       SELECT prod_id
-      WHERE ;
+      WHERE
+
+      ;
 
 
 
