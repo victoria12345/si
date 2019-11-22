@@ -1,3 +1,4 @@
+DROP FUNCTION IF EXISTS getTopVentas(integer);
 CREATE OR REPLACE FUNCTION getTopVentas(anno_entrada INTEGER,
 OUT Anno INTEGER,
 OUT Titulo VARCHAR,
@@ -16,7 +17,7 @@ FROM(
   FROM imdb_movies, orderdetail, orders, products
 
   WHERE orders.orderid = orderdetail.orderid AND
-        products.prod_id = orderdetail.orderid AND
+        products.prod_id = orderdetail.prod_id AND
         products.movieid = imdb_movies.movieid AND
         date_part('year', orders.orderdate) >=  anno_entrada
 
@@ -25,4 +26,4 @@ FROM(
   ORDER BY Anno, Ventas DESC, Titulo ) as res $$
 LANGUAGE SQL;
 
-select * from getTopVentas(2010);
+select * from getTopVentas(2015);
