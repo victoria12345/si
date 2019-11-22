@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+
+<html lang="es" dir="ltr">
+<head>
+   <meta charset="UTF-8">
+   <link href="https://fonts.googleapis.com/css?family=Josefin+Slab&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates&display=swap" rel="stylesheet">
+   <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename='style.css')}}">
+   <link rel="icon" href="{{url_for("static", filename= 'imagenes/logo.png')}}" >
+   <title> {% block title %} {% endblock %}- El Videoclub</title>
+   <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script> 
+   <script src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+</head>
+
+<body>
+
+  <div id="contenedor">
+    <div id="cabecera">
+      <!-- <a href="{{url_for('index')}}"><img id="logo" src ="../static/imagenes/logo.png" alt="Logo"></a> -->
+      <a href="{{url_for('index')}}"><img id="logo" src ="{{url_for("static", filename= 'imagenes/logo.png')}}" alt="Logo"></a>
+      <h1>Tu tienda de confianza</h1>
+
+      <form action="{{url_for('busqueda')}}" class = "busqueda" method="post">
+         <input class = "buscar" name="buscar" type="search" placeholder="Buscar...">
+         <select class="categoria" name="categoria">
+            <option value="">Categoria</option>
+            <option value="terror">Terror</option>
+            <option value="drama">Drama</option>
+            <option value="ciencia ficcion">Ciencia ficcion</option>
+            <option value="suspense">Suspense</option>
+            <option value="animada">Animada</option>
+            <option value="accion">Accion</option>
+            <option value="romantica">Romantica</option>
+         </select>
+		 <input class="boton" type ="submit" value="Buscar">
+      </form>
+      <div class = "infoDiv">
+          <div class=NumUs> 
+              <span>Clientes online: </span>  
+              <span id="numusuarios"></span>
+          </div>
+          
+      
+          <div class = "contacto">
+          <a href="https://github.com/search?q=org%3Agithub+victoria12345&unscoped_q=victoria12345"><img class="icono" src ="{{url_for("static", filename= 'imagenes/git.png')}}" alt="git"></a>
+          <a href="https://www.instagram.com/victoria_6/?hl=es"><img class="icono" src ="{{url_for("static", filename= 'imagenes/ig.png')}}" alt = "ig"></a>
+      
+          </div>
+      </div>
+	 
+    </div>
+
+
+    <div id="menu">
+    {% if not session['usuario'] %}
+  		<ul> <!-- ul define la lista-->
+  			<li><a href="{{url_for('index')}}">Home</a></li>  <!-- li define cada elemento de la lista-->
+  			<li><a href="{{url_for('registro')}}">Registrarse</a></li>
+  			<li><a href="{{url_for('login')}}">Login</a></li>
+        <li><a href="{{url_for('carrito')}}">Carrito</a></li>
+  		</ul>
+    {% else %}
+      <h4>Usuario:  {{ session['usuario'] }}</h4>
+        <ul> <!-- ul define la lista-->
+          <li><a href="{{url_for('index')}}">Home</a></li>  <!-- li define cada elemento de la lista-->
+          <li><a href="{{url_for('historial')}}">Historial</a></li>
+          <li><a href="{{url_for('logout')}}">Logout</a></li>
+          <li><a href="{{url_for('carrito')}}">Carrito</a></li>
+          <li><a href="{{url_for('saldo')}}">Saldo</a></li>
+      </ul>
+    {% endif %}
+	</div>
+
+   <div id="contenido">
+     {% block contenido %}
+     {% endblock %}
+   </div>
+
+    <div id="pie">
+      <p class= "etiqueta">Práctica realizada por Victoria Pelayo y Sofía Sánchez | &copy; 2019</p>
+    </div>
+  </div>
+
+</body>
+
+<script>
+$(document).ready(function() {
+    ajaxd();
+    setInterval(ajaxd, 3000); // cada 3 segundos
+});
+
+function ajaxd() { 
+  $.ajax({
+   type: "GET",
+   url: "{{url_for('numeroUsuarios')}}",
+  //  data: "user=success",
+   success: function(msg){
+    $("#numusuarios").text(msg)
+   }
+ });
+}
+
+</script>
+</html>

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block contenido %}
+      {% if not historial %}
+      <h2> No tienes peliculas en tu historial</h2>
+
+      {% else %}
+      <table>
+          {%for item in historial.keys() %}
+          <tr class = "todo">
+             <td colspan="4"> Compra realizada el {{item}} </td>
+          </tr>
+
+            <tr class="informacion">
+                <td class="titulo_t">Imagen</td>
+                <td class="titulo_t">Titulo</td>
+                <td class="titulo_t">Precio </td>
+                <td class="titulo_t">Cantidad</td>
+                 <!-- <td ><div > {{item.sinopsis}}  </div> </td> -->
+            </tr>
+
+          {% for i in historial[item] %}
+          <tr class="informacion">
+              <td><img class="imagen" src="../static/imagenes/{{i.poster}}" alt ="{{i.poster}}"></td>
+              <td ><div > {{i.titulo}}  </div> </td>
+              <td ><div > {{i.precio}}  </div> </td>
+              <td ><div > {{i.cantidad}}  </div> </td>
+
+
+               <!-- <td ><div > {{item.sinopsis}}  </div> </td> -->
+          </tr>
+          {% endfor %}
+          <tr class = "pausa">
+          </tr>
+
+
+         {% endfor %}
+       </table>
+      {% endif %}
+
+
+      <script>
+
+
+            $(document).ready(function(){
+
+              $('.todo').click(
+
+                  // Primer click
+                  function(){
+                      $(this).nextUntil('.pausa').slideToggle();
+                  }
+
+              );
+
+            });
+         </script>
+
+
+{% endblock %}

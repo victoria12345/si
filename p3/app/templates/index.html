@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+{% extends "base.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock%}
+
+{% block contenido %}
+   <h3>Quizás te interese ver...</h3>
+   <div class=contenidoPeliculas>
+   {% for item in movies %}
+     <div class="pelicula">
+        <a title="{{ item.titulo }}" href="{{url_for('informacion', pelicula_id = item.id)}}">
+        <img class="imagen_princ" src ={{url_for('static', filename= 'imagenes/'+item.poster)}} alt="{{item.titulo}}"><p> {{ item.titulo }}</p></a>
+     </div>
+   {% endfor %}
+   </div>
+
+{% endblock %}

@@ -1,0 +1,204 @@
+{ "peliculas":
+   [
+      {
+         "id": 1,
+         "titulo": "It Capitulo 2",
+         "poster": "it.png",
+         "director": "Andrés Muschietti",
+         "precio": 18.99,
+         "categoria": "terror",
+         "anno": 2019,
+         "duracion": "169 min",
+         "pais": "Estados Unidos",
+         "guionista": "Gary Dauberman",
+         "actores":
+         [
+            { "nombre": " lula",
+               "personaje": " mari carmen",
+               "foto": " "
+            }
+         ],
+         "sinopsis": "Han pasado casi 30 annos desde que el 'Club de los Perdedores', formado por Bill, Berverly, Richie, Ben, Eddie, Mike y Stanley, se enfrentaran al macabro y despiadado Pennywise (Bill Skarsgård). En cuanto tuvieron oportunidad, abandonaron el pueblo de Derry, en el estado de Maine, que tantos problemas les había ocasionado. Sin embargo, ahora, siendo adultos, parece que no pueden escapar de su pasado. Todos deberán enfrentarse de nuevo al temible payaso para descubrir si de verdad están preparados para superar sus traumas de la infancia."
+      },
+      {
+         "id": 2,
+         "titulo": "A dos metros de ti",
+         "poster": "a2m.jpg",
+         "director": "Justin Baldoni",
+         "precio": 18.99,
+         "categoria": "romantica",
+         "anno": 2019,
+         "duracion": "196 min",
+         "pais": "Estados Unidos",
+         "guionista": "Tobias Iaconis, Mikki Daughtry",
+         "actores":
+         [
+            { "nombre": "Cole Sprouse",
+               "personaje": "Will Newman",
+               "foto": " "
+            }
+         ],
+         "sinopsis": "Will y Stella son dos adolescentes que padecen fibrosis quística y están ingresados en el hospital para tratarse. Aunque ambos tratan de refugiarse en su propio mundo, de forma inevitable acaban enamorándose. La pareja deberá luchar para mantener viva su relación, con una única regla: separarse con una distancia de alrededor de dos metros para evitar que ambos se puedan contagiar. Sin embargo, la vida de ambos estará en peligro."
+      },
+      {
+         "id": 3,
+         "titulo": "Ad Astra",
+         "poster": "adastra.jpg",
+         "director": "James Gray",
+         "precio": 18.99,
+         "categoria": "ciencia ficcion",
+         "anno": 2019,
+         "duracion": "124 min",
+         "pais": "Estados Unidos",
+         "guionista": "Ethan Gross, James Gray",
+         "actores":
+         [
+            { "nombre": "Brad Pitt",
+               "personaje": "Roy McBride",
+               "foto": " "
+            }
+         ],
+         "sinopsis": "El astronauta Roy McBride (Brad Pitt) viaja a los límites exteriores del sistema solar para encontrar a su padre perdido y desentrannar un misterio que amenaza la supervivencia de nuestro planeta. Su viaje desvelará secretos que desafían la naturaleza de la existencia humana y nuestro lugar en el cosmos."
+      },
+      {
+         "id": 4,
+         "titulo": "Dora y la ciudad perdida",
+         "poster": "dora.jpg",
+         "director": "James Bobin",
+         "precio": 18.99,
+         "categoria": "accion",
+         "anno": 2019,
+         "duracion": "102 min",
+         "pais": "Australia - Estados Unidos",
+         "guionista": "Nicholas Stoller",
+         "actores":
+         [
+            { "nombre": "Isabela Moner",
+               "personaje": "Dora la exploradora",
+               "foto": " "
+            }
+         ],
+         "sinopsis": "La aventurera más famosa de la televisión llega al cine. Dora será la protagonista de este filme de acción real en el que la joven protagonista interpretada por Isabela Mone tendrá que enfrentarse a su aventura más peligrosa hasta la fecha. A pesar de una vida explorando la jungla junto a sus padres, nada ha preparado a Dora para lo que está por llegar: el instituto. Siempre preparada para explorar, Dora se encuentra rápidamente guiando a Botas -el mono que es también su mejor amigo-, su primo Diego (Micke Moreno) y a un variopinto grupo de adolescentes en una aventura para salvar a sus padres y resolver el imposible misterio detrás de una perdida civilización inca."
+      },
+      {
+         "id": 5,
+         "titulo": "Objetivo: Washington D.C.",
+         "poster": "objetivo.jpg",
+         "director": "Ric Roman Waugh",
+         "precio": 18.99,
+         "categoria": "accion",
+         "anno": 2019,
+         "duracion": "120 min",
+         "pais": "Estados Unidos",
+         "guionista": "Katrin Benedikt, Creighton Rothenberger",
+         "actores":
+         [
+            { "nombre": "Morgan Freeman",
+               "personaje": "Allan Trumbull",
+               "foto": " "
+            }
+         ],
+         "sinopsis": "Tras las amenazas a la Casa Blanca y Londres, esta vez el objetivo a batir es el agente del Servicio Secreto de Estados Unidos Banning (Gerard Butler), quien se ha ganado muchos enemigos al haber frustrado los diferentes planes terroristas hasta ahora."
+      },
+      {
+         "id": 6,
+         "titulo": "A quien a hierro mata",
+         "poster": "hierro.jpg",
+         "director": "Paco Plaza",
+         "precio": 18.99,
+         "categoria": "suspense",
+         "anno": 2019,
+         "duracion": "107 min",
+         "pais": "Espanna",
+         "guionista": "Jorge Guerricaechevarría",
+         "actores":
+         [
+            { "nombre": "Luis Tosar",
+               "personaje": "Mario",
+               "foto": " "
+            }
+         ],
+         "sinopsis": "Mario (Luis Tosar) es un hombre ejemplar, trabaja como enfermero en una residencia y en poco tiempo va a tener un hijo junto con su adorable mujer Julia. Antonio Padín es un reconocido narcotraficante de Galicia que tras salir de la cárcel ingresa en el centro donde trabaja Mario, debido a una grave enfermedad. Kike y Tonno son los hijos de Padín, quienes han tomado el relevo de su padre y se han hecho cargo del negocio familiar. Tras tener graves problemas con uno de sus socios y una importante deuda con un proveedor colombiano, el hermano mayor ingresará en la cárcel. Será entonces cuando Tonno intentará recurrir al enfermero de su padre, con quien ha creado una estrecha relación, pero Mario tiene otros planes en mente."
+      },
+      {
+         "id": 7,
+         "titulo": "Mientras dure la guerra",
+         "poster": "guerra.jpg",
+         "director": "Alejandro Amenábar",
+         "precio": 18.99,
+         "categoria": "drama",
+         "anno": 2019,
+         "duracion": "107 min",
+         "pais": "Espanna",
+         "guionista": "Alejandro Amenábar, Alejandro Hernández",
+         "actores":
+         [
+            { "nombre": "Karra Elejalde",
+               "personaje": "Miguel de Unamuno",
+               "foto": " "
+            }
+         ],
+         "sinopsis": "Espanna. Verano de 1936. El célebre escritor Miguel de Unamuno decide apoyar públicamente la rebelión militar que promete traer orden a la convulsa situación del país. Inmediatamente es destituido por el gobierno republicano como rector de la Universidad de Salamanca. Mientras tanto, el general Franco consigue sumar sus tropas al frente sublevado e inicia una exitosa campanna con la secreta esperanza de hacerse con el mando único de la guerra. La deriva sangrienta del conflicto y el encarcelamiento de algunos de sus companneros hacen que Unamuno empiece a cuestionar su postura inicial y a sopesar sus principios. Cuando Franco traslada su cuartel a Salamanca y es nombrado Jefe del Estado de la zona nacional, Unamuno acudirá a su Palacio, decidido a hacerle una petición de clemencia."
+      },
+      {
+         "id": 8,
+         "titulo": "Padre no hay mas que uno",
+         "poster": "padre.jpg",
+         "director": "Santiago Segura",
+         "precio": 18.99,
+         "categoria": "comedia",
+         "anno": 2019,
+         "duracion": "98 min",
+         "pais": "Espanna",
+         "guionista": "Marta González De Vega, Santiago Segura",
+         "actores":
+         [
+            { "nombre": "Silvia Abril",
+               "personaje": "Carmen",
+               "foto": " "
+            }
+         ],
+         "sinopsis": "Javier (Santiago Segura) es un padre de cinco hijos, de entre cuatro y doce annos. Una especie de 'marido/cunnao' que, sin ocuparse en absoluto de lo que supone el cuidado de la casa y de los ninnos, sabe perfectamente lo que hay que hacer, aunque continuamente regala a su mujer frases del tipo: “no te pongas nerviosa”, porque considera que su desbordada mujer se ahoga en un vaso de agua. Claro que Javier tendrá que enfrentarse a la caótica realidad que supone quedarse solo con sus cinco hijos, cuando su mujer decida irse de viaje y dejarle solo con ellos. La caótica situación que esto provoca en casa, todo un ejercicio práctico de conciliación familiar, dará lugar al desastre más absoluto. Eso sí, les dará la oportunidad a padre e hijos de conocerse y disfrutarse por primera vez. Será una experiencia que cambiará sus vidas para siempre."
+      },
+      {
+         "id": 9,
+         "titulo": "Cegado por la luz",
+         "poster": "cegado.jpg",
+         "director": "Gurinder Chadha",
+         "precio": 18.99,
+         "categoria": "comedia",
+         "anno": 2019,
+         "duracion": "118 min",
+         "pais": "Gran Bretanna",
+         "guionista": "Paul Mayeda Berges, Gurinder Chadha, Sarfraz Manzoor",
+         "actores":
+         [
+            { "nombre": "Aaron Phagura",
+               "personaje": "Roops",
+               "foto": " "
+            }
+         ],
+         "sinopsis": "'Blinded by the light (Cegado por la luz)' cuenta la historia de Javed (Viveik Kalra), un adolescente británico de ascendencia paquistaní, que vive en la ciudad inglesa de Luton en 1987. En medio de la agitación racial y económica de la época, Javed escribe poesía como medio para escapar de la intolerancia de su ciudad natal y de la inflexibilidad de un padre tradicional. Pero cuando un compannero de clase le da a conocer la música de 'The Boss', Javed ve paralelismos entre su vida de chico de clase trabajadora y las potentes letras de Springsteen. Así es como Javed descubre una salida catártica para sus suennos reprimidos y se arma de valor para empezar a expresarse con su propia voz."
+      },
+      {
+         "id": 10,
+         "titulo": "El Rey Leon",
+         "poster": "reyleon.jpg",
+         "director": "Jon Favreau",
+         "precio": 18.99,
+         "categoria": "animada",
+         "anno": 2019,
+         "duracion": "120 min",
+         "pais": "Estados Unidos",
+         "guionista": "Brenda Chapman, Jonathan Roberts, Linda Woolverton, Irene Mecchi, Jeff Nathanson",
+         "actores":
+         [
+            { "nombre": "Alfre Woodard",
+               "personaje": "Sarabi",
+               "foto": " "
+            }
+         ],
+         "sinopsis": "La nueva película 'El Rey León' de Disney Live Action, viaja a la sabana africana donde ha nacido el futuro rey. Simba idolatra a su padre, el rey Mufasa, y se toma muy en serio su propio destino real. Pero en el reino no todos celebran la llegada del nuevo cachorro. Scar, el hermano de Mufasa y antiguo heredero al trono, tiene sus propios planes. La batalla por Pride Rock está asolada por la traición, la tragedia y el drama, y termina con el exilio de Simba. Con la ayuda de un curioso par de nuevos amigos, Simba tendrá que aprender a madurar y a recuperar lo que le pertenece por derecho."
+      }
+   ]
+}

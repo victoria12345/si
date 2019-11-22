@@ -1,0 +1,166 @@
+<!DOCTYPE HTML>
+{% extends "base.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock%}
+
+{% block contenido %}
+
+<h2> Registrate en nuestra pagina!<br></h2>
+{% if mensaje %}
+    <h2>{{mensaje}}</h2>
+{% endif %}
+<div class ="registro">
+
+   <form action ="{{url_for('registro')}}" method="post" onsubmit="return validar();">
+      <p> Nombre de Usuario:</p>
+      <input class="text1" name=username type ="text" id="username" onkeypress="return permite(event)" required>
+      <p> Contraseña:</p>
+      <input class="text1" name=contrasenna type ="password" id="contrasenna" required>
+      <div class="barrita1" id="barrita"></div>
+      <p> Confirmación de contraseña:</p>
+      <input class="text1" name=contrasenna2 type ="password" id="contrasenna2" required>
+      <p> Email:</p>
+      <input class="text1" name=email type ="mail" id="email" required>
+      <p> Tarjeta:</p>
+      <input class="text1" name=tarjeta type ="text" id="tarjeta"required>
+      <p></p>
+
+      <input class="boton" type ="submit" value="Confirmar">
+   </form>
+
+</div>
+
+<script type='text/javascript'>
+
+function validar(){
+
+   var todo_correcto = true;
+
+
+   if(document.getElementById('username').value.length < 2 ){
+      alert('El nombre introducido es demasiado corto');
+      todo_correcto = false;
+   }
+   if(permite(document.getElementById('username').value) == false){
+
+      alert('El usuario introducido contiene caracteres no permitidos');
+      todo_correcto = false;
+   }
+
+   if(document.getElementById('contrasenna').value.length < 8 ){
+      alert('La contraseña es demasiado corta');
+      todo_correcto = false;
+   }
+
+   if(document.getElementById('contrasenna').value != document.getElementById('contrasenna2').value){
+       alert('Las contraseñas no coinciden');
+       todo_correcto = false;
+   }
+
+   if(isNaN(document.getElementById('tarjeta').value)){
+      alert('La tarjeta introducida no es un valor valido');
+      todo_correcto = false;
+   }
+
+   if(document.getElementById('tarjeta').value.length != 12){
+      alert('La tarjeta introducida tiene la longitud incorrecta');
+      todo_correcto = false;
+   }
+
+   var email = document.getElementById('email').value
+   var patron=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
+   if (email.search(patron) != 0) {
+      alert('El email introducido no es correcto');
+      todo_correcto = false;
+   }
+
+
+
+   return todo_correcto;
+}
+
+// function validar_email( email )
+// {
+//     var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+//     return regex.test(email) ? true : false;
+// }
+
+function permite(string){//solo letras y numeros
+
+    //Se añaden las letras validas
+    var filtro = 'abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNÑOPQRSTUVWXYZ1234567890';//Caracteres validos
+
+    for (var i=0; i<string.length; i++)
+       if (filtro.indexOf(string.charAt(i)) == -1)
+	     return false;
+    return true;
+}
+
+
+</script>
+
+
+
+<script>
+    jQuery.fn.fortalezaClave = function(){
+        $(this).each(function(){
+            elem = $(this);
+            //creo el elemento HTML para el mensaje
+            msg = $('<span class="colorContrasenna">\tNo segura</span>');
+            //inserto el mensaje en la página, justo después del campo input password
+            elem.after(msg)
+            //almaceno la referencia del elemento del mensaje dentro del campo input
+            elem.data("mensaje", msg);
+
+            elem.keyup(function(e){
+                elem = $(this);
+                //recupero la referencia al elemento del mensaje
+                msg = elem.data("mensaje")
+                //miro la fortaleza
+                //extraigo el atributo value del campo input password
+                claveActual = elem.attr("value");
+                var fortalezaActual = "";
+                //saco la fortaleza en función de los caracteres que tenga la clave
+                if (claveActual.length < 5){
+                    fortalezaActual = "\tNo segura";
+                    $('#barrita').removeClass('barrita3');
+                    $('#barrita').removeClass('barrita2');
+                    $('#barrita').addClass('barrita1');
+                    msg.removeClass('colorMedianamente');
+                    msg.removeClass('colorBuena');
+                    msg.addClass('colorContrasenna');
+                }else{
+                    if(claveActual.length < 8){
+                        fortalezaActual = "\tMedianamente segura";
+                        $('#barrita').removeClass('barrita3');
+                        $('#barrita').removeClass('barrita1');
+                        $('#barrita').addClass('barrita2');
+                        msg.removeClass('colorContrasenna');
+                        msg.removeClass('colorBuena');
+                        msg.addClass('colorMedianamente');
+                    }else{
+                        fortalezaActual = "\tSegura";
+                        $('#barrita').removeClass('barrita2');
+                        $('#barrita').removeClass('barrita1');
+                        $('#barrita').addClass('barrita3');
+                        msg.removeClass('colorContrasenna');
+                        msg.removeClass('colorMedianamente');
+                        msg.addClass('colorBuena');
+                    }
+                }
+                //cambio el texto del elemento mensaje para mostrar la fortaleza actual
+                msg.html(fortalezaActual);
+            });
+        });
+        return this;
+    }
+
+    //cuando la página esté lista, cargo la funcionalidad del plugin sobre el elemento password
+    $(document).ready(function(){
+        $("#contrasenna").fortalezaClave();
+    });
+</script>
+
+{% endblock %}

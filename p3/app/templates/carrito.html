@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock %}
+
+{% block contenido %}
+      {% if mensaje %}
+         <h2>{{mensaje}}</h2>
+      {% endif %}
+      <h2>Este es tu carrito de la compra...</h2>
+      {% if not carrito_lista %}
+         <h2> No tienes peliculas en tu carrito </h2>
+      {% else %}
+         <table>
+            <tr>
+               <th> </th>
+               <th> Película </th>
+               <th> Precio </th>
+               <th> Cantidad </th>
+               <th> </th>
+            </tr>
+            {% for item in carrito_lista %}
+            <tr>
+               <td><img class="imagen" src ={{url_for('static', filename= 'imagenes/'+item.poster)}} alt ="item.poster"></td>
+               <td> {{item.titulo}} </td>
+               <td> {{item.precio}} </td>
+               <td> {{numero_elementos[item.id-1]}}</td>
+               <td><button onclick="window.location.href='{{url_for('eliminar', pelicula_id = item.id)}}'" class=boton>Eliminar</button></td>
+            </tr>
+            <tr>
+            {% endfor %}
+            <tr>
+               <td class = "fila_vacia"> <button onclick="window.location.href='{{url_for('finalizar')}}' " class=boton>Finalizar Compra</button></td>
+               <td class = "fila_vacia" colspan="4"> Precio final de la compra: {{precio}} </td>
+            </tr>
+         </table>
+      {% endif %}
+{% endblock %}
