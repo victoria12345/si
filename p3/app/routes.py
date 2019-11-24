@@ -10,6 +10,14 @@ import hashlib
 import os.path as path
 import random
 import time
+### para la base de datos ###
+import sqlalchemy
+import hashlib
+from sqlalchemy import create_engine
+from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey
+from sqlalchemy.sql import select
+import  datetime 
+
 
 # #recibe un argumento de la manera L = [1,2,1,3,3,1]
 # #devolveremos una lista de la manera L=[(1,2),(2,4)] donde el primer valor es el id y el segundo el numero de veces que aparece
@@ -23,6 +31,15 @@ import time
 #         Lcontar.append((i,veces))
 #         Lindices.append(i)
 #     return Lcontar
+
+#vamos a crear la base de datos
+db_engine = create_engine("postgresql://alumnodb:alumnodb@localhost/si1", echo=False)
+
+#cargamos las tablas desde la base de datos
+db_meta = MetaData(bind = db_engine, reflect = True)
+
+#nos conectamos a la base de datos
+db_conn = db_engine.connect() #esto no se si es necesario hacerlo aqui pero imagino que si
 
 
 
@@ -91,49 +108,47 @@ def busqueda():
     return render_template('index.html', title = "Home", movies=L)
 
 
+#vamos a hacernos una funcion auxiliar que nos permita hacer las querys aqui
+def login_aux(username, password):
+
+    #hacemos la consulta para obtener la password
+    sql = sqlalchemy.text("SELECT password FROM customers WHERE username =:n").params(n = username)
+    try:
+        result = db_conn.execute(sql)
+        result = list(result)
+        if result[0]:
+            #tenemos resultados, en el [0] se enecuentra la contraseña
+            if result[0][0] == hashlib.md5(password).hexdigest():
+                return True
+            else:
+                return False
+    except:
+        return 'Peticion erronea'
+
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # doc sobre request object en http://flask.pocoo.org/docs/1.0/api/#incoming-request-data
     if 'username' in request.form:
 
-        dato =[]
-        i = 0
+        #cogemos el username y la passowrd
+        username = request.form['username']
+        password = reques.form['password']
 
-
-
-        cadena = "usuarios/" + request.form['username']
-        cadena = os.path.join(app.root_path,cadena)
-
-        if path.exists(cadena):
-            cadena = cadena + "/datos.dat"
-            with open(cadena) as f:
-                for linea in f:
-                    dato.append ((linea.split(": ")[1]).split('\n')[0])
-                    i = i + 1
-                    if i == 2:
-                        break
-        else:
-            # aqui se le puede pasar como argumento un mensaje de login invalido
-            return render_template('login.html', title = "Sign In", mensaje="No has realizado Login correctamente. Intentalo de nuevo")
-
-
-        aux2 = hashlib.md5(request.form['contrasenna'].encode())
-        aux2 = "" + aux2.hexdigest()
-        if request.form['username'] == dato[0] and aux2 == dato[1]:
+        if login_aux(username, password):
             resp = make_response(redirect(url_for('index')))
             resp.set_cookie('nombre',request.form['username'] )
             
             session['usuario'] = request.form['username']
             session.modified=True
-            # se puede usar request.referrer para volver a la pagina desde la que se hizo login
-            return resp
+
+            return resp#                 break
         else:
             # aqui se le puede pasar como argumento un mensaje de login invalido
             return render_template('login.html', title = "Sign In", mensaje="No has realizado Login correctamente. Intentalo de nuevo")
     else:
         nombre = request.cookies.get('nombre')
-        
         # se puede guardar la pagina desde la que se invoca
         session['url_origen']=request.referrer
         session.modified=True
