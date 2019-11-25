@@ -1,10 +1,21 @@
---BORRAR COLUMNAS QUE NO NECESITAMOS
+-- ACTUALIZAMOS LOS VALORES DE LOS ID'S
+SELECT setval('customers_customerid_seq', max(customerid)) FROM customers;
+SELECT setval('orders_orderid_seq', max(orderid)) FROM orders;
+
+﻿--BORRAR COLUMNAS QUE NO NECESITAMOS
 ALTER TABLE customers DROP COLUMN address2;
 ALTER TABLE customers DROP COLUMN zip;
 ALTER TABLE customers DROP COLUMN state;
 ALTER TABLE customers DROP COLUMN income;
 ALTER TABLE customers DROP COLUMN region;
-ALTER TABLE imdb_actormovies DROP COLUMN ascharacter; 
+ALTER TABLE customers DROP COLUMN firstname;
+ALTER TABLE customers DROP COLUMN lastname;
+ALTER TABLE customers DROP COLUMN address1;
+ALTER TABLE customers DROP COLUMN city;
+ALTER TABLE customers DROP COLUMN country;
+ALTER TABLE customers DROP COLUMN creditcardtype;
+ALTER TABLE customers DROP COLUMN creditcardexpiration;
+ALTER TABLE imdb_actormovies DROP COLUMN ascharacter;
 ALTER TABLE imdb_actormovies DROP COLUMN isvoice;
 ALTER TABLE imdb_actormovies DROP COLUMN isarchivefootage;
 ALTER TABLE imdb_actormovies DROP COLUMN isuncredited;
@@ -41,20 +52,20 @@ ALTER TABLE imdb_moviegenres ADD genreid integer NOT NULL DEFAULT 0;
 ALTER TABLE imdb_moviecountries ADD countryid integer NOT NULL DEFAULT 0;
 
 
-UPDATE imdb_movielanguages 
-SET languageid = l.languageid 
-FROM languages AS l 
+UPDATE imdb_movielanguages
+SET languageid = l.languageid
+FROM languages AS l
 WHERE l.language = imdb_movielanguages.language;
 
 
-UPDATE imdb_moviecountries 
-SET countryid = c.countryid 
+UPDATE imdb_moviecountries
+SET countryid = c.countryid
 FROM countries AS c
 WHERE c.country = imdb_moviecountries.country;
 
 
 UPDATE imdb_moviegenres
-SET genreid = g.genreid 
+SET genreid = g.genreid
 FROM genres AS g
 WHERE g.genre = imdb_moviegenres.genre;
 

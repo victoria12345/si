@@ -16,7 +16,7 @@ import hashlib
 from sqlalchemy import create_engine
 from sqlalchemy import Table, Column, Integer, String, MetaData, ForeignKey
 from sqlalchemy.sql import select
-import  datetime 
+import  datetime
 
 
 # #recibe un argumento de la manera L = [1,2,1,3,3,1]
@@ -42,6 +42,17 @@ db_meta = MetaData(bind = db_engine, reflect = True)
 db_conn = db_engine.connect() #esto no se si es necesario hacerlo aqui pero imagino que si
 
 
+def getTopVentas():
+    # 2016 porque queremos las pelis mas vendidas de los ultimos 2 annos
+    sql  = sqlalchemy.text("SELECT * FROM getTopVentas(2016);")
+
+    try:
+        result = db_conn.execute(sql)
+        result = list(result)
+        return result
+    except:
+        return None
+
 
 @app.route('/')
 @app.route('/index',methods=['GET','POST'])
@@ -62,8 +73,19 @@ def index():
         session['precio'] = 0 #ponemos el precio final a 0
         session.modified = True
 
-    return render_template('index.html', title = "Home", movies=catalogue['peliculas'][:10])
+        # annadimos las pelis mas vendidas para que se muestren
+    result = getTopVentas()
+    catalogue = {}
+    catalogue['peliculas'] = []
+    for item in result:
 
+        dicc={}
+        dicc['titulo'] = item[1]
+        dicc['id']=item[3]
+
+        catalogue['peliculas'].append(dicc)
+
+    return render_template('index.html', title = "Home", movies=catalogue['peliculas'])
 
 @app.route('/informacion/<pelicula_id>', methods=['GET','POST'])
 def informacion(pelicula_id):
@@ -107,25 +129,24 @@ def busqueda():
 
     return render_template('index.html', title = "Home", movies=L)
 
-
 #vamos a hacernos una funcion auxiliar que nos permita hacer las querys aqui
 def login_aux(username, password):
 
     #hacemos la consulta para obtener la password
-    sql = sqlalchemy.text("SELECT password FROM customers WHERE username =:n").params(n = username)
+    string = "SELECT password FROM customers WHERE username =\'" + username+"\'"
+    sql = sqlalchemy.text(string)
+    print(sql)
     try:
         result = db_conn.execute(sql)
         result = list(result)
         if result[0]:
             #tenemos resultados, en el [0] se enecuentra la contraseña
-            if result[0][0] == hashlib.md5(password).hexdigest():
+            if result[0][0] == password:
                 return True
             else:
                 return False
     except:
-        return 'Peticion erronea'
-
-
+        return False
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -134,12 +155,14 @@ def login():
 
         #cogemos el username y la passowrd
         username = request.form['username']
-        password = reques.form['password']
+        password = request.form['contrasenna']
 
         if login_aux(username, password):
+            print(login_aux(username, password))
+
             resp = make_response(redirect(url_for('index')))
             resp.set_cookie('nombre',request.form['username'] )
-            
+
             session['usuario'] = request.form['username']
             session.modified=True
 
@@ -213,43 +236,53 @@ def saldo():
     else:
         return render_template('saldo.html', title = "Añadir Saldo", saldo = saldo)
 
+def registro_aux(username, password, email, creditcard):
+    #hacemos la consulta para obtener la password
+    string = "SELECT password FROM customers WHERE username =\'" + username+"\'"
+    sql = sqlalchemy.text(string)
+
+    try:
+        result = db_conn.execute(sql)
+        result = list(result)
+        if result[0]:
+            return 'usuario existente'
+        return False
+
+    except:
+        # registramos al usuario
+        string = "INSERT INTO customers(username, password, creditcard, email)"
+        string += "VALUES (\'" + username + "\'"
+        string += ", \'" + password+ "\'"
+        string += ", \'" + creditcard+ "\'"
+        string += ", \'" + email+ "\' )"
+        print("la segunda query: ")
+        print(string)
+
+        sql = sqlalchemy.text(string)
+        try:
+            result = db_conn.execute(sql)
+            return True
+        except:
+            return False
+
 @app.route('/registro', methods=['GET', 'POST'])
 def registro():
 
     if 'username' in request.form:
 
+        passowrd = request.form['contrasenna']
+        username = request.form['username']
+        email = request.form['email']
+        creditcard = request.form['tarjeta']
 
-        cadena = "usuarios/" + request.form['username']
-        cadena = os.path.join(app.root_path,cadena)
-        if path.exists(cadena):
-            return render_template('registro.html', title = "Registro", mensaje="Ese nombre de usuario ya existe")
+        res = registro_aux(username, passowrd, email, creditcard)
+        if res:
+            if res == 'usuario existente':
+                return render_template('registro.html', title= "Registro", mensaje="Ese nombre de usuario ya existe")
+            else:
+                return redirect(url_for('index'))
         else:
-            #si el usuario no existe creamos el fichero datos.dat que contiene los datos del usuario
-            os.mkdir(cadena)
-            cadena_datos = cadena + "/datos.dat"
-            f = open(cadena_datos, "w")
-            aux_contrasenna = hashlib.md5(request.form['contrasenna'].encode())
-            aux_contrasenna = "" + aux_contrasenna.hexdigest()
-
-            saldo = str(random.randint(0, 100))
-
-            f.write("usuario: " + request.form['username'] + "\n" +
-                    "contrasenna: " + aux_contrasenna + "\n" +
-                    "correo: " + request.form['email'] + "\n" +
-                    "tarjeta: " + request.form['tarjeta'] + "\n" +
-                    "saldo: " + saldo + "\n"
-                    )
-            f.close()
-
-            #cuando ya hemos creado el fichero datos.dat tenemso que crear el historial.json
-            cadena_historial = cadena + "/historial.json"
-
-            f = open (cadena_historial, "w")
-
-            historial = {}
-
-            f.write(json.dumps(historial))
-            return redirect(url_for('index'))
+            return render_template('registro.html', title = "Registrarse")
     else:
         return render_template('registro.html', title = "Registrarse")
 
@@ -262,7 +295,7 @@ def comprar(pelicula_id):
     catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
     catalogue = json.loads(catalogue_data)
     movies=catalogue['peliculas']
-   
+
     for item in movies:
             if item['id'] == int(pelicula_id):
                 if 'carrito' not in session:
@@ -288,7 +321,7 @@ def carrito():
     catalogue = json.loads(catalogue_data)
     movies=catalogue['peliculas']
     L = []
-    
+
     for item in movies:
         if item['id'] in session['carrito']:
             L.append(item)

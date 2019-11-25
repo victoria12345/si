@@ -10,4 +10,4 @@ WHERE
 END;$$
 LANGUAGE plpgsql;
 
-SELECT * FROM setOrderAmount();
+

@@ -2,17 +2,19 @@ DROP FUNCTION IF EXISTS getTopVentas(integer);
 CREATE OR REPLACE FUNCTION getTopVentas(anno_entrada INTEGER,
 OUT Anno INTEGER,
 OUT Titulo VARCHAR,
-OUT Ventas INTEGER)
+OUT Ventas INTEGER,
+OUT Id INTEGER)
 
 RETURNS SETOF record
 AS $$
 
-SELECT DISTINCT ON (res.Anno) res.Anno, res.Titulo,res.Ventas
+SELECT DISTINCT ON (res.Anno) res.Anno, res.Titulo,res.Ventas, res.Id
 
 FROM(
   SELECT cast(date_part('year', orders.orderdate) as INTEGER) as Anno,
   imdb_movies.movietitle as Titulo,
-  cast(sum(orderdetail.quantity) as INTEGER) as Ventas
+  cast(sum(orderdetail.quantity) as INTEGER) as Ventas,
+  imdb_movies.movieid as Id
 
   FROM imdb_movies, orderdetail, orders, products
 
@@ -25,5 +27,3 @@ FROM(
 
   ORDER BY Anno, Ventas DESC, Titulo ) as res $$
 LANGUAGE SQL;
-
-select * from getTopVentas(2015);
