@@ -9,7 +9,7 @@
             <div class="detalle">
                 <div class="arriba">
 
-                    <img class="foto" src="../static/imagenes/{{ film.poster }}" alt ="it">
+                    <img class="foto" src={{url_for('static', filename= 'imagenes/'+"it.png")}} alt ="it">
                     <div class="info">
                         <div><h1>{{film.titulo}}</h1></div>
                         <div>

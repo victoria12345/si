@@ -19,19 +19,6 @@ from sqlalchemy.sql import select
 import  datetime
 
 
-# #recibe un argumento de la manera L = [1,2,1,3,3,1]
-# #devolveremos una lista de la manera L=[(1,2),(2,4)] donde el primer valor es el id y el segundo el numero de veces que aparece
-# def contar(lista):
-#     Lindices = []
-#     Lcontar = []
-#     for i in lista:
-#         if i in Lindices:
-#             continue
-#         veces = lista.count(i)
-#         Lcontar.append((i,veces))
-#         Lindices.append(i)
-#     return Lcontar
-
 #vamos a crear la base de datos
 db_engine = create_engine("postgresql://alumnodb:alumnodb@localhost/si1", echo=False)
 
@@ -58,12 +45,12 @@ def getTopVentas():
 @app.route('/index',methods=['GET','POST'])
 def index():
 
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-    movies=catalogue['peliculas']
+    # catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    # catalogue = json.loads(catalogue_data)
+    # movies=catalogue['peliculas']
+
+
     #creamos el carrito para la sesion
-
-
     if not "carrito" in session:
         session['n_producto_carrito'] = []
         for i in range(len(movies)):
@@ -82,57 +69,58 @@ def index():
         dicc={}
         dicc['titulo'] = item[1]
         dicc['id']=item[3]
-
         catalogue['peliculas'].append(dicc)
 
     return render_template('index.html', title = "Home", movies=catalogue['peliculas'])
 
 
 def informacion_aux(pelicula_id):
+
     pelicula = {}
 
     # sacamos el titulo
-    consulta = "SELECT language, genre, movietitle, directorname, price, movierelease"
-    consulta += "FROM imdb_movies NATURAL JOIN languages NATURAL JOIN imdb_movielanguages"
-    consulta += "NATURAL JOIN genres NATURAL JOIN imdb_moviegenres NATURAL JOIN imdb_directors"
-    consulta += "NATURAL JOIN imdb_directormovies NATURAL JOIN products WHERE prod_id =" + pelicula_id
+    consulta = "SELECT language, genre, movietitle, directorname, price, movierelease, year"
+    consulta += " FROM imdb_movies NATURAL JOIN languages NATURAL JOIN imdb_movielanguages"
+    consulta += " NATURAL JOIN genres NATURAL JOIN imdb_moviegenres NATURAL JOIN imdb_directors"
+    consulta += " NATURAL JOIN imdb_directormovies NATURAL JOIN products WHERE prod_id =" + pelicula_id
 
     sql  = sqlalchemy.text(consulta)
 
     try:
+        
         res = db_conn.execute(sql)
-        titulo = list(res)[0][2]
-        idioma = list(res)[0][0]
-        categoria = list(res)[0][1]
-        director = list(res)[0][3]
-        precio = list(res)[0][4]
-        sinopsis = list(res)[0][5]
+        res = list(res)
+
+        titulo = res[0][2]
+        idioma = res[0][0]
+        categoria = res[0][1]
+        director = res[0][3]
+        precio = res[0][4]
+        sinopsis = res[0][5]
+        anno = res[0][6]
         pelicula['titulo'] = titulo
         pelicula['idioma'] = idioma
         pelicula['categoria'] = categoria
         pelicula['director'] = director
         pelicula['precio'] = precio
         pelicula['sinopsis'] = sinopsis
+        pelicula['anno'] = anno
+       
+        if sinopsis is None or sinopsis == "":
+            pelicula['sinopsis'] = "este articulo no tiene sinopsis disponible"
+
+        return pelicula
+
     except:
         return None
 
-    return pelicula
+   
 
 
 @app.route('/informacion/<pelicula_id>', methods=['GET','POST'])
 def informacion(pelicula_id):
-    # catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    # catalogue = json.loads(catalogue_data)
-
-    # movies=catalogue['peliculas']
-
-    # for item in movies:
-    #     if item['id'] == int(pelicula_id):
-    #         return render_template('informacion.html', title = "Pelicula", film=item, flag=False)
-
-
-    # pelicula_id recordar que es el id del producto
     item = informacion_aux(pelicula_id)
+    
 
     if item is None:
         return 'error'
@@ -173,7 +161,7 @@ def login_aux(username, password):
     #hacemos la consulta para obtener la password
     string = "SELECT password FROM customers WHERE username =\'" + username+"\'"
     sql = sqlalchemy.text(string)
-    print(sql)
+    
     try:
         result = db_conn.execute(sql)
         result = list(result)
