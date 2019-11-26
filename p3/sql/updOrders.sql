@@ -4,7 +4,7 @@ DROP FUNCTION IF EXISTS updOrdersFunction();
 CREATE OR REPLACE FUNCTION updOrdersFunction() RETURNS TRIGGER AS $$ DECLARE result integer;
   BEGIN
     IF (TG_OP = 'INSERT') THEN -- SE AÑADE UN ARTICULO AL CARRITO
-      nuevo := NEW.totalamount
+      NEW.nuevo := NEW.totalamount
 
       UPDATE orders
       SET -- queremos cambiar los precios
@@ -15,7 +15,7 @@ CREATE OR REPLACE FUNCTION updOrdersFunction() RETURNS TRIGGER AS $$ DECLARE res
       RETURN NEW;
 
     ELSIF (TG_OP = 'UPDATE') THEN -- SE ACTUALIZA UN ARTICULO DEL CARRITO
-      nuevo := NEW.totalamount - OLD.totalamount
+      NEW.nuevo := NEW.totalamount - OLD.totalamount
 
       UPDATE orders
 

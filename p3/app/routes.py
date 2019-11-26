@@ -128,30 +128,61 @@ def informacion(pelicula_id):
     return render_template('informacion.html', title = "Pelicula", film=item, flag=False)
 
 
+##########################################################
+# NO FUNCIONAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+######################################################
+#################################################
+
+def buscar_titulo(titulo):
+    consulta = "SELECT * FROM imdb_movies NATURAL JOIN products NATURAL JOIN imdb_moviegenres NATURAL JOIN genres movietitle like \'%"+titulo+"%\'"
+    sql  = sqlalchemy.text(consulta)
+
+    try:
+        result = db_conn.execute(sql)
+        result = list(result)
+        L=[]
+        for item in result:
+            pelicula = {}
+            pelicula['id'] = result[item][0]
+            pelicula['titulo'] = result[item][1]
+            pelicula['categoria'] = result[item][2]
+            L.append(pelicula)
+        
+        return L
+    except:
+        return None
+
+
 @app.route('/busqueda', methods=['GET','POST'])
 def busqueda():
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-    movies=catalogue['peliculas']
+    # catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    # catalogue = json.loads(catalogue_data)
+    # movies=catalogue['peliculas']
 
     L=[]
 
     if request.form['buscar'] != "":
-        for item in movies:
-            if request.form['buscar'].lower() in item['titulo'].lower():
-                L.append(item)
-        if request.form['categoria'] != "":
-            for item in L:
-                if item['categoria'] != request.form['categoria']:
-                    L.remove(item)
-
-    elif request.form['categoria'] != "":
-        for item in movies:
-            if item['categoria'] == request.form['categoria']:
+        res = buscar_titulo(request.form['buscar'])
+        if res is None:
+            return render_template('index.html', title = "Home", movies=L)
+        else:
+            for item in res:
                 L.append(item)
 
-    else:
-        return redirect(url_for('index'))
+        # print(L)
+        # if request.form['categoria'] != "":
+        #     for item in L:
+        #         if item['categoria'] != request.form['categoria']:
+        #             L.remove(item)
+
+    # elif request.form['categoria'] != "":
+    #     res = buscar_categoria(categoria)
+    #     for item in movies:
+    #         if item['categoria'] == request.form['categoria']:
+    #             L.append(item)
+
+    # else:
+    #     return redirect(url_for('index'))
 
     return render_template('index.html', title = "Home", movies=L)
 
