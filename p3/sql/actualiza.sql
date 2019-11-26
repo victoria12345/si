@@ -2,7 +2,7 @@
 SELECT setval('customers_customerid_seq', max(customerid)) FROM customers;
 SELECT setval('orders_orderid_seq', max(orderid)) FROM orders;
 
-﻿--BORRAR COLUMNAS QUE NO NECESITAMOS
+--BORRAR COLUMNAS QUE NO NECESITAMOS
 ALTER TABLE customers DROP COLUMN address2;
 ALTER TABLE customers DROP COLUMN zip;
 ALTER TABLE customers DROP COLUMN state;

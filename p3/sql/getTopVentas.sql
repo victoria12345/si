@@ -14,7 +14,7 @@ FROM(
   SELECT cast(date_part('year', orders.orderdate) as INTEGER) as Anno,
   imdb_movies.movietitle as Titulo,
   cast(sum(orderdetail.quantity) as INTEGER) as Ventas,
-  imdb_movies.movieid as Id
+  products.prod_id as Id
 
   FROM imdb_movies, orderdetail, orders, products
 
@@ -23,7 +23,7 @@ FROM(
         products.movieid = imdb_movies.movieid AND
         date_part('year', orders.orderdate) >=  anno_entrada
 
-  GROUP BY Anno, imdb_movies.movieid
+  GROUP BY Anno, imdb_movies.movietitle,products.prod_id
 
   ORDER BY Anno, Ventas DESC, Titulo ) as res $$
 LANGUAGE SQL;

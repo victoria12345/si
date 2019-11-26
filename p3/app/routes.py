@@ -87,19 +87,57 @@ def index():
 
     return render_template('index.html', title = "Home", movies=catalogue['peliculas'])
 
+
+def informacion_aux(pelicula_id):
+    pelicula = {}
+
+    # sacamos el titulo
+    consulta = "SELECT language, genre, movietitle, directorname, price, movierelease"
+    consulta += "FROM imdb_movies NATURAL JOIN languages NATURAL JOIN imdb_movielanguages"
+    consulta += "NATURAL JOIN genres NATURAL JOIN imdb_moviegenres NATURAL JOIN imdb_directors"
+    consulta += "NATURAL JOIN imdb_directormovies NATURAL JOIN products WHERE prod_id =" + pelicula_id
+
+    sql  = sqlalchemy.text(consulta)
+
+    try:
+        res = db_conn.execute(sql)
+        titulo = list(res)[0][2]
+        idioma = list(res)[0][0]
+        categoria = list(res)[0][1]
+        director = list(res)[0][3]
+        precio = list(res)[0][4]
+        sinopsis = list(res)[0][5]
+        pelicula['titulo'] = titulo
+        pelicula['idioma'] = idioma
+        pelicula['categoria'] = categoria
+        pelicula['director'] = director
+        pelicula['precio'] = precio
+        pelicula['sinopsis'] = sinopsis
+    except:
+        return None
+
+    return pelicula
+
+
 @app.route('/informacion/<pelicula_id>', methods=['GET','POST'])
 def informacion(pelicula_id):
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
+    # catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
+    # catalogue = json.loads(catalogue_data)
 
-    movies=catalogue['peliculas']
+    # movies=catalogue['peliculas']
 
-    for item in movies:
-        if item['id'] == int(pelicula_id):
-            return render_template('informacion.html', title = "Pelicula", film=item, flag=False)
+    # for item in movies:
+    #     if item['id'] == int(pelicula_id):
+    #         return render_template('informacion.html', title = "Pelicula", film=item, flag=False)
 
 
-    return 'error'
+    # pelicula_id recordar que es el id del producto
+    item = informacion_aux(pelicula_id)
+
+    if item is None:
+        return 'error'
+
+    return render_template('informacion.html', title = "Pelicula", film=item, flag=False)
 
 
 @app.route('/busqueda', methods=['GET','POST'])
