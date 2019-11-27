@@ -79,3 +79,25 @@ ALTER TABLE imdb_moviecountries DROP COLUMN country;
 ALTER TABLE imdb_movielanguages ADD CONSTRAINT imdb_movielanguages_pk PRIMARY KEY (movieid, languageid);
 ALTER TABLE imdb_moviecountries ADD CONSTRAINT imdb_moviecountries_pk PRIMARY KEY (movieid, countryid);
 ALTER TABLE imdb_moviegenres ADD CONSTRAINT imdb_moviegenres_pk PRIMARY KEY (movieid, genreid);
+
+
+-- cambiar orderdetail
+CREATE TABLE public.orderdetail2(
+	orderid INTEGER NOT NULL,
+	prod_id INTEGER NOT NULL,
+	price NUMERIC,
+	quantity INTEGER NOT NULL,
+	PRIMARY KEY(orderid, prod_id),
+	FOREIGN KEY(orderid) REFERENCES orders(orderid),
+	FOREIGN KEY(prod_id) REFERENCES products(prod_id)
+); 
+
+INSERT INTO orderdetail2 (orderid, prod_id, price, quantity)
+ select t.orderid, t.prod_id, t.price, t.quantity 
+FROM (select sum(price) as price, sum(quantity) as quantity, 
+		orderid as orderid, prod_id as prod_id
+	from orderdetail 
+	group by orderid, prod_id) as t;
+
+DROP TABLE orderdetail;
+ALTER TABLE orderdetail2 RENAME TO orderdetail;

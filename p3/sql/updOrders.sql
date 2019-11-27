@@ -1,21 +1,21 @@
 DROP TRIGGER IF EXISTS updOrders on orderdetail;
 DROP FUNCTION IF EXISTS updOrdersFunction();
 
-CREATE OR REPLACE FUNCTION updOrdersFunction() RETURNS TRIGGER AS $$ DECLARE result integer;
+CREATE OR REPLACE FUNCTION updOrdersFunction() RETURNS TRIGGER AS $$ DECLARE nuevo integer;
   BEGIN
     IF (TG_OP = 'INSERT') THEN -- SE AÑADE UN ARTICULO AL CARRITO
-      NEW.nuevo := NEW.totalamount
+      nuevo := NEW.totalamount;
 
       UPDATE orders
       SET -- queremos cambiar los precios
         totalamount = netamount + netamount*(tax/100) + nuevo*(tax/100) + nuevo,
         netamount = netamount + nuevo
       WHERE
-          orderid = NEW.orderid
+          orderid = NEW.orderid;
       RETURN NEW;
 
     ELSIF (TG_OP = 'UPDATE') THEN -- SE ACTUALIZA UN ARTICULO DEL CARRITO
-      NEW.nuevo := NEW.totalamount - OLD.totalamount
+      nuevo := NEW.totalamount - OLD.totalamount;
 
       UPDATE orders
 
@@ -23,17 +23,17 @@ CREATE OR REPLACE FUNCTION updOrdersFunction() RETURNS TRIGGER AS $$ DECLARE res
         totalamount = netamount + netamount*(tax/100) + nuevo*(tax/100) + nuevo,
         netamount = netamount + nuevo
       WHERE
-        orderid = NEW.orderid
+        orderid = NEW.orderid;
       RETURN NEW;
     ELSE -- SE ELIMINA UN ARTICULO DEL CARRITO
-      nuevo := - OLD.totalamount
+      nuevo := - OLD.totalamount;
 
       UPDATE orders
       SET
         totalamount = netamount + netamount*(tax/100) + nuevo*(tax/100) + nuevo,
         netamount = netamount + nuevo
       WHERE
-        orderid = OLD.orderid
+        orderid = OLD.orderid;
       RETURN OLD;
 
   END IF;
