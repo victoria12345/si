@@ -392,8 +392,10 @@ def comprar_aux(pelicula_id, userid):
 @app.route('/informacion/<pelicula_id>comprada', methods=['GET','POST'])
 def comprar(pelicula_id):
 
+    if not 'userid' in session:
+        return render_template('login.html', title = "Login")
+
     userid = session['userid']
-    
     comprar_aux(pelicula_id, userid)
 
     item = informacion_aux(pelicula_id)

@@ -104,3 +104,11 @@ ALTER TABLE orderdetail2 RENAME TO orderdetail;
 
 -- Para añadir el saldo a los usuarios 
 ALTER TABLE customers ADD saldo numeric DEFAULT 100;
+
+--Annadimos la tabla alerts
+CREATE TABLE public.alerts
+(
+  prod_id integer NOT NULL,
+  orderdate date,
+  FOREIGN KEY(prod_id) REFERENCES products(prod_id)
+)
