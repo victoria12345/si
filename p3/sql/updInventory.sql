@@ -1,51 +1,42 @@
 DROP TRIGGER IF EXISTS updInventory on orderdetail;
-DROP FUNCTION IF EXISTS updInventoryFunction();
+DROP FUNCTION IF EXISTS updInventoryFunction() CASCADE;
 
-CREATE OR REPLACE FUNCTION updInventoryFunction() RETURNS TRIGGER AS $$ DECLARE result integer;
+CREATE OR REPLACE FUNCTION updInventoryFunction() RETURNS TRIGGER AS $$ 
+DECLARE product record;
   BEGIN
-    IF (NEW.status is not null and OLD.status is null) -- cuando tengamos un nuevo estado
+    
+FOR product IN 
+  SELECT prod_id, stock, sales, quantity 
+  FROM orders NATURAL JOIN orderdetail NATURAL JOIN inventory
+  WHERE OLD.orderid = orderid
 
-    -- QUEREMOS QUE ACTUALICE ORDERS E INVENTORY CUANDO SE FINALICE LA COMPRA
-    -- El trigger también deberá crear una alerta en una nueva tabla llamada 'alertas'
-    -- si la cantidad en stock llega a cero. Realizar los cambios necesarios en la
-    -- base de datos para incluir dicha tabla, incorporándolos al script actualiza.sql.
+LOOP
 
-    -- cuando se finalice la compra queremos que se inserte en la tabla ORDERS
-    -- cuando se finalice la compra queremos que en el inventory se modifique el stock --> aqui si llegamos a 0 hacemos una alerta
-      UPDATE inventory
-      SET
-        stock = stock - num_products --num_products sera algo que nos diga cuantas peliculas compramos
-        sales = sales + num_products
-      WHERE
-        orderdetail.prod_id = inventory.prod_id AND
-        OLD.orderid = orderdetail.orderid ;
+  UPDATE inventory
+  SET 
+    stock = product.stock - product.quantity,
+    sales = product.sales + product.quantity
+  WHERE
+    inventory.prod_id = product.prod_id;
 
-      -- YA TENEMOS ACTUALIZADO EL INVENTARIO
-      -- AHORA QUETENEMOS QUE SE CREE LA alerta
-      -- suponemos que tenemos una tabla llamada alerts que tengo que poner en actualiza.SQL
-      -- ESTA TABLA NOS VA A DAR LA INFORMACION DE LOS PRODUCTOS CUYO STOCK ESTA A 0
-
-      -- Aqui tenemos que eliminarlo
-      DELETE FROM alerts
-      SELECT prod_id
-      WHERE ;
+  IF product.stock <= product.quantity THEN
+    INSERT INTO alerts (prod_id, orderdate) VALUES (product.prod_id, NOW());
+  END IF;
+END LOOP;
 
 
-      -- Ahora tendre que terlo de nuevo en la TABLA
-      INSERT INTO alerts
-      SELECT prod_id
-      WHERE
+NEW.orderdate = 'NOW()';
 
-      ;
+RETURN NEW;
 
-
-
-    END IF;
-  END;
+END;
 
 
 $$ LANGUAGE plpgsql;
 
+DROP  TRIGGER IF EXISTS  updInventory ON orders;
 CREATE TRIGGER updInventory
-BEFORE INSERT OR UPDATE OR DELETE ON orderdetail
-    FOR EACH ROW EXECUTE PROCEDURE updInventoryFunction();
+BEFORE UPDATE OF status ON orders
+    FOR EACH ROW 
+    WHEN (NEW.status = 'Paid')
+    EXECUTE PROCEDURE updInventoryFunction();
