@@ -369,6 +369,52 @@ def comprar(pelicula_id):
                 session.modified = True
                 return render_template('informacion.html', title = "Pelicula", film=item, flag=True)
 
+    userid = session['userid'] # TENEMOS QUE GUARDARLOOOOOO
+
+    # seleccionamos toda la informacion del pedidido cuyo estado sea null y sea del usuario que esta en la sesion
+    string = "SELECT * FROM orders WHERE status is null AND customerid =\'" + userid +"\';"
+    sql = sqlalchemy.text(string)
+
+    # ejecutamos la query
+    result = db_conn.execute(sql)
+    result = list(result)
+
+     # si no obtenemos lista es porque no tenemos ese order en la tabla con lo cual tenemos que añadirlo 
+     # tenemos que añadirlo tanto a orders como a orderdetail
+    if result == []:
+        string = "INSERT INTO orders (orderdate,customerid) VALUES (NOW()," + userid + ");"
+        sql = sqlalchemy.text(string)
+        db_conn.execute(sql)
+        # ahora que ya lo tenemos queremos obtener el id de este pedido para poder actualizar orderdetail 
+        string = "SELECT orderid FROM orders WHERE status is null AND customerid =\'" + userid +"\';"
+        sql = sqlalchemy.text(string)
+        result = db_conn.execute(sql)
+        result = list(result)
+    
+    # Una vez estanmos aqui, es porque ya lo tenemos en la lista o lo acabamos de añadir 
+    # entonces lo que pasara es que tendremos que actualizar el orderdetail si ya esta --> esto es porque ya teniamos la venta
+    # tendremos que insertarlo en orderdetail si no estaba en orders --> esto es porque no tenemos esa venta el orders
+    orderid = result[0][0]
+    #tengo que mirar si esta en orderdetail o no
+    string = "SELECT * FROM orderdetail WHERE orderid == " + orderid + ";"
+    sql = sqlalchemy.text(string)
+    result = db_conn.execute(sql)
+    result = list(result)
+
+    if result == []: #si esta vavia es porque no esta en orderdetail --> tenemos que añadirla
+        string = "INSERT INTO orderdetail (orderid, prod_id, price, quantity) VALUES ( " + orderid + "," + pelicula_id
+        string += ", ( SELECT price FROM products WHERE prod_id == " + pelicula_id + "), 1 )"
+        sql = sqlalchemy.text(string)
+        db_conn.execute(sql)
+
+    else: # no esta vacia, con lo cual ya esta en orderdetail y solo tenemos que actualizar
+        string = "UPDATE orderdetail SET quantity = quantity + 1, price = price + (SELECT price FROM products WHERE prod_id ==" + pelicula_id
+        string += ") WHERE prod_id == " + pelicula_id + " AND orderid == " + orderid + ";"
+        sql = sqlalchemy.text(string)
+        db_conn.execute(sql)
+
+
+
 # #esta funcion nos permitira cargar el carrito de la compra:
 # es decir la vista y ademas realizar diferentes funciones con el carrito
 
@@ -406,6 +452,32 @@ def eliminar(pelicula_id):
     #         L.append(item)
     # return carrito()
     return redirect(url_for('carrito'))
+
+    string = "SELECT * FROM orders WHERE status is null AND customerid =\'" + userid +"\';"
+    sql = sqlalchemy.text(string)
+
+    # ejecutamos la query
+    result = db_conn.execute(sql)
+    result = list(result)
+
+    if result == []: 
+        print("ERROR no deberiamos estar aqui porque estamos intntando borrar algo que deberia de estar en la BD")
+    
+    orderid = result[0][0]
+    #tengo que mirar si esta en orderdetail o no --> deberia de estar
+    string = "SELECT * FROM orderdetail WHERE orderid == " + orderid + ";"
+    sql = sqlalchemy.text(string)
+    result = db_conn.execute(sql)
+    result = list(result)
+
+    if result == []:
+        print("ERROR no deberiamos estar aqui porque estamos intntando borrar algo que deberia de estar en la BD")
+    
+    string = "UPDATE orderdetail SET quantity = quantity - 1;" #TENGO QUE CAMBIAR EL PRECIO PERO NO SE COMO HACERLO
+    sql = sqlalchemy.text(string)
+    db_conn.execute(sql)
+    
+
 
 
 # Esta funcion nos permite finalizar la compra
