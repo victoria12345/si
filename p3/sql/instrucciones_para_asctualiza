@@ -5,4 +5,6 @@ psql -U alumnodb si1 -f SetPrice.sql
 psql -U alumnodb si1 -f SetOrderAmount.sql
 psql -U alumnodb si1 -f getTopMonths.sql
 psql -U alumnodb si1 -f getTopVentas.sql
+psql -U alumnodb si1 -f updOrders.sql
+psql -U alumnodb si1 -f updInventory.sql
 

@@ -12,7 +12,7 @@
 
 UPDATE orderdetail
 SET --aqui tenemos que poner lo que queremos
-	price = orderdetail.quantity*products.price/ pow(1.02, (SELECT EXTRACT( year from  NOW()) - (SELECT EXTRACT( year from orders.orderdate))))
+	price = products.price/ pow(1.02, (SELECT EXTRACT( year from  NOW()) - (SELECT EXTRACT( year from orders.orderdate))))
 
 FROM products, orders
 

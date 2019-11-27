@@ -94,10 +94,10 @@ CREATE TABLE public.orderdetail2(
 
 INSERT INTO orderdetail2 (orderid, prod_id, price, quantity)
  select t.orderid, t.prod_id, t.price, t.quantity 
-FROM (select sum(price) as price, sum(quantity) as quantity, 
+FROM (select price as price, sum(quantity) as quantity, 
 		orderid as orderid, prod_id as prod_id
 	from orderdetail 
-	group by orderid, prod_id) as t;
+	group by price, orderid, prod_id) as t;
 
 DROP TABLE orderdetail;
 ALTER TABLE orderdetail2 RENAME TO orderdetail;

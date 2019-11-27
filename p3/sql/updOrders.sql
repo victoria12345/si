@@ -1,47 +1,41 @@
 DROP TRIGGER IF EXISTS updOrders on orderdetail;
 DROP FUNCTION IF EXISTS updOrdersFunction();
 
-CREATE OR REPLACE FUNCTION updOrdersFunction() RETURNS TRIGGER AS $$ DECLARE nuevo integer;
+CREATE OR REPLACE FUNCTION updOrdersFunction() RETURNS TRIGGER AS $$
   BEGIN
     IF (TG_OP = 'INSERT') THEN -- SE AÑADE UN ARTICULO AL CARRITO
-      nuevo := NEW.totalamount;
 
       UPDATE orders
-      SET -- queremos cambiar los precios
-        totalamount = netamount + netamount*(tax/100) + nuevo*(tax/100) + nuevo,
-        netamount = netamount + nuevo
+      SET
+        totalamount = (NEW.price * NEW.quantity)+ (tax/100)*(NEW.price * NEW.quantity),
+        netamount = NEW.price * NEW.quantity
+     
       WHERE
-          orderid = NEW.orderid;
+      orders.orderid = NEW.orderid ;
       RETURN NEW;
 
     ELSIF (TG_OP = 'UPDATE') THEN -- SE ACTUALIZA UN ARTICULO DEL CARRITO
-      nuevo := NEW.totalamount - OLD.totalamount;
+      IF  (NEW.quantity = 0) THEN
+        
+        DELETE FROM orderdetail WHERE orderdetail.orderid = OLD.orderid AND orderdetail.prod_id = OLD.prod_id;
+        RETURN NEW;
+
+      END IF;
 
       UPDATE orders
-
       SET
-        totalamount = netamount + netamount*(tax/100) + nuevo*(tax/100) + nuevo,
-        netamount = netamount + nuevo
+        totalamount = (netamount + NEW.price * (NEW.quantity-OLD.quantity))+ (tax/100)*(netamount + NEW.price * (NEW.quantity-OLD.quantity)),
+        netamount = netamount + NEW.price * (NEW.quantity-OLD.quantity)
+     
       WHERE
-        orderid = NEW.orderid;
+      orders.orderid = NEW.orderid ;
       RETURN NEW;
-    ELSE -- SE ELIMINA UN ARTICULO DEL CARRITO
-      nuevo := - OLD.totalamount;
-
-      UPDATE orders
-      SET
-        totalamount = netamount + netamount*(tax/100) + nuevo*(tax/100) + nuevo,
-        netamount = netamount + nuevo
-      WHERE
-        orderid = OLD.orderid;
-      RETURN OLD;
-
   END IF;
 END;
 
 
 $$ LANGUAGE plpgsql;
-
+DROP  TRIGGER IF EXISTS  updOrders ON  orderdetail;
 CREATE TRIGGER updOrders
-BEFORE INSERT OR UPDATE OR DELETE ON orderdetail
+AFTER INSERT OR UPDATE ON orderdetail
     FOR EACH ROW EXECUTE PROCEDURE updOrdersFunction();

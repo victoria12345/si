@@ -2,7 +2,7 @@ CREATE OR REPLACE FUNCTION SetOrderAmount() RETURNS void AS $$BEGIN UPDATE order
 SET
   totalamount = sumas.s + (tax/100)*sumas.s,
   netamount = sumas.s
-FROM (select orderdetail.orderid as id, sum(price) as s
+FROM (select orderdetail.orderid as id, sum(price*orderdetail.quantity) as s
       from orderdetail, orders
       where orders.orderid = orderdetail.orderid group by orderdetail.orderid) as sumas
 WHERE
@@ -10,4 +10,4 @@ WHERE
 END;$$
 LANGUAGE plpgsql;
 
-
+SELECT * FROM setOrderAmount();

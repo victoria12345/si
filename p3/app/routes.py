@@ -190,7 +190,7 @@ def busqueda():
 def login_aux(username, password):
 
     #hacemos la consulta para obtener la password
-    string = "SELECT password FROM customers WHERE username =\'" + username+"\'"
+    string = "SELECT password FROM customers WHERE password = \'" + passowrd + "\' AND username =\'" + username+"\'"
     sql = sqlalchemy.text(string)
     
     try:
