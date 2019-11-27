@@ -101,3 +101,6 @@ FROM (select price as price, sum(quantity) as quantity,
 
 DROP TABLE orderdetail;
 ALTER TABLE orderdetail2 RENAME TO orderdetail;
+
+-- Para añadir el saldo a los usuarios 
+ALTER TABLE customers ADD saldo numeric DEFAULT 100;

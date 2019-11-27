@@ -52,9 +52,6 @@ def index():
 
     #creamos el carrito para la sesion
     if not "carrito" in session:
-        session['n_producto_carrito'] = []
-        for i in range(len(movies)):
-            session['n_producto_carrito'].append(0)
 
         session['carrito'] = [] #creamos una lista vacia para el carrito
         session['precio'] = 0 #ponemos el precio final a 0
@@ -82,7 +79,7 @@ def informacion_aux(pelicula_id):
     consulta = "SELECT language, genre, movietitle, directorname, price, movierelease, year"
     consulta += " FROM imdb_movies NATURAL JOIN languages NATURAL JOIN imdb_movielanguages"
     consulta += " NATURAL JOIN genres NATURAL JOIN imdb_moviegenres NATURAL JOIN imdb_directors"
-    consulta += " NATURAL JOIN imdb_directormovies NATURAL JOIN products WHERE prod_id =" + pelicula_id
+    consulta += " NATURAL JOIN imdb_directormovies NATURAL JOIN products WHERE prod_id =" + str(pelicula_id)
 
     sql  = sqlalchemy.text(consulta)
 
@@ -98,6 +95,7 @@ def informacion_aux(pelicula_id):
         precio = res[0][4]
         sinopsis = res[0][5]
         anno = res[0][6]
+        pelicula['id'] = pelicula_id
         pelicula['titulo'] = titulo
         pelicula['idioma'] = idioma
         pelicula['categoria'] = categoria
@@ -189,8 +187,10 @@ def busqueda():
 #vamos a hacernos una funcion auxiliar que nos permita hacer las querys aqui
 def login_aux(username, password):
 
+    print(username)
+    print(password)
     #hacemos la consulta para obtener la password
-    string = "SELECT password FROM customers WHERE password = \'" + passowrd + "\' AND username =\'" + username+"\'"
+    string = "SELECT password FROM customers WHERE password = \'" + password + "\' AND username =\'" + username+"\'"
     sql = sqlalchemy.text(string)
     
     try:
@@ -199,6 +199,12 @@ def login_aux(username, password):
         if result[0]:
             #tenemos resultados, en el [0] se enecuentra la contraseña
             if result[0][0] == password:
+                string = "SELECT customerid FROM customers WHERE password = \'" + password + "\' AND username =\'" + username+"\'"
+                sql = sqlalchemy.text(string)
+                result = db_conn.execute(sql)
+                result = list(result)
+
+                session['userid'] = result[0][0]
                 return True
             else:
                 return False
@@ -250,47 +256,41 @@ def logout():
     session.pop('usuario', None)
     return redirect(url_for('index'))
 
-@app.route('/saldo', methods=['GET', 'POST'])
-def saldo():
-    dato = []
-    i = 0
-    #tenemos que meternos en los datos del usuario y comprobar si tiene saldo
 
-    cadena = "usuarios/" + session['usuario'] + "/datos.dat"
-    cadena = os.path.join(app.root_path,cadena)
-    with open(cadena) as f:
-        for linea in f:
-            dato.append ((linea.split(": ")[1]).split('\n')[0])
-            i = i + 1
-            if i == 5:
-                break
+def saldo_aux(userid):
+    string = "SELECT saldo FROM customers WHERE customerid = " +str(userid) + ";"
+    sql = sqlalchemy.text(string)
+    result = db_conn.execute(sql)
+    result = list(result)
 
-    saldo = float(dato[4])
+    saldo = float(result[0][0])
     saldo = "{0:.2f}".format(saldo)
     saldo = float(saldo)
 
+    return saldo
+
+def saldo_annadir(userid , saldo):
+    string = "UPDATE customers SET saldo = saldo + " + str(saldo) + " WHERE customerid = " +str(userid) + ";"
+    sql = sqlalchemy.text(string)
+    db_conn.execute(sql)
+
+
+@app.route('/saldo', methods=['GET', 'POST'])
+def saldo():
+    userid = session['userid']
+
     if 'saldo' in request.form:
         if "usuario" in session:
-
-
-            # Escribimos el nuevo saldo
-            f = open(cadena, "r")
-            lineas = f.readlines()
-            f.close()
-
-            f = open(cadena, "w")
-
-            for linea in lineas:
-                if not "saldo" in linea:
-                    f.write(linea)
-
-            saldo += float(request.form['saldo'])
-            saldo_str = str(saldo)
-            f.write("saldo: "+ saldo_str)
+            
+            
+            saldo_annadir(userid, request.form['saldo'])
+            saldo = saldo_aux(userid)
 
             return render_template('saldo.html', title = "Añadir Saldo", saldo = saldo)
 
     else:
+        
+        saldo = saldo_aux(userid)
         return render_template('saldo.html', title = "Añadir Saldo", saldo = saldo)
 
 def registro_aux(username, password, email, creditcard):
@@ -343,36 +343,10 @@ def registro():
     else:
         return render_template('registro.html', title = "Registrarse")
 
-# esta funcion nos permite añadir una pelicula al carrito de la compra. En la sesion hay un carrito de la compra creado
-@app.route('/informacion/<pelicula_id>comprada', methods=['GET','POST'])
-def comprar(pelicula_id):
-    # Cuando compre una pelicula me pasan el id y tengo que comprobar que este en el catalogo.
-    # Despues de comprobar que este en el catalogo tengo que añadir el id de la pelicula a la lista del carrito en la sesion
-    # Tengo que actualizar el precio del carrito
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-    movies=catalogue['peliculas']
-
-    for item in movies:
-            if item['id'] == int(pelicula_id):
-                if 'carrito' not in session:
-                    session['carrito'] = []
-                session['carrito'].append(int(pelicula_id))
-                if 'precio' not in session:
-                    session['precio'] = 0
-                session['precio'] += item['precio']
-                if 'n_producto_carrito' not in session:
-                    session['n_producto_carrito'] = []
-                    for i in range(len(movies)):
-                        session['n_producto_carrito'].append(0)
-                session['n_producto_carrito'][int(pelicula_id)-1] += 1
-                session.modified = True
-                return render_template('informacion.html', title = "Pelicula", film=item, flag=True)
-
-    userid = session['userid'] # TENEMOS QUE GUARDARLOOOOOO
+def comprar_aux(pelicula_id, userid):
 
     # seleccionamos toda la informacion del pedidido cuyo estado sea null y sea del usuario que esta en la sesion
-    string = "SELECT * FROM orders WHERE status is null AND customerid =\'" + userid +"\';"
+    string = "SELECT * FROM orders WHERE status is null AND customerid =" + str(userid) +";"
     sql = sqlalchemy.text(string)
 
     # ejecutamos la query
@@ -382,11 +356,12 @@ def comprar(pelicula_id):
      # si no obtenemos lista es porque no tenemos ese order en la tabla con lo cual tenemos que añadirlo 
      # tenemos que añadirlo tanto a orders como a orderdetail
     if result == []:
-        string = "INSERT INTO orders (orderdate,customerid) VALUES (NOW()," + userid + ");"
+        print ("ESTOY INTENTANDO INSERTAR EN ORDERS")
+        string = "INSERT INTO orders (orderdate,customerid) VALUES (NOW()," + str(userid) + ");"
         sql = sqlalchemy.text(string)
         db_conn.execute(sql)
         # ahora que ya lo tenemos queremos obtener el id de este pedido para poder actualizar orderdetail 
-        string = "SELECT orderid FROM orders WHERE status is null AND customerid =\'" + userid +"\';"
+        string = "SELECT orderid FROM orders WHERE status is null AND customerid =" + str(userid) +";"
         sql = sqlalchemy.text(string)
         result = db_conn.execute(sql)
         result = list(result)
@@ -396,23 +371,34 @@ def comprar(pelicula_id):
     # tendremos que insertarlo en orderdetail si no estaba en orders --> esto es porque no tenemos esa venta el orders
     orderid = result[0][0]
     #tengo que mirar si esta en orderdetail o no
-    string = "SELECT * FROM orderdetail WHERE orderid == " + orderid + ";"
+    string = "SELECT * FROM orderdetail WHERE orderid = " + str(orderid) + "AND prod_id = "+str(pelicula_id)+ ";"
     sql = sqlalchemy.text(string)
     result = db_conn.execute(sql)
     result = list(result)
 
     if result == []: #si esta vavia es porque no esta en orderdetail --> tenemos que añadirla
-        string = "INSERT INTO orderdetail (orderid, prod_id, price, quantity) VALUES ( " + orderid + "," + pelicula_id
-        string += ", ( SELECT price FROM products WHERE prod_id == " + pelicula_id + "), 1 )"
+        string = "INSERT INTO orderdetail (orderid, prod_id, price, quantity) VALUES ( " + str(orderid) + "," + str(pelicula_id)
+        string += ", ( SELECT price FROM products WHERE prod_id = " + str(pelicula_id) + "), 1 )"
         sql = sqlalchemy.text(string)
         db_conn.execute(sql)
 
     else: # no esta vacia, con lo cual ya esta en orderdetail y solo tenemos que actualizar
-        string = "UPDATE orderdetail SET quantity = quantity + 1, price = price + (SELECT price FROM products WHERE prod_id ==" + pelicula_id
-        string += ") WHERE prod_id == " + pelicula_id + " AND orderid == " + orderid + ";"
+        string = "UPDATE orderdetail SET quantity = quantity + 1"
+        string += "WHERE prod_id = " + str(pelicula_id) + " AND orderid = " + str(orderid) + ";"
         sql = sqlalchemy.text(string)
         db_conn.execute(sql)
 
+# esta funcion nos permite añadir una pelicula al carrito de la compra. En la sesion hay un carrito de la compra creado
+@app.route('/informacion/<pelicula_id>comprada', methods=['GET','POST'])
+def comprar(pelicula_id):
+
+    userid = session['userid']
+    
+    comprar_aux(pelicula_id, userid)
+
+    item = informacion_aux(pelicula_id)
+
+    return render_template('informacion.html', title = "Pelicula", film=item, flag=True)
 
 
 # #esta funcion nos permitira cargar el carrito de la compra:
@@ -420,40 +406,42 @@ def comprar(pelicula_id):
 
 @app.route('/carrito/', methods=['GET', 'POST'])
 def carrito():
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-    movies=catalogue['peliculas']
+    userid = session['userid']
+    # ESTO ES EL CARRITO
+    # seleccionamos toda la informacion del pedidido cuyo estado sea null y sea del usuario que esta en la sesion
+    string = "SELECT prod_id, orderid FROM orders NATURAL JOIN orderdetail WHERE status is null AND customerid = " + str(userid) +";"
+    sql = sqlalchemy.text(string)
+
+    # ejecutamos la query
+    result = db_conn.execute(sql)
+    result = list(result)
+
     L = []
+    precio = 0
 
-    for item in movies:
-        if item['id'] in session['carrito']:
-            L.append(item)
+    #no tienes carrito todavia
+    if result == []:
+        return render_template('carrito.html', title = "Carrito", carrito_lista = L, precio="{0:.2f}".format(session['precio']))
 
-    return render_template('carrito.html', title = "Carrito", carrito_lista = L, numero_elementos = session['n_producto_carrito'], precio="{0:.2f}".format(session['precio']))
+    #en caso de que si tengamos carrito
+    for prod in result:
+        item = informacion_aux(prod[0])
+        
+        string = "SELECT quantity FROM orderdetail WHERE prod_id = " + str(item['id']) + "AND orderid =" + str(prod[1]) + ";"
+        sql = sqlalchemy.text(string)
+        result = db_conn.execute(sql)
+        result = list(result)
 
+        item['cantidad'] = result[0][0]
+        precio += item['precio']*item['cantidad']
+        L.append(item)
 
-#con esta funcion eliminaremos una pelicula del carrito
-@app.route('/carrito/<pelicula_id>eliminada', methods=['GET', 'POST'])
-def eliminar(pelicula_id):
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-    movies=catalogue['peliculas']
-    L = []
+    session['precio'] = precio
+    return render_template('carrito.html', title = "Carrito", carrito_lista = L, precio="{0:.2f}".format(precio))
 
-    for item in movies:
-        if item['id'] == (int(pelicula_id)):
-            session['carrito'].remove(int(pelicula_id))
-            session['precio'] -= item['precio']
-            session['n_producto_carrito'][int(pelicula_id)-1] -= 1
-    session.modified=True
+def eliminar_aux(pelicula_id, userid):
 
-    # for item in movies:
-    #     if item['id'] in session['carrito']:
-    #         L.append(item)
-    # return carrito()
-    return redirect(url_for('carrito'))
-
-    string = "SELECT * FROM orders WHERE status is null AND customerid =\'" + userid +"\';"
+    string = "SELECT * FROM orders WHERE status is null AND customerid = " + str(userid) +";"
     sql = sqlalchemy.text(string)
 
     # ejecutamos la query
@@ -465,7 +453,7 @@ def eliminar(pelicula_id):
     
     orderid = result[0][0]
     #tengo que mirar si esta en orderdetail o no --> deberia de estar
-    string = "SELECT * FROM orderdetail WHERE orderid == " + orderid + ";"
+    string = "SELECT * FROM orderdetail WHERE orderid = " + str(orderid) + "AND prod_id = "+str(pelicula_id)+ ";"
     sql = sqlalchemy.text(string)
     result = db_conn.execute(sql)
     result = list(result)
@@ -473,10 +461,84 @@ def eliminar(pelicula_id):
     if result == []:
         print("ERROR no deberiamos estar aqui porque estamos intntando borrar algo que deberia de estar en la BD")
     
-    string = "UPDATE orderdetail SET quantity = quantity - 1;" #TENGO QUE CAMBIAR EL PRECIO PERO NO SE COMO HACERLO
+    string = "UPDATE orderdetail SET quantity = quantity - 1" #TENGO QUE CAMBIAR EL PRECIO PERO NO SE COMO HACERLO
+    string += "WHERE prod_id = " + str(pelicula_id) + " AND orderid = " + str(orderid) + ";"
     sql = sqlalchemy.text(string)
     db_conn.execute(sql)
+
+#con esta funcion eliminaremos una pelicula del carrito
+@app.route('/carrito/<pelicula_id>eliminada', methods=['GET', 'POST'])
+def eliminar(pelicula_id):
+    userid = session['userid']
+
+    eliminar_aux(pelicula_id, userid)
     
+    return redirect(url_for('carrito'))
+
+def finalizar_aux(userid):
+
+    string = "SELECT * FROM orders WHERE status is null AND customerid = " + str(userid) +";"
+    sql = sqlalchemy.text(string)
+
+    # ejecutamos la query
+    result = db_conn.execute(sql)
+    result = list(result)
+
+    if result == []: 
+        print("ERROR no deberiamos estar aqui porque estamos intntando borrar algo que deberia de estar en la BD")
+    
+    orderid = result[0][0]
+
+    #ahora tenemos que comprobar que el usuario tiene saldo para pagarlo
+    string = "SELECT saldo FROM customers WHERE customerid = " + str(userid) + ";"
+    sql = sqlalchemy.text(string)
+    result = db_conn.execute(sql)
+    result = list(result)
+
+    saldo = result[0][0]
+    precio = session['precio']
+
+    L = []
+    ##################################
+    #EN CASO DE QUE NO TENGAMOS SALDO#
+    ##################################
+    if saldo < precio or saldo <= 0:
+
+        #OBTENEMOS LOS PRODUCTOS QUE TENEMOS EN EL CARRITO
+        string = "SELECT prod_id, orderid FROM orders NATURAL JOIN orderdetail WHERE status is null AND customerid = " + str(userid) +";"
+        sql = sqlalchemy.text(string)
+        result = db_conn.execute(sql)
+        result = list(result)
+        #en caso de que si tengamos carrito
+        for prod in result:
+            item = informacion_aux(prod[0])
+            precio += item['precio']
+
+            string = "SELECT quantity FROM orderdetail WHERE prod_id = " + str(item['id']) + "AND orderid =" + str(prod[1]) + ";"
+            sql = sqlalchemy.text(string)
+            result = db_conn.execute(sql)
+            result = list(result)
+
+            item['cantidad'] = result[0][0]
+            L.append(item)
+        
+        return render_template('carrito.html', title = "Carrito", carrito_lista = L, mensaje="No tienes saldo para realizar la compra", precio = precio)
+
+    ##################################
+    #EN CASO DE QUE SI TENGAMOS SALDO#
+    ##################################
+    else:
+        string = "UPDATE orders SET status='Paid' WHERE orderid = " + str(orderid) + ";"
+        sql = sqlalchemy.text(string)
+        db_conn.execute(sql)
+
+        print("********PRECIO*********")
+        print(precio)
+        string = "UPDATE customers SET saldo = saldo -" + str(precio) + "WHERE customerid = " + str(userid)+ ";"
+        sql = sqlalchemy.text(string)
+        db_conn.execute(sql)
+
+        return redirect(url_for('carrito'))
 
 
 
@@ -487,93 +549,15 @@ def eliminar(pelicula_id):
 
 @app.route('/finalizar', methods=['GET', 'POST'])
 def finalizar():
-    catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
-    movies=catalogue['peliculas']
-    L = []
-
+    
     #primero voy a comprobar que el usuario este registrado en la aplicacion
 
     #Si hay un usuario logeado en la sesion hacemos las comprobaciones pertinentes: saldo
     #si no esta logeado le llevamos a que inicie sesion
     if "usuario" in session:
+        userid = session['userid']
         #tenemos que meternos en los datos del usuario y comprobar si tiene saldo
-
-        cadena = "usuarios/" + session['usuario'] + "/datos.dat"
-        cadena = os.path.join(app.root_path,cadena)
-
-        dato = []
-        i = 0
-
-        with open(cadena) as f:
-            for linea in f:
-                dato.append ((linea.split(": ")[1]).split('\n')[0])
-                i = i + 1
-                if i == 5:
-                    break;
-
-            saldo = float(dato[4])
-
-            if saldo <= 0 or saldo < session['precio']:
-                for item in movies:
-                    if item['id'] in session['carrito']:
-                        L.append(item)
-                #si no tiene saldo tenemos que decirle que no tiene saldo suficiente
-                #esto podemos hacerlo como en el login, enviando un mensaje de compra no valida porque no tienes saldo
-                return render_template('carrito.html', title = "Carrito", carrito_lista = L, mensaje="No tienes saldo para realizar la compra",numero_elementos = session['n_producto_carrito'], precio = session['precio'])
-
-            #en caso de que si tenga saldo, tenemos que modificarlo y restarselo.
-            else:
-
-                #annadimos al historial las pelis compradas
-                cadena2 = "usuarios/" + session['usuario']
-                cadena2 = os.path.join(app.root_path,cadena2)
-                historial_data = open(cadena2 + '/historial.json', encoding="utf-8").read()
-                historial = json.loads(historial_data)
-                fecha = time.strftime("%d/%m/%y")
-                if str(fecha) not in historial:
-                    historial[str(fecha)] = []
-
-                for i in session['carrito']:
-                    for item in movies:
-                        if i == item['id']:
-                            in_history = 0
-                            for j in historial[str(fecha)]:
-                                if j['id'] == item['id']:
-                                    j['cantidad'] += 1
-                                    in_history = 1
-                            if not in_history:
-                                item['cantidad']=1
-                                historial[str(fecha)].append(item)
-
-
-
-
-
-
-                with open(cadena2 + '/historial.json','w') as file:
-                    json.dump(historial, file, indent= 3)
-
-
-                f = open(cadena, "r")
-                lineas = f.readlines()
-                f.close()
-
-                f = open(cadena, "w")
-
-                for linea in lineas:
-                    if not "saldo" in linea:
-                        f.write(linea)
-                saldo -= session['precio']
-                session['precio'] = 0
-                session['carrito'] = []
-                for i in range(len(movies)):
-                    session['n_producto_carrito'][i] = 0
-                session.modified = True
-                saldo_str = str(saldo)
-                f.write("saldo: " + saldo_str + "\n")
-                f.close()
-                return redirect(url_for('carrito'))
+        return finalizar_aux(userid)
 
 
     else:
@@ -583,14 +567,38 @@ def finalizar():
 
 @app.route('/historial/', methods=['GET', 'POST'])
 def historial():
+    userid = session['userid']
+    L = []
+    precio = 0
+    # cadena2 = "usuarios/" + session['usuario']
+    # cadena2 = os.path.join(app.root_path,cadena2)
 
-    cadena2 = "usuarios/" + session['usuario']
-    cadena2 = os.path.join(app.root_path,cadena2)
+    # catalogue_data = open(cadena2+'/historial.json', encoding="utf-8").read()
+    # catalogue = json.loads(catalogue_data)
 
-    catalogue_data = open(cadena2+'/historial.json', encoding="utf-8").read()
-    catalogue = json.loads(catalogue_data)
+    #OBTENEMOS LOS PRODUCTOS QUE TENEMOS EN EL CARRITO
+    string = "SELECT prod_id, orderid, orderdate FROM orders NATURAL JOIN orderdetail WHERE status = 'Paid' AND customerid = " + str(userid) +";"
+    sql = sqlalchemy.text(string)
+    result = db_conn.execute(sql)
+    result = list(result)
+    #en caso de que si tengamos carrito
+    for prod in result:
+        item = informacion_aux(prod[0])
+        precio += item['precio']
+        item['fecha'] = prod[2]
+        string = "SELECT quantity FROM orderdetail WHERE prod_id = " + str(item['id']) + "AND orderid =" + str(prod[1]) + ";"
+        sql = sqlalchemy.text(string)
+        result = db_conn.execute(sql)
+        result = list(result)
 
-    return render_template('historial.html', title = "Historial", historial = catalogue)
+        item['cantidad'] = result[0][0]
+        L.append(item)
+    string = "SELECT DISTINCT orderdate FROM orders NATURAL JOIN orderdetail WHERE status = 'Paid' AND customerid = " + str(userid) +";"
+    sql = sqlalchemy.text(string)
+    result = db_conn.execute(sql)
+    result = list(result)
+    
+    return render_template('historial.html', title = "Historial", historial = L, fechas = result)
 
 @app.route('/numeroUsuarios/', methods=['GET'])
 def numeroUsuarios():

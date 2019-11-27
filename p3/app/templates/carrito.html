@@ -22,10 +22,10 @@
             </tr>
             {% for item in carrito_lista %}
             <tr>
-               <td><img class="imagen" src ={{url_for('static', filename= 'imagenes/'+item.poster)}} alt ="item.poster"></td>
+               <td><img class="imagen" src ={{url_for('static', filename= 'imagenes/'+"it.png")}} alt ="item.poster"></td>
                <td> {{item.titulo}} </td>
                <td> {{item.precio}} </td>
-               <td> {{numero_elementos[item.id-1]}}</td>
+               <td> {{item.cantidad}}</td>
                <td><button onclick="window.location.href='{{url_for('eliminar', pelicula_id = item.id)}}'" class=boton>Eliminar</button></td>
             </tr>
             <tr>

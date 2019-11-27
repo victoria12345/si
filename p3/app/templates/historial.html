@@ -12,9 +12,9 @@
 
       {% else %}
       <table>
-          {%for item in historial.keys() %}
+          {%for item in fechas %}
           <tr class = "todo">
-             <td colspan="4"> Compra realizada el {{item}} </td>
+             <td colspan="4"> Compra realizada el {{item[0]}} </td>
           </tr>
 
             <tr class="informacion">
@@ -25,7 +25,7 @@
                  <!-- <td ><div > {{item.sinopsis}}  </div> </td> -->
             </tr>
 
-          {% for i in historial[item] %}
+          {% for i in historial %}
           <tr class="informacion">
               <td><img class="imagen" src="../static/imagenes/{{i.poster}}" alt ="{{i.poster}}"></td>
               <td ><div > {{i.titulo}}  </div> </td>
