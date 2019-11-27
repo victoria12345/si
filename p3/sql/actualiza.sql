@@ -111,4 +111,4 @@ CREATE TABLE public.alerts
   prod_id integer NOT NULL,
   orderdate date,
   FOREIGN KEY(prod_id) REFERENCES products(prod_id)
-)
+);

@@ -45,10 +45,6 @@ def getTopVentas():
 @app.route('/index',methods=['GET','POST'])
 def index():
 
-    # catalogue_data = open(os.path.join(app.root_path,'catalogue/catalogue.json'), encoding="utf-8").read()
-    # catalogue = json.loads(catalogue_data)
-    # movies=catalogue['peliculas']
-
 
     #creamos el carrito para la sesion
     if not "carrito" in session:
@@ -132,18 +128,19 @@ def informacion(pelicula_id):
 #################################################
 
 def buscar_titulo(titulo):
-    consulta = "SELECT * FROM imdb_movies NATURAL JOIN products NATURAL JOIN imdb_moviegenres NATURAL JOIN genres movietitle like \'%"+titulo+"%\'"
+    consulta = "SELECT prod_id, movietitle FROM imdb_movies NATURAL JOIN products NATURAL JOIN imdb_moviegenres NATURAL JOIN genres WHERE movietitle like \'%"+str(titulo)+"%\'"
     sql  = sqlalchemy.text(consulta)
 
     try:
         result = db_conn.execute(sql)
         result = list(result)
+        print(result)
         L=[]
         for item in result:
             pelicula = {}
-            pelicula['id'] = result[item][0]
-            pelicula['titulo'] = result[item][1]
-            pelicula['categoria'] = result[item][2]
+            pelicula['id'] = item[0]
+            pelicula['titulo'] = item[1]
+            # pelicula['categoria'] = item[10]
             L.append(pelicula)
         
         return L
@@ -161,6 +158,7 @@ def busqueda():
 
     if request.form['buscar'] != "":
         res = buscar_titulo(request.form['buscar'])
+        print(res)
         if res is None:
             return render_template('index.html', title = "Home", movies=L)
         else:
@@ -187,8 +185,7 @@ def busqueda():
 #vamos a hacernos una funcion auxiliar que nos permita hacer las querys aqui
 def login_aux(username, password):
 
-    print(username)
-    print(password)
+    
     #hacemos la consulta para obtener la password
     string = "SELECT password FROM customers WHERE password = \'" + password + "\' AND username =\'" + username+"\'"
     sql = sqlalchemy.text(string)
@@ -221,7 +218,6 @@ def login():
         password = request.form['contrasenna']
 
         if login_aux(username, password):
-            print(login_aux(username, password))
 
             resp = make_response(redirect(url_for('index')))
             resp.set_cookie('nombre',request.form['username'] )
@@ -357,7 +353,7 @@ def comprar_aux(pelicula_id, userid):
      # tenemos que añadirlo tanto a orders como a orderdetail
     if result == []:
         print ("ESTOY INTENTANDO INSERTAR EN ORDERS")
-        string = "INSERT INTO orders (orderdate,customerid) VALUES (NOW()," + str(userid) + ");"
+        string = "INSERT INTO orders (orderdate,customerid, tax) VALUES (NOW()," + str(userid) + ", 15);"
         sql = sqlalchemy.text(string)
         db_conn.execute(sql)
         # ahora que ya lo tenemos queremos obtener el id de este pedido para poder actualizar orderdetail 
