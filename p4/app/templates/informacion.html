@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ title }}
+{% endblock%}
+
+{% block contenido %}
+
+            <div class="detalle">
+                <div class="arriba">
+
+                    <img class="foto" src={{url_for('static', filename= 'imagenes/'+"it.png")}} alt ="it">
+                    <div class="info">
+                        <div><h1>{{film.titulo}}</h1></div>
+                        <div>
+                        <p><span class="etiqueta"> Año: </span>{{film.anno}}</p>
+                        <p><span class="etiqueta"> Idioma:</span>{{film.idioma}}</p>
+                        <p><span class="etiqueta"> Género:  </span>{{film.categoria}}</p>
+                        <p><span class="etiqueta"> Director: </span>{{film.director}}</p>
+                        </div>
+                    </div>
+
+
+                    <div class="compra">
+                        <p> Precio : {{film.precio}} </p>
+                        <button onclick="window.location.href='{{url_for('comprar', pelicula_id = film.id)}}'" class="botonComprar"><span id="icono-cesta">Comprar</span><img src = "../static/imagenes/carrito.png" alt ="carrito"></button>
+                        
+                    </div>
+                </div>
+                <div class="abajo" >
+                    <p class="etiqueta"> Sinopsis: </p>
+                    <p> {{film.sinopsis}}</p>
+                 </div>
+            </div><!-- 
+            {% if flag == True %}
+                <script>
+                    alert("Pelicula añadida al carrito.");
+                </script>
+            {% endif %} -->
+
+
+{% endblock %}
