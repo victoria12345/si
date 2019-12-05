@@ -6,7 +6,7 @@
   </head>
   <body>
     <h2> Ejemplo de SQL injection: Información en la BD</h2>
-      <form name="consultaanio" method="get" action={{ url_for('xSearchInjection') }} >
+      <form name="consultaanio" method="post" action={{ url_for('xSearchInjection') }} >
         Películas del año: <input name="i_anio"/><br/>
         <input type="submit" value="Mostrar"/>
       </form>
